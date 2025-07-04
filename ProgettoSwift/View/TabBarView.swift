@@ -7,32 +7,40 @@
 
 import SwiftUI
 
-struct TabBar: View {
+struct TabBarView: View {
     
     var body: some View {
         TabView {
                     ExploreView()
                         .tabItem {
-                            Image(systemName: "magnifyingglass")
+                            
+                            Image(systemName: "safari")
                             Text("EXPLORE")
+                            
                         }
                     
                     WorkoutView()
                         .tabItem {
+                            
                             Image(systemName: "dumbbell")
                             Text("WORKOUT")
+                            
                         }
                     
                     StatsView()
                         .tabItem {
-                            Image(systemName: "chart.bar")
+                            
+                            Image(systemName: "chart.xyaxis.line")
                             Text("STATS")
+                            
                         }
                     
                     SettingsView()
                         .tabItem {
+                            
                             Image(systemName: "gearshape")
                             Text("SETTINGS")
+                            
                         }
                 }
     }
@@ -40,5 +48,5 @@ struct TabBar: View {
 
 
 #Preview {
-    TabBar()
+    TabBarView()
 }
