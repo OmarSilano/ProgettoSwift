@@ -22,13 +22,16 @@ struct ExploreView: View {
         VStack {
             // Titolo
             Text("EXPLORE")
-                .font(.title)
-                .bold()
+                .font(.titleLarge)
+                .foregroundColor(.white)
                 .padding(.top, 20)
+            
             
             // Toggle tab
             Picker("Select Tab", selection: $selectedTab) {
-                Text("Workouts").tag("Workouts")
+                Text("Workouts")
+                    .font(.caption)
+                    .tag("Workouts")
                 Text("Exercises").tag("Exercises")
             }
             .pickerStyle(SegmentedPickerStyle())
@@ -47,7 +50,7 @@ struct ExploreView: View {
                             .cornerRadius(20)
                         
                         Text(workout.title)
-                            .font(.headline)
+                            .font(.titleMedium)
                             .foregroundColor(workout.color)
                             .padding(.top, 10)
                         
