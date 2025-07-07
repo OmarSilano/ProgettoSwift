@@ -7,8 +7,27 @@
 
 import SwiftUI
 
-struct WorkoutView: View {
+struct ExploreWorkoutsView: View {
+    
+    let workoutCategory: String
     let workouts: [Workout]
+    @State private var selectedTab = "Beginner"
+    
+    var filteredWorkouts: [Workout] {
+            workouts.filter { $0.difficulty == selectedTab }
+        }
+    
+    init(workoutCategory: String, workouts: [Workout]) {
+        
+        self.workouts = workouts
+        self.workoutCategory = workoutCategory
+        
+            let segmentedAppearance = UISegmentedControl.appearance()
+            segmentedAppearance.selectedSegmentTintColor = UIColor(named: "SecondaryColor")
+            segmentedAppearance.backgroundColor = UIColor(named: "TabBarColor")?.withAlphaComponent(0.9)
+        segmentedAppearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "FourthColor")], for: .normal)
+        segmentedAppearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "PrimaryColor")], for: .selected)
+        }
     
     var body: some View {
         NavigationView {
@@ -18,34 +37,44 @@ struct WorkoutView: View {
                     Button(action: {
                         // Help action
                     }) {
-                        Image(systemName: "questionmark.circle")
+                        Image(systemName: "lessthan")
                             .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(Color("FourthColor"))
+                            .frame(width: 15, height: 20)
+                            .foregroundColor(.white)
                     }
                     
                     Spacer()
                     
-                    Text("WORKOUT")
+                    Text(workoutCategory)
                         .font(Font.titleLarge)
                         .bold()
-                        .foregroundColor(Color("FourthColor"))
+                        .foregroundColor(.white)
                     
                     Spacer()
                     
                     Button(action: {
                         // Add workout action
                     }) {
-                        Image(systemName: "plus")
+                        Image(systemName: "questionmark.circle")
                             .resizable()
                             .frame(width: 24, height: 24)
                             .foregroundColor(Color("FourthColor"))
                     }
                 }
                 .padding()
-                .background(Color.black)
                 
-                List(workouts) { workout in
+                Picker("Select Tab", selection: $selectedTab) {
+                    Text("Beginner")
+                        .tag("Beginner")
+                    Text("Intermediate").tag("Intermediate")
+                    Text("Advanced").tag("Advanced")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .tint(Color("SecondaryColor"))
+                
+                
+                List(filteredWorkouts) { workout in
                     NavigationLink(destination: Text("Dettagli di \(workout.name)")) {
                         HStack {
                             Image(systemName: "photo")
@@ -57,19 +86,18 @@ struct WorkoutView: View {
                             VStack(alignment: .center) {
                                 Text(workout.name)
                                     .font(.headline)
-                                    .foregroundColor(Color("FourthColor"))
+                                    .foregroundColor(.white)
                                 Text("\(workout.days) ∞ \(workout.weeks)")
                                     .font(.subheadline)
                                     .foregroundColor(Color("SubtitleColor"))
                             }
                             .frame(maxWidth: .infinity, alignment: .center)
-                            
                         }
                         .padding(.vertical, 8)
                     }
                     .listRowBackground(Color("PrimaryColor"))
-                    
                 }
+
                 .listStyle(PlainListStyle())
             }
             .background(Color("PrimaryColor").edgesIgnoringSafeArea(.all))
@@ -80,6 +108,8 @@ struct WorkoutView: View {
 
 #Preview {
     
+    let workoutCategory: String = "HYPERTROPHY"
+    
     let workoutsPreview: [Workout] = [
         Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks", difficulty: "Beginner"),
         Workout(name: "PIRAMIDALE INVERSO B", days: "Y Days", weeks: "B Weeks", difficulty: "Beginner"),
@@ -89,6 +119,6 @@ struct WorkoutView: View {
         Workout(name: "UTENTE 2", days: "H Days", weeks: "F Weeks", difficulty: "Advanced")
     ]
     
-    WorkoutView(workouts: workoutsPreview)
+    ExploreWorkoutsView(workoutCategory: workoutCategory, workouts: workoutsPreview)
     
 }
