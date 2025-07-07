@@ -9,11 +9,7 @@ import CoreData
 
 extension Exercise {
     
-    enum Difficulty: String, CaseIterable {
-        case beginner = "Beginner"
-        case intermediate = "Intermediate"
-        case advanced = "Advanced"
-    }
+
     
     // computed property difficultyEnum (non optional setter, optional getter per sicurezza)
     var difficultyEnum: Difficulty {
@@ -36,6 +32,7 @@ extension Exercise {
     
     // Costruttore custom
     convenience init(context: NSManagedObjectContext,
+                     id: UUID = UUID(),
                      name: String,
                      difficulty: Difficulty,
                      muscle: String,
@@ -43,8 +40,8 @@ extension Exercise {
                      pathToImage: String? = nil,
                      pathToVideo: String? = nil,
                      isBanned: Bool = false,
-                     instructions: String? = nil,
-                     id: UUID = UUID()) {
+                     instructions: String? = nil
+                     ) {
         
         self.init(context: context)
         
