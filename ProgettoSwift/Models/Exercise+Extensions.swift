@@ -9,13 +9,6 @@ import CoreData
 
 extension Exercise {
     
-    enum Difficulty: String, CaseIterable {
-        case beginner = "Beginner"
-        case intermediate = "Intermediate"
-        case advanced = "Advanced"
-    }
-    
-    // computed property difficultyEnum (non optional setter, optional getter per sicurezza)
     var difficultyEnum: Difficulty {
         get {
             Difficulty(rawValue: difficulty ?? Difficulty.beginner.rawValue) ?? .beginner
@@ -27,11 +20,11 @@ extension Exercise {
     
     // Default paths se nil
     var safeImagePath: String {
-        pathToImage ?? "defaultImageName"
+        pathToImage ?? "default_image"
     }
     
     var safeVideoPath: String {
-        pathToVideo ?? "defaultVideoName"
+        pathToVideo ?? "default_video"
     }
     
     // Costruttore custom

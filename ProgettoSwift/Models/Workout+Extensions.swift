@@ -9,31 +9,40 @@ import CoreData
 
 extension Workout {
     
-    enum Difficulty: String {
-        case beginner = "Beginner"
-        case intermediate = "Intermediate"
-        case advanced = "Advanced"
+    var difficultyEnum: Difficulty? {
+            get {
+                guard let rawValue = difficulty else { return nil }
+                return Difficulty(rawValue: rawValue)
+            }
+            set {
+                difficulty = newValue?.rawValue
+            }
+        }
+    
+    // Default paths se nil
+    var safeImagePath: String {
+        pathToImage ?? "default_image"
     }
     
-    // Convenience initializer
+    // Costruttore custom
     convenience init(context: NSManagedObjectContext,
+                     id: UUID = UUID(),
                      name: String,
                      weeks: Int16,
-                     imagePath: String?,
-                     difficulty: Difficulty) {
+                     imagePath: String? = nil,
+                     difficulty: Difficulty? = nil) {
         
         self.init(context: context)
-        self.id = UUID()
+        self.id = id
         self.name = name
         self.weeks = weeks
         self.pathToImage = imagePath
-        self.difficulty = difficulty.rawValue
+        self.difficultyEnum = difficulty
+
+        // Calcola i giorni in base alla relazione 1-N con WorkoutDay
+        self.days = Int16(self.workoutDay?.count ?? 0)
     }
 
-    // Optional: computed property to access the enum safely
-    var difficultyLevel: Difficulty? {
-        get { Difficulty(rawValue: difficulty ?? "") }
-        set { difficulty = newValue?.rawValue }
-    }
+    
 }
 

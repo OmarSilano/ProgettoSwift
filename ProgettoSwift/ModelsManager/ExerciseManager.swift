@@ -23,7 +23,7 @@ class ExerciseManager {
     // MARK: - Create
     @discardableResult
     func createExercise(name: String,
-                        difficulty: Exercise.Difficulty,
+                        difficulty: Difficulty,
                         muscle: String,
                         method: String? = nil,
                         pathToImage: String? = nil,
@@ -71,7 +71,7 @@ class ExerciseManager {
     // MARK: - Update
     func updateExercise(_ exercise: Exercise,
                         name: String? = nil,
-                        difficulty: Exercise.Difficulty? = nil,
+                        difficulty: Difficulty? = nil,
                         muscle: String? = nil,
                         method: String? = nil,
                         pathToImage: String? = nil,
