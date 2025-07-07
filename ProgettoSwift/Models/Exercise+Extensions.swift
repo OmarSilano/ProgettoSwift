@@ -4,7 +4,6 @@
 //
 //  Created by Studente on 07/07/25.
 //
-/*
 import Foundation
 import CoreData
 
@@ -39,17 +38,24 @@ extension Exercise {
     convenience init(context: NSManagedObjectContext,
                      name: String,
                      difficulty: Difficulty,
+                     muscle: String,
+                     method: String? = nil,
                      pathToImage: String? = nil,
                      pathToVideo: String? = nil,
                      isBanned: Bool = false,
-                     instructions: String? = nil) {
+                     instructions: String? = nil,
+                     id: UUID = UUID()) {
         
         self.init(context: context)
+        
+        self.id = id
         self.name = name
         self.difficultyEnum = difficulty
+        self.muscle = muscle
+        self.method = method
         self.pathToImage = pathToImage ?? "defaultImageName"
         self.pathToVideo = pathToVideo ?? "defaultVideoName"
         self.isBanned = isBanned
         self.instructions = instructions
     }
-}*/
+}
