@@ -9,18 +9,6 @@ import CoreData
 
 extension Exercise {
     
-
-    
-    // computed property difficultyEnum (non optional setter, optional getter per sicurezza)
-    var difficultyEnum: Difficulty {
-        get {
-            Difficulty(rawValue: difficulty ?? Difficulty.beginner.rawValue) ?? .beginner
-        }
-        set {
-            difficulty = newValue.rawValue
-        }
-    }
-    
     // Default paths se nil
     var safeImagePath: String {
         pathToImage ?? "defaultImageName"
@@ -47,7 +35,7 @@ extension Exercise {
         
         self.id = id
         self.name = name
-        self.difficultyEnum = difficulty
+        self.difficulty = difficulty.rawValue
         self.muscle = muscle
         self.method = method
         self.pathToImage = pathToImage ?? "defaultImageName"
