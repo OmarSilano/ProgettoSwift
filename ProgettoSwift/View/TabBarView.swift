@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct TabBarView: View {
     @State private var selectedTab: Int = 0 //mi indica quale tabItem è selezionato (per poter mettere il fill dei symbols)
     let workouts: [Workout]
