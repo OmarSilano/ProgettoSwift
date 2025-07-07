@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
-
+/*
 struct Workout: Identifiable {
     let id = UUID()
     let name: String
     let days: String
     let weeks: String
 }
+ */
 
 @main
 struct ProgettoSwiftApp: App {
+    
+    let persistenceController = PersistenceController.shared
+    
+    /*
     let workouts :[Workout] = [
         Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks"),
         Workout(name: "PIRAMIDALE INVERSO B", days: "Y Days", weeks: "B Weeks"),
@@ -24,11 +29,13 @@ struct ProgettoSwiftApp: App {
         Workout(name: "UTENTE 1", days: "K Days", weeks: "E Weeks"),
         Workout(name: "UTENTE 2", days: "H Days", weeks: "F Weeks")
     ]
-
+*/
     
     var body: some Scene {
         WindowGroup {
-            ContentView(workouts: workouts)
+            ContentView()
+                .environment(\EnvironmentValues.managedObjectContext, persistenceController.container.viewContext)
+
         }
     }
 }

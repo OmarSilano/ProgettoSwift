@@ -4,20 +4,19 @@
 //
 //  Created by Studente on 04/07/25.
 //
-
 import SwiftUI
 
 
 
 struct ContentView: View {
     
-    let workouts: [Workout]
+    //let workouts: [Workout]
     
     var body: some View {
-        TabBarView(workouts: workouts)
+        //TabBarView()
     }
 }
-
+/*
 #Preview {
     let workoutsPreview: [Workout] = [
         Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks"),
@@ -29,4 +28,5 @@ struct ContentView: View {
     ]
     
     ContentView(workouts: workoutsPreview)
-}
+}*/
+
