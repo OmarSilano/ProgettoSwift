@@ -20,6 +20,9 @@ struct PersistenceController {
             if let error = error as NSError? {
                 fatalError("Errore nel caricamento di Core Data: \(error), \(error.userInfo)")
             }
+            
+            
+            
         }
     }
 }
