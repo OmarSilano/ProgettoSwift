@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/*
 struct Workout: Identifiable {
     let id = UUID()
     let name: String
@@ -14,9 +14,14 @@ struct Workout: Identifiable {
     let weeks: String
     let difficulty: String      //sarà enum
 }
+ */
 
 @main
 struct ProgettoSwiftApp: App {
+    
+    let persistenceController = PersistenceController.shared
+    
+    /*
     let workouts :[Workout] = [
         Workout(name: "PIRAMIDALE A", days: "X", weeks: "A", difficulty: "Beginner"),
         Workout(name: "PIRAMIDALE INVERSO B", days: "Y", weeks: "B", difficulty: "Intermediate"),
@@ -25,11 +30,13 @@ struct ProgettoSwiftApp: App {
         Workout(name: "UTENTE 1", days: "K", weeks: "E", difficulty: "Beginner"),
         Workout(name: "UTENTE 2", days: "H", weeks: "F", difficulty: "Intermediate")
     ]
-
+*/
     
     var body: some Scene {
         WindowGroup {
-            ContentView(workouts: workouts)
+            ContentView()
+                .environment(\EnvironmentValues.managedObjectContext, persistenceController.container.viewContext)
+
         }
     }
 }
