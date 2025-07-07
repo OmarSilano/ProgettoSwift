@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
+        <attribute name="difficulty" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="instructions" attributeType="String"/>
+        <attribute name="isBanned" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="method" attributeType="String"/>
+        <attribute name="muscle" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="pathToImage" optional="YES" attributeType="String"/>
+        <attribute name="patToVideo" optional="YES" attributeType="String"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="exercise" inverseEntity="WorkoutDayDetail"/>
+    </entity>
+    <entity name="Typology" representedClassName="Typology" syncable="YES" codeGenerationType="class">
+        <attribute name="detail" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isDefault" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="typology" inverseEntity="WorkoutDayDetail"/>
+    </entity>
+    <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
+        <attribute name="days" attributeType="Integer 16" derived="YES" derivationExpression="workoutDays.@count" usesScalarValueType="YES"/>
+        <attribute name="difficulty" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="pathToImage" optional="YES" attributeType="String"/>
+        <attribute name="weeks" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="workoutDay" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDay" inverseName="workout" inverseEntity="WorkoutDay"/>
+    </entity>
+    <entity name="WorkoutDay" representedClassName="WorkoutDay" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isCompleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="muscles" attributeType="Transformable"/>
+        <relationship name="workout" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="workoutDay" inverseEntity="Workout"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="workoutDay" inverseEntity="WorkoutDayDetail"/>
+    </entity>
+    <entity name="WorkoutDayDetail" representedClassName="WorkoutDayDetail" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="workoutDayDetail" inverseEntity="Exercise"/>
+        <relationship name="typology" maxCount="1" deletionRule="Nullify" destinationEntity="Typology" inverseName="workoutDayDetail" inverseEntity="Typology"/>
+        <relationship name="workoutDay" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutDay" inverseName="workoutDayDetail" inverseEntity="WorkoutDay"/>
+    </entity>
+</model>
