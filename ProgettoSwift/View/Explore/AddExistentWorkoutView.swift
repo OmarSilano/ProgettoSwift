@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Foundation
+import CoreData
 
 struct AddExistentWorkoutView: View {
     
@@ -76,7 +78,7 @@ struct AddExistentWorkoutView: View {
     
     let workoutCategory: String = "HYPERTROPHY"
     
-    let workout = Workout(name: "PIRAMIDALE A", days: "2", weeks: "4", difficulty: "BEGINNER")
+    let workout = Workout(context: <#T##NSManagedObjectContext#>, name: <#T##String#>, weeks: <#T##Int16#>, imagePath: <#T##String?#>, difficulty: <#T##Difficulty#>)
     
     AddExistentWorkoutView(workout: workout)
     

@@ -21,17 +21,6 @@ struct ProgettoSwiftApp: App {
     
     let persistenceController = PersistenceController.shared
     
-    /*
-    let workouts :[Workout] = [
-        Workout(name: "PIRAMIDALE A", days: "X", weeks: "A", difficulty: "Beginner"),
-        Workout(name: "PIRAMIDALE INVERSO B", days: "Y", weeks: "B", difficulty: "Intermediate"),
-        Workout(name: "10X4", days: "Z", weeks: "C", difficulty: "Advanced"),
-        Workout(name: "8X4", days: "W", weeks: "D", difficulty: "Advanced"),
-        Workout(name: "UTENTE 1", days: "K", weeks: "E", difficulty: "Beginner"),
-        Workout(name: "UTENTE 2", days: "H", weeks: "F", difficulty: "Intermediate")
-    ]
-*/
-    
     var body: some Scene {
         WindowGroup {
             ContentView()

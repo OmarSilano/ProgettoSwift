@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @State private var selectedTab: Int = 0 //mi indica quale tabItem è selezionato (per poter mettere il fill dei symbols)
-    let workouts: [Workout]
     
-    init(workouts: [Workout]) {
-        self.workouts = workouts
+    @State private var selectedTab: Int = 0 //mi indica quale tabItem è selezionato (per poter mettere il fill dei symbols)
+    
+    
+    /*STYLING TABBAR*/
+    init() {
 
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.unselectedItemTintColor = UIColor(named:"TabBarSymbolColor")
@@ -34,7 +35,7 @@ struct TabBarView: View {
                 }
                 .tag(0)
             
-            WorkoutView(workouts: workouts)
+            WorkoutView()
                 .tabItem {
                     Image(systemName: "dumbbell")
                     Text("WORKOUT")
@@ -62,14 +63,6 @@ struct TabBarView: View {
 
 #Preview {
     
-    let workoutsPreview: [Workout] = [
-        Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks", difficulty: "Beginner"),
-        Workout(name: "PIRAMIDALE INVERSO B", days: "Y Days", weeks: "B Weeks", difficulty: "Beginner"),
-        Workout(name: "10X4 C", days: "Z Days", weeks: "C Weeks", difficulty: "Beginner"),
-        Workout(name: "8X4 D", days: "W Days", weeks: "D Weeks", difficulty: "Intermediate"),
-        Workout(name: "UTENTE 1", days: "K Days", weeks: "E Weeks", difficulty: "Advanced"),
-        Workout(name: "UTENTE 2", days: "H Days", weeks: "F Weeks", difficulty: "Advanced")
-    ]
+    TabBarView()
     
-    TabBarView(workouts: workoutsPreview)
 }

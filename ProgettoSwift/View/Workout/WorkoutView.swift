@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Foundation
+import CoreData
 
 struct WorkoutView: View {
-    let workouts: [Workout]
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
         NavigationView {
