@@ -37,7 +37,7 @@ extension Exercise {
         self.id = id
         self.name = name
         self.difficulty = difficulty.rawValue
-        self.muscle = muscle
+        self.muscle = muscle.rawValue
         self.method = method
         self.pathToImage = pathToImage
         self.pathToVideo = pathToVideo

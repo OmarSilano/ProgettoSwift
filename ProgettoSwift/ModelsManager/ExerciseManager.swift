@@ -18,7 +18,7 @@ class ExerciseManager {
     @discardableResult
     func createExercise(name: String,
                         difficulty: Difficulty,
-                        muscle: String,
+                        muscle: MuscleGroup,
                         method: String? = nil,
                         pathToImage: String? = nil,
                         pathToVideo: String? = nil,
