@@ -24,10 +24,5 @@ extension Workout {
         self.difficulty = difficulty?.rawValue
     }
 
-    // Optional: computed property to access the enum safely
-    var difficultyLevel: Difficulty? {
-        get { Difficulty(rawValue: difficulty ?? "") }
-        set { difficulty = newValue?.rawValue }
-    }
 }
 
