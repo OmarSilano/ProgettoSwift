@@ -4,12 +4,6 @@
 //
 //  Created by Studente on 07/07/25.
 //
-//
-//  ExerciseManager.swift
-//  ProgettoSwift
-//
-//  Created by [Tuo Nome] on [Data].
-//
 import Foundation
 import CoreData
 
