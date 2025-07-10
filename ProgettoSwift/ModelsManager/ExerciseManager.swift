@@ -66,7 +66,7 @@ class ExerciseManager {
     func updateExercise(_ exercise: Exercise,
                         name: String? = nil,
                         difficulty: Difficulty? = nil,
-                        muscle: String? = nil,
+                        muscle: MuscleGroup? = nil,
                         method: String? = nil,
                         pathToImage: String? = nil,
                         pathToVideo: String? = nil,
@@ -74,8 +74,8 @@ class ExerciseManager {
                         instructions: String? = nil) {
         
         if let name = name { exercise.name = name }
-        if let difficulty = difficulty { exercise.difficultyEnum = difficulty }
-        if let muscle = muscle { exercise.muscle = muscle }
+        if let difficulty = difficulty { exercise.difficulty = difficulty.rawValue }
+        if let muscle = muscle { exercise.muscle = muscle.rawValue }
         if let method = method { exercise.method = method }
         if let pathToImage = pathToImage { exercise.pathToImage = pathToImage }
         if let pathToVideo = pathToVideo { exercise.pathToVideo = pathToVideo }
