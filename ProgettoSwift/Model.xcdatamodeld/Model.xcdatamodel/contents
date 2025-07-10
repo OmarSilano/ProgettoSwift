@@ -10,14 +10,14 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="pathToImage" optional="YES" attributeType="String"/>
         <attribute name="pathToVideo" optional="YES" attributeType="String"/>
-        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="exercise" inverseEntity="WorkoutDayDetail"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="WorkoutDayDetail" inverseName="exercise" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="Typology" representedClassName="Typology" syncable="YES" codeGenerationType="class">
         <attribute name="detail" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isDefault" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="typology" inverseEntity="WorkoutDayDetail"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="WorkoutDayDetail" inverseName="typology" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
         <attribute name="days" attributeType="Integer 16" usesScalarValueType="YES"/>
@@ -26,14 +26,15 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="pathToImage" optional="YES" attributeType="String"/>
         <attribute name="weeks" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="workoutDay" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDay" inverseName="workout" inverseEntity="WorkoutDay"/>
+        <relationship name="workoutDay" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutDay" inverseName="workout" inverseEntity="WorkoutDay"/>
     </entity>
     <entity name="WorkoutDay" representedClassName="WorkoutDay" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isCompleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="muscles" attributeType="Transformable"/>
+        <attribute name="name" attributeType="String"/>
         <relationship name="workout" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="workoutDay" inverseEntity="Workout"/>
-        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="workoutDay" inverseEntity="WorkoutDayDetail"/>
+        <relationship name="workoutDayDetail" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutDayDetail" inverseName="workoutDay" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="WorkoutDayDetail" representedClassName="WorkoutDayDetail" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
