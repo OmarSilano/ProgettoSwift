@@ -8,7 +8,8 @@ import Foundation
 import CoreData
 
 extension WorkoutDay {
-
+    
+    // muscles come array di stringhe, con default empty array se nil
     var musclesList: [MuscleGroup] {
         get {
             (muscles as? [String])?.compactMap { MuscleGroup(rawValue: $0) } ?? []
@@ -44,6 +45,7 @@ extension WorkoutDay {
                      id: UUID = UUID(),
                      name: String,
                      isCompleted: Bool = false,
+                     muscles: [MuscleGroup] = [],
                      workout: Workout) {
         self.init(context: context)
         self.id = id

@@ -54,6 +54,30 @@ class WorkoutManager {
             return nil
         }
     }
+    
+    //  recupero workout salvati
+    func fetchSavedWorkouts() -> [Workout] {
+        let request: NSFetchRequest<Workout> = Workout.fetchRequest()
+        request.predicate = NSPredicate(format: "isSaved = true")
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Errore nel recupero dei workout salvati: \(error)")
+            return []
+        }
+    }
+    
+    //recupero workout in base alla categoria
+    func fetchWorkoutByCategory(_ category: String) -> [Workout] {
+        let request: NSFetchRequest<Workout> = Workout.fetchRequest()
+        request.predicate = NSPredicate(format: "category == %@", category)
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Errore nel recupero dei workout per categoria: \(error)")
+            return []
+        }
+    }
 
     // MARK: - Update
     func updateWorkout(_ workout: Workout,

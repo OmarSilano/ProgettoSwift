@@ -15,7 +15,9 @@ extension Workout {
                      name: String,
                      weeks: Int16,
                      imagePath: String?,
-                     difficulty: Difficulty? = Difficulty.beginner) {
+                     difficulty: Difficulty? = Difficulty.beginner,
+                     category: Category? = nil,
+                     isSaved: Bool = false) {
         
         self.init(context: context)
         self.id = UUID()
@@ -23,6 +25,8 @@ extension Workout {
         self.weeks = weeks
         self.pathToImage = imagePath
         self.difficulty = difficulty?.rawValue
+        self.isSaved = isSaved
+        self.category = category
     }
 
 }
