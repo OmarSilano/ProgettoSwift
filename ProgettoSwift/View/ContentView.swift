@@ -10,12 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
     
-    //let workouts: [Workout]
-    
     var body: some View {
-        //TabBarView()
+        
+        TabBarView()
+        
     }
 }
+
 /*
 #Preview {
     

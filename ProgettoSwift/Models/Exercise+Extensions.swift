@@ -29,6 +29,7 @@ extension Exercise {
     
     // Costruttore custom
     convenience init(context: NSManagedObjectContext,
+                     id: UUID = UUID(),
                      name: String,
                      difficulty: Difficulty,
                      muscle: String,
@@ -36,14 +37,14 @@ extension Exercise {
                      pathToImage: String? = nil,
                      pathToVideo: String? = nil,
                      isBanned: Bool = false,
-                     instructions: String? = nil,
-                     id: UUID = UUID()) {
+                     instructions: String? = nil
+                     ) {
         
         self.init(context: context)
         
         self.id = id
         self.name = name
-        self.difficultyEnum = difficulty
+        self.difficulty = difficulty.rawValue
         self.muscle = muscle
         self.method = method
         self.pathToImage = pathToImage ?? "defaultImageName"

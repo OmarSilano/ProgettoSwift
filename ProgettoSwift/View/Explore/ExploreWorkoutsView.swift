@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExploreWorkoutsView: View {
     
+    @Environment(\.managedObjectContext) var context
     let workoutCategory: String
     let workouts: [Workout]
     @State private var selectedTab = "Beginner"
@@ -110,6 +111,7 @@ struct ExploreWorkoutsView: View {
     
     let workoutCategory: String = "HYPERTROPHY"
     
+    /*
     let workoutsPreview: [Workout] = [
         Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks", difficulty: "Beginner"),
         Workout(name: "PIRAMIDALE INVERSO B", days: "Y Days", weeks: "B Weeks", difficulty: "Beginner"),
@@ -118,7 +120,7 @@ struct ExploreWorkoutsView: View {
         Workout(name: "UTENTE 1", days: "K Days", weeks: "E Weeks", difficulty: "Advanced"),
         Workout(name: "UTENTE 2", days: "H Days", weeks: "F Weeks", difficulty: "Advanced")
     ]
-    
-    ExploreWorkoutsView(workoutCategory: workoutCategory, workouts: workoutsPreview)
+    */
+    ExploreWorkoutsView(workoutCategory: workoutCategory)
     
 }
