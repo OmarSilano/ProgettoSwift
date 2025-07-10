@@ -18,10 +18,12 @@ class WorkoutDayManager {
     // MARK: - Create
     @discardableResult
     func createWorkoutDay(isCompleted: Bool,
-                          muscles: [String],
+                          name: String,
+                          muscles: [MuscleGroup],
                           workout: Workout) -> WorkoutDay {
         
         let workoutDay = WorkoutDay(context: context,
+                                    name: name,
                                     isCompleted: isCompleted,
                                     workout: workout)
         
@@ -53,9 +55,14 @@ class WorkoutDayManager {
     
     // MARK: - Update
     func updateWorkoutDay(_ workoutDay: WorkoutDay,
+                          name: String? = nil,
                           isCompleted: Bool? = nil,
-                          muscles: [String]? = nil,
+                          muscles: [MuscleGroup]? = nil,
                           workout: Workout? = nil) {
+        
+        if let name = name {
+            workoutDay.name = name
+        }
         
         if let isCompleted = isCompleted {
             workoutDay.isCompleted = isCompleted

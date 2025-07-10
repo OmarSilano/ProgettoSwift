@@ -25,7 +25,11 @@ class WorkoutDayDetailManager {
                                      workoutDay: workoutDay,
                                      exercise: exercise,
                                      typology: typology)
+        
+        workoutDay.updateMusclesFromDetails()
+        
         saveContext()
+                
         return detail
     }
     
@@ -53,24 +57,26 @@ class WorkoutDayDetailManager {
     
     // MARK: - Update
     func updateWorkoutDayDetail(_ detail: WorkoutDayDetail,
-                                workoutDay: WorkoutDay? = nil,
                                 exercise: Exercise? = nil,
                                 typology: Typology? = nil) {
-        if let workoutDay = workoutDay {
-            detail.workoutDay = workoutDay
-        }
+        
         if let exercise = exercise {
             detail.exercise = exercise
+            detail.workoutDay?.updateMusclesFromDetails()
         }
         if let typology = typology {
             detail.typology = typology
         }
+        
         saveContext()
     }
     
     // MARK: - Delete
     func deleteWorkoutDayDetail(_ detail: WorkoutDayDetail) {
         context.delete(detail)
+        
+        detail.workoutDay?.updateMusclesFromDetails()
+        
         saveContext()
     }
     
