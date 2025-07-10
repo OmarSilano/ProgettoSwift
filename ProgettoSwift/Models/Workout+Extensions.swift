@@ -15,7 +15,7 @@ extension Workout {
                      name: String,
                      weeks: Int16,
                      imagePath: String?,
-                     difficulty: Difficulty?) {
+                     difficulty: Difficulty? = Difficulty.beginner) {
         
         self.init(context: context)
         self.id = UUID()

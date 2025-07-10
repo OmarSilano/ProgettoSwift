@@ -8,24 +8,7 @@ import Foundation
 import CoreData
 
 extension Exercise {
-    
-    var difficultyEnum: Difficulty {
-        get {
-            Difficulty(rawValue: difficulty ?? Difficulty.beginner.rawValue) ?? .beginner
-        }
-        set {
-            difficulty = newValue.rawValue
-        }
-    }
-    
-    // Default paths se nil
-    var safeImagePath: String {
-        pathToImage ?? "default_image"
-    }
-    
-    var safeVideoPath: String {
-        pathToVideo ?? "default_video"
-    }
+
     
     // Costruttore custom
     convenience init(context: NSManagedObjectContext,
@@ -34,8 +17,8 @@ extension Exercise {
                      difficulty: Difficulty,
                      muscle: String,
                      method: String? = nil,
-                     pathToImage: String? = nil,
-                     pathToVideo: String? = nil,
+                     pathToImage: String? = "defaultImageName",
+                     pathToVideo: String? = "defaultVideoName",
                      isBanned: Bool = false,
                      instructions: String? = nil
                      ) {
@@ -47,9 +30,10 @@ extension Exercise {
         self.difficulty = difficulty.rawValue
         self.muscle = muscle
         self.method = method
-        self.pathToImage = pathToImage ?? "defaultImageName"
-        self.pathToVideo = pathToVideo ?? "defaultVideoName"
+        self.pathToImage = pathToImage
+        self.pathToVideo = pathToVideo
         self.isBanned = isBanned
         self.instructions = instructions
     }
+    
 }
