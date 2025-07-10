@@ -10,20 +10,21 @@ import CoreData
 extension WorkoutDay {
     
     // muscles come array di stringhe, con default empty array se nil
-    var musclesList: [String] {
+    var musclesList: [MuscleGroup] {
         get {
-            muscles as? [String] ?? []
+            (muscles as? [String])?.compactMap { MuscleGroup(rawValue: $0) } ?? []
         }
         set {
-            muscles = newValue as NSObject
+            muscles = newValue.map { $0.rawValue } as NSObject
         }
     }
+
     
     // convenience init
     convenience init(context: NSManagedObjectContext,
                      id: UUID = UUID(),
                      isCompleted: Bool = false,
-                     muscles: [String] = [],
+                     muscles: [MuscleGroup] = [],
                      workout: Workout) {
         self.init(context: context)
         self.id = id
