@@ -11,6 +11,7 @@ extension Workout {
     
     // Convenience initializer
     convenience init(context: NSManagedObjectContext,
+                     id: UUID = UUID(),
                      name: String,
                      weeks: Int16,
                      imagePath: String?,

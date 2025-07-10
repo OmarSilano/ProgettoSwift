@@ -8,6 +8,7 @@ import Foundation
 import CoreData
 
 extension Exercise {
+
     
     // Costruttore custom
     convenience init(context: NSManagedObjectContext,
