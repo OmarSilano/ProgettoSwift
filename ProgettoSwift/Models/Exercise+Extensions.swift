@@ -9,15 +9,7 @@ import CoreData
 
 extension Exercise {
 
-    enum MuscleGroup: String, CaseIterable{
-        case abs = "Abs"
-        case biceps = "Biceps"
-        case triceps = "Triceps"
-        case back = "Back"
-        case chest = "Chest"
-        case shoulders = "Shoulders"
-        case legs = "Legs"
-    }
+
     
     // Costruttore custom
     convenience init(context: NSManagedObjectContext,
