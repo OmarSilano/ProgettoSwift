@@ -9,13 +9,22 @@ import CoreData
 
 extension Exercise {
     
+    var difficultyEnum: Difficulty {
+        get {
+            Difficulty(rawValue: difficulty ?? Difficulty.beginner.rawValue) ?? .beginner
+        }
+        set {
+            difficulty = newValue.rawValue
+        }
+    }
+    
     // Default paths se nil
     var safeImagePath: String {
-        pathToImage ?? "defaultImageName"
+        pathToImage ?? "default_image"
     }
     
     var safeVideoPath: String {
-        pathToVideo ?? "defaultVideoName"
+        pathToVideo ?? "default_video"
     }
     
     // Costruttore custom
