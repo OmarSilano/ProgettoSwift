@@ -13,6 +13,11 @@ struct WorkoutView: View {
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
+        
+        let manager = WorkoutManager(context: context)
+        
+        let workouts = manager.fetchSavedWorkouts()
+        
         NavigationView {
             VStack {
                 // Custom toolbar
@@ -45,10 +50,10 @@ struct WorkoutView: View {
                     }
                 }
                 .padding()
-                .background(Color.black)
+                .background(Color("PrimaryColor"))
                 
                 List(workouts) { workout in
-                    NavigationLink(destination: Text("Dettagli di \(workout.name)")) {
+                    NavigationLink(destination: Text("Dettagli di \(workout.name!)")) {
                         HStack {
                             Image(systemName: "photo")
                                 .resizable()
@@ -57,7 +62,7 @@ struct WorkoutView: View {
                                 .foregroundColor(Color("FourthColor"))
                             
                             VStack(alignment: .center) {
-                                Text(workout.name)
+                                Text(workout.name!)
                                     .font(.headline)
                                     .foregroundColor(Color("FourthColor"))
                                 Text("\(workout.days) ∞ \(workout.weeks)")
@@ -82,15 +87,6 @@ struct WorkoutView: View {
 
 #Preview {
     
-    let workoutsPreview: [Workout] = [
-        Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks", difficulty: "Beginner"),
-        Workout(name: "PIRAMIDALE INVERSO B", days: "Y Days", weeks: "B Weeks", difficulty: "Beginner"),
-        Workout(name: "10X4 C", days: "Z Days", weeks: "C Weeks", difficulty: "Beginner"),
-        Workout(name: "8X4 D", days: "W Days", weeks: "D Weeks", difficulty: "Intermediate"),
-        Workout(name: "UTENTE 1", days: "K Days", weeks: "E Weeks", difficulty: "Advanced"),
-        Workout(name: "UTENTE 2", days: "H Days", weeks: "F Weeks", difficulty: "Advanced")
-    ]
-    
-    WorkoutView(workouts: workoutsPreview)
+    WorkoutView()
     
 }

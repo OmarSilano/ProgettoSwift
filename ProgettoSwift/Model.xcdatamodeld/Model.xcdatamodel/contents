@@ -20,9 +20,11 @@
         <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="WorkoutDayDetail" inverseName="typology" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="days" attributeType="Integer 16" usesScalarValueType="YES"/>
         <attribute name="difficulty" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isSaved" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="pathToImage" optional="YES" attributeType="String"/>
         <attribute name="weeks" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
