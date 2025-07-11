@@ -10,17 +10,11 @@ import SwiftUI
 struct ExploreWorkoutsView: View {
     
     @Environment(\.managedObjectContext) var context
-    let workoutCategory: String
-    let workouts: [Workout]
+    let workoutCategory: Category
     @State private var selectedTab = "Beginner"
     
-    var filteredWorkouts: [Workout] {
-            workouts.filter { $0.difficulty == selectedTab }
-        }
-    
-    init(workoutCategory: String, workouts: [Workout]) {
+    init(workoutCategory: Category) {
         
-        self.workouts = workouts
         self.workoutCategory = workoutCategory
         
             let segmentedAppearance = UISegmentedControl.appearance()
@@ -31,6 +25,10 @@ struct ExploreWorkoutsView: View {
         }
     
     var body: some View {
+        
+        let workoutManager = WorkoutManager(context: self.context)
+        let workouts = workoutManager.fetchWorkoutByCategory( workoutCategory)
+        
         NavigationView {
             VStack {
                 // Custom toolbar
@@ -46,7 +44,7 @@ struct ExploreWorkoutsView: View {
                     
                     Spacer()
                     
-                    Text(workoutCategory)
+                    Text(workoutCategory.rawValue)
                         .font(Font.titleLarge)
                         .bold()
                         .foregroundColor(.white)
@@ -75,7 +73,7 @@ struct ExploreWorkoutsView: View {
                 .tint(Color("SecondaryColor"))
                 
                 
-                List(filteredWorkouts) { workout in
+                List(workouts) { workout in
                     NavigationLink(destination: Text("Dettagli di \(workout.name)")) {
                         HStack {
                             Image(systemName: "photo")
@@ -85,7 +83,7 @@ struct ExploreWorkoutsView: View {
                                 .foregroundColor(Color("FourthColor"))
                             
                             VStack(alignment: .center) {
-                                Text(workout.name)
+                                Text(workout.name!)
                                     .font(.headline)
                                     .foregroundColor(.white)
                                 Text("\(workout.days) ∞ \(workout.weeks)")
@@ -109,7 +107,7 @@ struct ExploreWorkoutsView: View {
 
 #Preview {
     
-    let workoutCategory: String = "HYPERTROPHY"
+    let workoutCategory: Category = Category.hypertrophy
     
     /*
     let workoutsPreview: [Workout] = [

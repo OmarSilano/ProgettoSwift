@@ -68,9 +68,9 @@ class WorkoutManager {
     }
     
     //recupero workout in base alla categoria
-    func fetchWorkoutByCategory(_ category: String) -> [Workout] {
+    func fetchWorkoutByCategory(_ category: Category) -> [Workout] {
         let request: NSFetchRequest<Workout> = Workout.fetchRequest()
-        request.predicate = NSPredicate(format: "category == %@", category)
+        request.predicate = NSPredicate(format: "category == %@", category.rawValue)
         do {
             return try context.fetch(request)
         } catch {
@@ -93,6 +93,13 @@ class WorkoutManager {
         
         saveContext()
     }
+    
+    // MARK: - Update isSaved
+    func toggleSavedStatus(for workout: Workout) {
+        workout.isSaved.toggle() // Inverte il valore true/false
+        saveContext()
+    }
+
 
     // MARK: - Delete
     func deleteWorkout(_ workout: Workout) {
