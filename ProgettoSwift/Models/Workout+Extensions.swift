@@ -26,7 +26,7 @@ extension Workout {
         self.pathToImage = imagePath
         self.difficulty = difficulty?.rawValue
         self.isSaved = isSaved
-        self.category = category
+        self.category = category?.rawValue
     }
 
 }

@@ -31,7 +31,7 @@ struct AddExistentWorkoutView: View {
                     
                     Spacer()
                     
-                    Text(workout.name)
+                    Text(workout.name!)
                         .font(Font.titleLarge)
                         .bold()
                         .foregroundColor(.white)
@@ -73,7 +73,7 @@ struct AddExistentWorkoutView: View {
     
 
 
-
+/*
 #Preview {
     
     let workoutCategory: String = "HYPERTROPHY"
@@ -83,3 +83,4 @@ struct AddExistentWorkoutView: View {
     AddExistentWorkoutView(workout: workout)
     
 }
+*/
