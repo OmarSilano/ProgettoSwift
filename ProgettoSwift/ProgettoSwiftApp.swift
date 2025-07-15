@@ -2,9 +2,8 @@ import SwiftUI
 
 @main
 struct ProgettoSwiftApp: App {
-    
     let persistenceController = PersistenceController.shared
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -12,7 +11,10 @@ struct ProgettoSwiftApp: App {
                 .onAppear {
                     let context = persistenceController.container.viewContext
                     TypologyManager(context: context).preloadDefaultTypologies()
+                    ExerciseManager(context: context).preloadDefaultExercises()
+                    WorkoutManager(context: context).preloadDefaultWorkouts()
                 }
         }
     }
 }
+
