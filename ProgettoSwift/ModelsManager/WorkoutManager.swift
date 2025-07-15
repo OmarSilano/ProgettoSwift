@@ -212,6 +212,11 @@ class WorkoutManager {
         )
         _ = detailManager.createWorkoutDayDetail(workoutDay: day3, exercise: squat, typology: typology)
         _ = detailManager.createWorkoutDayDetail(workoutDay: day3, exercise: lateralRaise, typology: typology)
+        if let crunch = beginnerExercises.first(where: { $0.name == "Crunch" }) {
+            _ = detailManager.createWorkoutDayDetail(workoutDay: day3, exercise: crunch, typology: typology)
+        } else {
+            print("⚠️ Crunch non trovato nei beginnerExercises.")
+        }
 
         print("✅ Workout di default 'Hypertrophy A' con 3 giorni creato.")
     }

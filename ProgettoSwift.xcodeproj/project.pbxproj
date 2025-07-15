@@ -45,6 +45,11 @@
 			path = ProgettoSwiftUITests;
 			sourceTree = "<group>";
 		};
+		1FCC610B2E26ADCE00249E3A /* Video */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Video;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 		1F32BEDC2E1801AB0004040D = {
 			isa = PBXGroup;
 			children = (
+				1FCC610B2E26ADCE00249E3A /* Video */,
 				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
 				1F32BEF52E1801AC0004040D /* ProgettoSwiftTests */,
 				1F32BEFF2E1801AC0004040D /* ProgettoSwiftUITests */,
@@ -109,6 +115,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
+				1FCC610B2E26ADCE00249E3A /* Video */,
 			);
 			name = ProgettoSwift;
 			packageProductDependencies = (
