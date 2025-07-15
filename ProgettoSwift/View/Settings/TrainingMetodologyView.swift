@@ -1,33 +1,28 @@
 import SwiftUI
+import CoreData
 
 struct TrainingMetodologyView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    
-    // MARK: - Sample Data
-    
-    struct Metodology: Identifiable {
-        let id = UUID()
-        var title: String
-        var description: String?
-        let isDefault: Bool
-    }
-    
-    @State private var expandedMetodologyID: UUID? = nil
-    @State private var selectedMetodologyIndex: Int? = nil
-    
-    
-    let defaultMetodologies: [Metodology] = [
-        Metodology(title: "4x10", description: "4 sets of 10 reps.", isDefault: true),
-        Metodology(title: "8x4x4", description: "8 sets of 4 reps x 4 exercises.", isDefault: true),
-        Metodology(title: "Piramidale", description: "Increasing weights, decreasing reps.", isDefault: true),
-        Metodology(title: "Piramidale Inverso", description: "Decreasing weights, increasing reps.", isDefault: true)
-    ]
-    
-    @State private var userMetodologies: [Metodology] = [
-        Metodology(title: "My metodology 1", description: "Custom description 1.", isDefault: false),
-        Metodology(title: "My metodology 2", description: nil, isDefault: false)
-    ]
+    @Environment(\.managedObjectContext) var context
+
+    // Fetch metodologie default (non modificabili)
+    @FetchRequest(
+        entity: Typology.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Typology.name, ascending: true)],
+        predicate: NSPredicate(format: "isDefault == true"),
+        animation: .default
+    ) var defaultTypologies: FetchedResults<Typology>
+
+    // Fetch metodologie utente (modificabili)
+    @FetchRequest(
+        entity: Typology.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Typology.name, ascending: true)],
+        predicate: NSPredicate(format: "isDefault == false"),
+        animation: .default
+    ) var userTypologies: FetchedResults<Typology>
+
+    @State private var expandedTypologyID: UUID? = nil
     
     var body: some View {
         NavigationStack {
@@ -52,7 +47,6 @@ struct TrainingMetodologyView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                            
                             Spacer().frame(width: 44)
                         }
                         .padding(.top, 20)
@@ -65,39 +59,39 @@ struct TrainingMetodologyView: View {
                             .padding(.leading)
                         
                         VStack(spacing: 1) {
-                            ForEach(defaultMetodologies) { metodology in
-                                MetodologyRow(
-                                    metodology: metodology,
-                                    expandedID: $expandedMetodologyID,
-                                    userMetodologies: .constant([]), // Pass dummy for default metodologies
-                                    canEdit: false
+                            ForEach(defaultTypologies) { typology in
+                                TypologyRow(
+                                    typology: typology,
+                                    expandedID: $expandedTypologyID,
+                                    canEdit: false,
+                                    context: context
                                 )
                             }
                         }
                         
-                        // MARK: - Your Metodology Section
+                        // MARK: - User Section
                         Text("YOUR METODOLOGY")
                             .foregroundColor(.white)
                             .fontWeight(.bold)
                             .padding(.leading)
                         
                         VStack(spacing: 1) {
-                            ForEach(userMetodologies.indices, id: \.self) { index in
-                                MetodologyRow(
-                                    metodology: userMetodologies[index],
-                                    expandedID: $expandedMetodologyID,
-                                    userMetodologies: $userMetodologies,
-                                    canEdit: true
+                            ForEach(userTypologies) { typology in
+                                TypologyRow(
+                                    typology: typology,
+                                    expandedID: $expandedTypologyID,
+                                    canEdit: true,
+                                    context: context
                                 )
                             }
                         }
-                        
-                        Spacer().frame(height: 100) // for bottom button spacing
+
+                        Spacer().frame(height: 100)
                     }
                 }
                 
-                // MARK: - Add Metodology Button
-                NavigationLink(destination: AddMetodologyView(userMetodologies: $userMetodologies)) {
+                // MARK: - Add Button
+                NavigationLink(destination: AddMetodologyView()) {
                     Text("ADD METODOLOGY")
                         .foregroundColor(.black)
                         .fontWeight(.bold)
@@ -116,40 +110,42 @@ struct TrainingMetodologyView: View {
     }
 }
 
-// MARK: - Metodology Row View
-
-struct MetodologyRow: View {
-    let metodology: TrainingMetodologyView.Metodology
+struct TypologyRow: View {
+    let typology: Typology
     @Binding var expandedID: UUID?
-    @Binding var userMetodologies: [TrainingMetodologyView.Metodology]
-    var canEdit: Bool = false
-    
+    let canEdit: Bool
+    let context: NSManagedObjectContext
+
     @State private var showDeleteConfirmation = false
+    @State private var navigateToEdit = false
     
     var isExpanded: Bool {
-        expandedID == metodology.id
+        expandedID == typology.id
     }
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(metodology.title)
+                Text(typology.name ?? "Untitled")
                     .foregroundColor(.white)
                     .padding(.leading)
                 
                 Spacer()
                 
                 if canEdit {
-                    if let index = userMetodologies.firstIndex(where: { $0.id == metodology.id }) {
-                        NavigationLink(
-                            destination: EditMetodologyView(
-                                metodology: $userMetodologies[index]
-                            )
-                        ) {
-                            Image(systemName: "pencil")
-                                .foregroundColor(.gray)
-                                .padding(.trailing, 5)
-                        }
+                    NavigationLink(
+                        destination: EditMetodologyView(typology: typology),
+                        isActive: $navigateToEdit
+                    ) {
+                        EmptyView()
+                    }
+                    
+                    Button {
+                        navigateToEdit = true
+                    } label: {
+                        Image(systemName: "pencil")
+                            .foregroundColor(.gray)
+                            .padding(.trailing, 5)
                     }
                 }
                 
@@ -161,11 +157,7 @@ struct MetodologyRow: View {
             .background(Color(.darkGray))
             .onTapGesture {
                 withAnimation {
-                    if isExpanded {
-                        expandedID = nil
-                    } else {
-                        expandedID = metodology.id
-                    }
+                    expandedID = isExpanded ? nil : typology.id
                 }
             }
             .contextMenu {
@@ -182,7 +174,7 @@ struct MetodologyRow: View {
                     title: Text("Delete Metodology"),
                     message: Text("Are you sure you want to delete this metodology?"),
                     primaryButton: .destructive(Text("Delete")) {
-                        deleteMetodology()
+                        deleteTypology()
                     },
                     secondaryButton: .cancel()
                 )
@@ -190,10 +182,9 @@ struct MetodologyRow: View {
             
             if isExpanded {
                 VStack(alignment: .leading) {
-                    Divider()
-                        .background(Color.gray)
+                    Divider().background(Color.gray)
                     
-                    Text(metodology.description ?? "no description...")
+                    Text(typology.detail?.isEmpty == false ? typology.detail! : "No description...")
                         .foregroundColor(.gray)
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -204,14 +195,16 @@ struct MetodologyRow: View {
         .background(Color(.darkGray))
     }
     
-    private func deleteMetodology() {
-        if let index = userMetodologies.firstIndex(where: { $0.id == metodology.id }) {
-            userMetodologies.remove(at: index)
+    private func deleteTypology() {
+        context.delete(typology)
+        do {
+            try context.save()
+        } catch {
+            print("Errore nella cancellazione: \(error)")
         }
     }
 }
 
-
 #Preview {
-    TrainingMetodologyView()
+    TrainingMetodologyView();
 }

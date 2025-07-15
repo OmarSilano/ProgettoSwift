@@ -74,7 +74,7 @@ struct ExploreWorkoutsView: View {
                 
                 
                 List(workouts) { workout in
-                    NavigationLink(destination: Text("Dettagli di \(workout.name)")) {
+                    NavigationLink(destination: Text("Dettagli di \(workout.name ?? "")")) {
                         HStack {
                             Image(systemName: "photo")
                                 .resizable()
