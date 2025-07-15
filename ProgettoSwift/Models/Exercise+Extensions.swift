@@ -17,7 +17,7 @@ extension Exercise {
                      name: String,
                      difficulty: Difficulty,
                      muscle: MuscleGroup,
-                     method: String? = nil,
+                     method: Method,
                      pathToImage: String? = "defaultImageName",
                      pathToVideo: String? = "defaultVideoName",
                      isBanned: Bool = false,
@@ -30,7 +30,7 @@ extension Exercise {
         self.name = name
         self.difficulty = difficulty.rawValue
         self.muscle = muscle.rawValue
-        self.method = method
+        self.method = method.rawValue
         self.pathToImage = pathToImage
         self.pathToVideo = pathToVideo
         self.isBanned = isBanned
