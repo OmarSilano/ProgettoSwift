@@ -42,6 +42,13 @@
     <entity name="WorkoutDayCompleted" representedClassName="WorkoutDayCompleted" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="workoutDay" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutDay" inverseName="workoutDayCompleted" inverseEntity="WorkoutDay"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint/>
+            <uniquenessConstraint>
+                <constraint value="date"/>
+                <constraint value="workoutDay"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="WorkoutDayDetail" representedClassName="WorkoutDayDetail" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
