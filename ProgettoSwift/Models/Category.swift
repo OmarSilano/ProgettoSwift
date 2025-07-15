@@ -8,5 +8,8 @@ import Foundation
 
 enum Category: String, CaseIterable, Codable {
     case hypertrophy = "Hypertrophy"
-    //!!!!!DA AGGIUNGERE GLI ALTRI!!!!!!
+    case cardioCore = "Cardio & Core"
+    case functionalFitness = "Functional Fitness"
+    case hit = "HIT"
 }
+
