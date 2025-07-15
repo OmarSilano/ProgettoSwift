@@ -1,9 +1,10 @@
 import SwiftUI
+import CoreData
 
 struct AddMetodologyView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @Binding var userMetodologies: [TrainingMetodologyView.Metodology]
+    @Environment(\.managedObjectContext) var context
     
     @State private var title: String = ""
     @State private var description: String = ""
@@ -71,14 +72,21 @@ struct AddMetodologyView: View {
             
             // MARK: - Add Button
             Button(action: {
-                if !title.isEmpty {
-                    let newMetodology = TrainingMetodologyView.Metodology(
-                        title: title,
-                        description: description.isEmpty ? nil : description,
+                if !title.trimmingCharacters(in: .whitespaces).isEmpty {
+                    // Crea nuova tipologia nel database
+                    _ = Typology(
+                        context: context,
+                        name: title,
+                        detail: description.trimmingCharacters(in: .whitespaces).isEmpty ? nil : description,
                         isDefault: false
                     )
-                    userMetodologies.append(newMetodology)
-                    presentationMode.wrappedValue.dismiss()
+                    
+                    do {
+                        try context.save()
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        print("Errore durante il salvataggio: \(error)")
+                    }
                 } else {
                     showAlert = true
                 }
