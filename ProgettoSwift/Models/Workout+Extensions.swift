@@ -27,6 +27,7 @@ extension Workout {
         self.difficulty = difficulty?.rawValue
         self.isSaved = isSaved
         self.category = category?.rawValue
+        //SERVE QUALCOSA PER CALCOLARE I DAYS
     }
 
 }

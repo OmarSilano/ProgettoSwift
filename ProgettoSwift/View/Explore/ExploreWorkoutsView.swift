@@ -1,124 +1,123 @@
-//
-//  WorkoutView.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 04/07/25.
-//
-
 import SwiftUI
 
-struct ExploreWorkoutsView: View {
-    
-    @Environment(\.managedObjectContext) var context
-    let workoutCategory: Category
-    @State private var selectedTab = "Beginner"
-    
-    init(workoutCategory: Category) {
-        
-        self.workoutCategory = workoutCategory
-        
-            let segmentedAppearance = UISegmentedControl.appearance()
-            segmentedAppearance.selectedSegmentTintColor = UIColor(named: "SecondaryColor")
-            segmentedAppearance.backgroundColor = UIColor(named: "TabBarColor")?.withAlphaComponent(0.9)
-        segmentedAppearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "FourthColor")], for: .normal)
-        segmentedAppearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "PrimaryColor")], for: .selected)
-        }
+struct WorkoutCardView: View {
+    let workout: Workout
     
     var body: some View {
-        
-        let workoutManager = WorkoutManager(context: self.context)
-        let workouts = workoutManager.fetchWorkoutByCategory( workoutCategory)
-        
-        NavigationView {
-            VStack {
-                // Custom toolbar
-                HStack {
-                    Button(action: {
-                        // Help action
-                    }) {
-                        Image(systemName: "lessthan")
-                            .resizable()
-                            .frame(width: 15, height: 20)
-                            .foregroundColor(.white)
-                    }
-                    
-                    Spacer()
-                    
-                    Text(workoutCategory.rawValue)
-                        .font(Font.titleLarge)
-                        .bold()
+        HStack(spacing: 12) {
+            Image(systemName: "dumbbell.fill")
+                .resizable()
+                .frame(width: 40, height: 40)
+                .foregroundColor(Color("FourthColor"))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(workout.name ?? "Unnamed")
+                    .foregroundColor(.white)
+                    .font(.headline)
+                Text("\(workout.weeks) weeks • \(workout.days ?? 0) days")
+                    .foregroundColor(Color("SubtitleColor"))
+                    .font(.subheadline)
+            }
+        }
+        .padding(.vertical, 8)
+    }
+}
+
+struct ExploreWorkoutsView: View {
+    @Environment(\.managedObjectContext) private var context
+    @Environment(\.presentationMode) var presentationMode
+
+    let workoutCategory: Category
+    @State private var selectedDifficulty: Difficulty = .beginner
+    @State private var workouts: [Workout] = []
+
+    private let workoutManager: WorkoutManager
+
+    init(workoutCategory: Category) {
+        self.workoutCategory = workoutCategory
+        self.workoutManager = WorkoutManager(context: PersistenceController.shared.container.viewContext)
+
+        let appearance = UISegmentedControl.appearance()
+        appearance.selectedSegmentTintColor = UIColor(named: "SecondaryColor")
+        appearance.backgroundColor = UIColor(named: "TabBarColor")?.withAlphaComponent(0.9)
+        appearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "FourthColor") ?? .gray], for: .normal)
+        appearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "PrimaryColor") ?? .white], for: .selected)
+    }
+
+    var body: some View {
+        VStack(spacing: 16) {
+            // Header personalizzato
+            HStack {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
                         .foregroundColor(.white)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        // Add workout action
-                    }) {
-                        Image(systemName: "questionmark.circle")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(Color("FourthColor"))
-                    }
-                }
-                .padding()
-                
-                Picker("Select Tab", selection: $selectedTab) {
-                    Text("Beginner")
-                        .tag("Beginner")
-                    Text("Intermediate").tag("Intermediate")
-                    Text("Advanced").tag("Advanced")
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                .tint(Color("SecondaryColor"))
-                
-                
-                List(workouts) { workout in
-                    NavigationLink(destination: Text("Dettagli di \(workout.name ?? "")")) {
-                        HStack {
-                            Image(systemName: "photo")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .padding(.trailing, 8)
-                                .foregroundColor(Color("FourthColor"))
-                            
-                            VStack(alignment: .center) {
-                                Text(workout.name!)
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Text("\(workout.days) ∞ \(workout.weeks)")
-                                    .font(.subheadline)
-                                    .foregroundColor(Color("SubtitleColor"))
-                            }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        }
-                        .padding(.vertical, 8)
-                    }
-                    .listRowBackground(Color("PrimaryColor"))
+                        .font(.title3)
                 }
 
+                Spacer()
+
+                Text(workoutCategory.rawValue)
+                    .font(.title2)
+                    .bold()
+                    .foregroundColor(.white)
+
+                Spacer()
+
+                Button {
+                    // Help action
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                        .resizable()
+                        .frame(width: 22, height: 22)
+                        .foregroundColor(Color("FourthColor"))
+                }
+            }
+            .padding(.horizontal)
+            .padding(.top, 20)
+
+            // Picker difficoltà
+            Picker("Difficulty", selection: $selectedDifficulty) {
+                ForEach(Difficulty.allCases, id: \.self) { difficulty in
+                    Text(difficulty.rawValue).tag(difficulty)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            .tint(Color("SecondaryColor"))
+
+            // Lista workout
+            if workouts.isEmpty {
+                Spacer()
+                Text("No workouts available.")
+                    .foregroundColor(.gray)
+                    .italic()
+                Spacer()
+            } else {
+                List {
+                    ForEach(workouts) { workout in
+                        NavigationLink(destination: WorkoutDetailView(workout: workout).navigationBarHidden(true)) {
+                            WorkoutCardView(workout: workout)
+                        }
+                        .listRowBackground(Color("PrimaryColor"))
+                    }
+                }
                 .listStyle(PlainListStyle())
             }
-            .background(Color("PrimaryColor").edgesIgnoringSafeArea(.all))
+        }
+        .background(Color("PrimaryColor").ignoresSafeArea())
+        .onAppear { loadWorkouts() }
+        .onChange(of: selectedDifficulty) { _ in loadWorkouts() }
+        .toolbar(.hidden, for: .tabBar)
+        .navigationBarHidden(true)
+    }
+
+    private func loadWorkouts() {
+        let all = workoutManager.fetchWorkoutByCategory(workoutCategory)
+        self.workouts = all.filter {
+            $0.difficulty == selectedDifficulty.rawValue && $0.isSaved == false
         }
     }
 }
 
-
-#Preview {
-    
-    let workoutCategory: Category = Category.hypertrophy
-    
-    /*
-    let workoutsPreview: [Workout] = [
-        Workout(name: "PIRAMIDALE A", days: "X Days", weeks: "A Weeks", difficulty: "Beginner"),
-        Workout(name: "PIRAMIDALE INVERSO B", days: "Y Days", weeks: "B Weeks", difficulty: "Beginner"),
-        Workout(name: "10X4 C", days: "Z Days", weeks: "C Weeks", difficulty: "Beginner"),
-        Workout(name: "8X4 D", days: "W Days", weeks: "D Weeks", difficulty: "Intermediate"),
-        Workout(name: "UTENTE 1", days: "K Days", weeks: "E Weeks", difficulty: "Advanced"),
-        Workout(name: "UTENTE 2", days: "H Days", weeks: "F Weeks", difficulty: "Advanced")
-    ]
-    */
-    ExploreWorkoutsView(workoutCategory: workoutCategory)
-    
-}
