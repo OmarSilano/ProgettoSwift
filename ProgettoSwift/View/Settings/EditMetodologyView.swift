@@ -1,19 +1,22 @@
 import SwiftUI
+import CoreData
 
 struct EditMetodologyView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @Binding var metodology: TrainingMetodologyView.Metodology
+    @Environment(\.managedObjectContext) var context
+    
+    var typology: Typology
     
     @State private var title: String
     @State private var description: String
     
     @State private var showAlert = false
     
-    init(metodology: Binding<TrainingMetodologyView.Metodology>) {
-        self._metodology = metodology
-        _title = State(initialValue: metodology.wrappedValue.title)
-        _description = State(initialValue: metodology.wrappedValue.description ?? "")
+    init(typology: Typology) {
+        self.typology = typology
+        _title = State(initialValue: typology.name ?? "")
+        _description = State(initialValue: typology.detail ?? "")
     }
     
     var body: some View {
@@ -36,7 +39,6 @@ struct EditMetodologyView: View {
                     .foregroundColor(.white)
                 
                 Spacer()
-                
                 Spacer().frame(width: 44)
             }
             .padding(.top, 20)
@@ -77,12 +79,16 @@ struct EditMetodologyView: View {
             
             // MARK: - Save Button
             Button(action: {
-                if !title.isEmpty {
-                    // Aggiorna direttamente il binding
-                    metodology.title = title
-                    metodology.description = description.isEmpty ? nil : description
+                if !title.trimmingCharacters(in: .whitespaces).isEmpty {
+                    typology.name = title
+                    typology.detail = description.trimmingCharacters(in: .whitespaces).isEmpty ? nil : description
                     
-                    presentationMode.wrappedValue.dismiss()
+                    do {
+                        try context.save()
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        print("Errore durante il salvataggio: \(error)")
+                    }
                 } else {
                     showAlert = true
                 }

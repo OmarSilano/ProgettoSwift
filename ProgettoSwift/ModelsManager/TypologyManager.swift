@@ -103,6 +103,33 @@ class TypologyManager {
             return []
         }
     }
+    
+    func preloadDefaultTypologies() {
+        let request: NSFetchRequest<Typology> = Typology.fetchRequest()
+        request.predicate = NSPredicate(format: "isDefault == true")
+
+        do {
+            let count = try context.count(for: request)
+            if count == 0 {
+                let defaultData: [(String, String)] = [
+                    ("4x10", "4 sets of 10 reps."),
+                    ("8x4x4", "8 sets of 4 reps x 4 exercises."),
+                    ("Piramidale", "Increasing weights, decreasing reps."),
+                    ("Piramidale Inverso", "Decreasing weights, increasing reps.")
+                ]
+                
+                for (title, desc) in defaultData {
+                    _ = Typology(context: context, name: title, detail: desc, isDefault: true)
+                }
+                
+                try context.save()
+                print("✅ Tipologie di default caricate.")
+            }
+        } catch {
+            print("❌ Errore nel preload delle tipologie di default: \(error)")
+        }
+    }
+
 
     
 }

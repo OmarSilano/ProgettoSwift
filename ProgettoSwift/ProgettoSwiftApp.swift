@@ -1,20 +1,4 @@
-//
-//  ProgettoSwiftApp.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 04/07/25.
-//
-
 import SwiftUI
-/*
-struct Workout: Identifiable {
-    let id = UUID()
-    let name: String
-    let days: String
-    let weeks: String
-    let difficulty: String      //sarà enum
-}
- */
 
 @main
 struct ProgettoSwiftApp: App {
@@ -24,8 +8,11 @@ struct ProgettoSwiftApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\EnvironmentValues.managedObjectContext, persistenceController.container.viewContext)
-
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .onAppear {
+                    let context = persistenceController.container.viewContext
+                    TypologyManager(context: context).preloadDefaultTypologies()
+                }
         }
     }
 }
