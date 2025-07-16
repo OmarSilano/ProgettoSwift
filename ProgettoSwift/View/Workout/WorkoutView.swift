@@ -30,25 +30,24 @@ struct WorkoutView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(Color("FourthColor"))
                     }
-                    
+
                     Spacer()
-                    
+
                     Text("WORKOUT")
                         .font(Font.titleLarge)
                         .bold()
                         .foregroundColor(Color("FourthColor"))
-                    
+
                     Spacer()
-                    
-                    Button(action: {
-                        // Add workout action
-                    }) {
+
+                    NavigationLink(destination: AddWorkoutView()) {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 24, height: 24)
                             .foregroundColor(Color("FourthColor"))
                     }
                 }
+
                 .padding()
                 .background(Color("PrimaryColor"))
                 
