@@ -63,7 +63,15 @@ struct StatsView: View {
                     .cornerRadius(8)
                     .padding(.top, 10)
                     
+                    /*
+                     LOGICA PER VISUALIZZARE ALLENAMENTI SVOLTI
+                     */
+                    
                     Spacer()
+                    
+                    /*
+                     ISTOGRAMMA ALLENAMENTI
+                     */
                     
                     
                     
