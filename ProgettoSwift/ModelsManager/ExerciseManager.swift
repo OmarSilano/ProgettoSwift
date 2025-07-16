@@ -116,7 +116,7 @@ class ExerciseManager {
             ("Barbell Row", .back, .rowBack, .beginner, "Pull barbell to your abdomen while bent over.", nil),
             ("Bicep Curl", .arms, .bicepsArms, .beginner, "Curl the dumbbell upwards.", "bicep_curl"),
             ("Triceps Dip", .arms, .tricepsArms, .beginner, "Lower and lift yourself on parallel bars.", nil),
-            ("Crunch", .abs, .upperAbs, .beginner, "Lift shoulders off the floor contracting abs.", nil),
+            ("Crunch", .abs, .upperAbs, .beginner, "Lift shoulders off the floor contracting abs.", "crunch"),
             ("Leg Raise", .abs, .lowerAbs, .intermediate, "Raise your legs while lying down.", "leg_raise"),
             ("Shoulder Press", .shoulders, .pushShoulders, .intermediate, "Push weights above your head.", "shoulder_press"),
             ("Lateral Raise", .shoulders, .lateralRaiseShoulders, .beginner, "Raise arms sideways.", nil),
