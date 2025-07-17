@@ -80,7 +80,9 @@ struct SavedWorkoutDetailView: View {
             }
             .padding(.top)
         }
+        
         .background(Color("PrimaryColor").ignoresSafeArea())
+        .navigationBarHidden(true) // nessuna nav bar nativa
         .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
             Button("Mark as Done") { /* Da implementare */ }
             Button("Edit") { /* Da implementare */ }

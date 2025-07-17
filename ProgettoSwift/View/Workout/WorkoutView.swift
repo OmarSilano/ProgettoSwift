@@ -73,7 +73,7 @@ struct WorkoutView: View {
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
-            .navigationBarHidden(true) // nessuna nav bar nativa
+            .navigationBarHidden(true)
             .toolbar(.visible, for: .tabBar)
         }
     }
