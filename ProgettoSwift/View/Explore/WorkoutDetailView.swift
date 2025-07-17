@@ -1,17 +1,21 @@
-import SwiftUI
 
 // MARK: - View Principale
+import SwiftUI
+
 struct WorkoutDetailView: View {
     let workout: Workout
     @State private var expandedDayID: UUID? = nil
-    @Environment(\.presentationMode) var presentationMode
+
+    @Environment(\.managedObjectContext) private var context
+    @EnvironmentObject var tabRouter: TabRouter
+    @Binding var explorePath: NavigationPath
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
                     Button {
-                        presentationMode.wrappedValue.dismiss()
+                        explorePath.removeLast()
                     } label: {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.white)
@@ -40,11 +44,8 @@ struct WorkoutDetailView: View {
                 .padding(.horizontal)
                 .padding(.top, 20)
 
-                
-                // Immagine del workout
                 WorkoutImageView(imageName: workout.pathToImage)
 
-                // Info generali
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("\(workout.weeks) Weeks • \(workout.days ?? 0) Days")
@@ -62,7 +63,6 @@ struct WorkoutDetailView: View {
 
                 Divider().background(Color.gray)
 
-                // Giorni dell'allenamento
                 if let days = workout.workoutDay?.allObjects as? [WorkoutDay] {
                     ForEach(days.sorted(by: { ($0.name ?? "") < ($1.name ?? "") })) { day in
                         WorkoutDayRowView(day: day, expandedDayID: $expandedDayID)
@@ -78,7 +78,11 @@ struct WorkoutDetailView: View {
             VStack {
                 Spacer()
                 Button(action: {
-                    // TODO: Azione per aggiungere workout
+                    let manager = WorkoutManager(context: context)
+                    manager.cloneWorkout(workout)
+                    
+                    explorePath.removeLast(2) // Torna direttamente a ExploreView
+                    tabRouter.selectedTab = 1 // Cambia tab su "WORKOUT"
                 }) {
                     Text("ADD WORKOUT")
                         .font(.headline)
@@ -94,6 +98,7 @@ struct WorkoutDetailView: View {
         )
     }
 }
+
 
 struct WorkoutDayRowView: View {
     let day: WorkoutDay
