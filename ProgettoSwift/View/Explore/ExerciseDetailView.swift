@@ -7,7 +7,7 @@ struct ExerciseDetailView: View {
     
     @State private var isPlaying: Bool = true
     @State private var player: AVPlayer? = nil
-
+    
     var body: some View {
         VStack(spacing: 0) {
             // Header
@@ -19,15 +19,15 @@ struct ExerciseDetailView: View {
                         .foregroundColor(.white)
                         .font(.title2)
                 }
-
+                
                 Spacer()
-
+                
                 Text(exercise?.name ?? "Exercise")
                     .font(.headline)
                     .foregroundColor(.white)
-
+                
                 Spacer()
-
+                
                 Button(action: {
                     if let player = player {
                         player.seek(to: .zero)
@@ -42,7 +42,7 @@ struct ExerciseDetailView: View {
             }
             .padding()
             .background(Color("PrimaryColor"))
-
+            
             // Video Player
             if let path = exercise?.pathToVideo,
                let url = Bundle.main.url(forResource: path, withExtension: "mp4") {
@@ -63,10 +63,14 @@ struct ExerciseDetailView: View {
                             .font(.system(size: 30))
                             .foregroundColor(.gray)
                     )
+                    .onAppear {
+                        print("❌ Video non trovato: \(exercise?.pathToVideo ?? "nil")")
+                    }
             }
 
-
-
+            
+            
+            
             // Play/Pause
             HStack {
                 Button(action: {
@@ -85,12 +89,12 @@ struct ExerciseDetailView: View {
                         .background(Color("SecondaryColor"))
                         .clipShape(Circle())
                 }
-
+                
                 Spacer()
             }
             .padding(.horizontal)
             .padding(.top, 8)
-
+            
             // Description
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
@@ -98,14 +102,14 @@ struct ExerciseDetailView: View {
                         .font(.title3)
                         .bold()
                         .foregroundColor(.white)
-
+                    
                     Text(exercise?.instructions ?? "No description available.")
                         .foregroundColor(.white)
                         .font(.body)
                 }
                 .padding()
             }
-
+            
             Spacer()
         }
         .background(Color("PrimaryColor").ignoresSafeArea())
