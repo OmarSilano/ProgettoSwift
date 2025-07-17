@@ -1,69 +1,49 @@
-//
-//  NewTabView.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 04/07/25.
-//
-
 import SwiftUI
 
+// MARK: - TabRouter per gestire la tab selezionata
+class TabRouter: ObservableObject {
+    @Published var selectedTab: Int = 0
+}
 
+// MARK: - TabView principale
 struct TabBarView: View {
-    
-    @State private var selectedTab: Int = 0 //mi indica quale tabItem è selezionato (per poter mettere il fill dei symbols)
-    
-    
-    /*STYLING TABBAR*/
-    init() {
+    @StateObject private var tabRouter = TabRouter()
 
+    init() {
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.unselectedItemTintColor = UIColor(named:"TabBarSymbolColor")
 
         if let tabBarColor = UIColor(named: "TabBarColor") {
-            tabBarAppearance.backgroundColor = tabBarColor.withAlphaComponent(0.9) //opacità = 90%
+            tabBarAppearance.backgroundColor = tabBarColor.withAlphaComponent(0.9)
         } else {
             tabBarAppearance.backgroundColor = UIColor.black.withAlphaComponent(0.9)
         }
     }
 
-    
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $tabRouter.selectedTab) {
             ExploreView()
-                .tabItem {
-                    Image(systemName: "safari")
-                    Text("EXPLORE")
-                }
+                .tabItem { Label("EXPLORE", systemImage: "safari") }
                 .tag(0)
-            
+
             WorkoutView()
-                .tabItem {
-                    Image(systemName: "dumbbell")
-                    Text("WORKOUT")
-                }
+                .tabItem { Label("WORKOUT", systemImage: "dumbbell") }
                 .tag(1)
-            
+
             StatsView()
-                .tabItem {
-                    Image(systemName: "chart.bar")
-                    Text("STATS")
-                }
+                .tabItem { Label("STATS", systemImage: "chart.bar") }
                 .tag(2)
-            
+
             SettingsView()
-                .tabItem {
-                    Image(systemName: "gearshape")
-                    Text("SETTINGS")
-                }
+                .tabItem { Label("SETTINGS", systemImage: "gearshape") }
                 .tag(3)
         }
+        .environmentObject(tabRouter)
         .tint(Color("SecondaryColor"))
     }
 }
-    
 
+// MARK: - Anteprima
 #Preview {
-    
     TabBarView()
-    
 }
