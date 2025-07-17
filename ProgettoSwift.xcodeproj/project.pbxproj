@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1F194FE62E28E0E8004C2238 /* crunch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1F194FE52E28E0E8004C2238 /* crunch.mp4 */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1F32BEF32E1801AC0004040D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F194FE52E28E0E8004C2238 /* crunch.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = crunch.mp4; sourceTree = "<group>"; };
 		1F32BEE52E1801AB0004040D /* ProgettoSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProgettoSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F32BEF22E1801AC0004040D /* ProgettoSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgettoSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F32BEFC2E1801AC0004040D /* ProgettoSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgettoSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,11 +48,6 @@
 		1F32BEFF2E1801AC0004040D /* ProgettoSwiftUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ProgettoSwiftUITests;
-			sourceTree = "<group>";
-		};
-		1FCC610B2E26ADCE00249E3A /* Video */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Video;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -77,10 +77,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F194FE42E28DFA1004C2238 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				1F194FE52E28E0E8004C2238 /* crunch.mp4 */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		1F32BEDC2E1801AB0004040D = {
 			isa = PBXGroup;
 			children = (
-				1FCC610B2E26ADCE00249E3A /* Video */,
+				1F194FE42E28DFA1004C2238 /* Video */,
 				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
 				1F32BEF52E1801AC0004040D /* ProgettoSwiftTests */,
 				1F32BEFF2E1801AC0004040D /* ProgettoSwiftUITests */,
@@ -115,7 +123,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
-				1FCC610B2E26ADCE00249E3A /* Video */,
 			);
 			name = ProgettoSwift;
 			packageProductDependencies = (
@@ -219,6 +226,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F194FE62E28E0E8004C2238 /* crunch.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

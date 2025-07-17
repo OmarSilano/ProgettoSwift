@@ -20,6 +20,8 @@ struct ProgettoSwiftApp: App {
         }
      */
 
+    /*
+     // Utilizza onAppear, va bene utilizzarlo quando verranno definiti tutti gli elementi di default
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -30,6 +32,22 @@ struct ProgettoSwiftApp: App {
                     ExerciseManager(context: context).preloadDefaultExercises()
                     WorkoutManager(context: context).preloadDefaultWorkouts()
                 }
+        }
+    }
+     */
+    
+    // Carica ogni volta gli elementi di default da capo, utile in fase di sviluppo
+    var body: some Scene {
+        let context = persistenceController.container.viewContext
+
+        // Preload prima della UI
+        TypologyManager(context: context).preloadDefaultTypologies()
+        ExerciseManager(context: context).preloadDefaultExercises()
+        WorkoutManager(context: context).preloadDefaultWorkouts()
+
+        return WindowGroup {
+            ContentView()
+                .environment(\.managedObjectContext, context)
         }
     }
 }
