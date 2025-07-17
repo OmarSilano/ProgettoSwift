@@ -1,0 +1,111 @@
+[
+  {
+    "name": "Bench Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Beginner",
+    "instructions": "Lie on a bench and push the barbell upward.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Incline Dumbbell Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Intermediate",
+    "instructions": "Press dumbbells upward at an incline.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Pull-Up",
+    "muscle": "Back",
+    "method": "Pull-up",
+    "difficulty": "Intermediate",
+    "instructions": "Hang and pull yourself up.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Row",
+    "muscle": "Back",
+    "method": "Row",
+    "difficulty": "Beginner",
+    "instructions": "Pull barbell to your abdomen while bent over.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Bicep Curl",
+    "muscle": "Arms",
+    "method": "Biceps",
+    "difficulty": "Beginner",
+    "instructions": "Curl the dumbbell upwards.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Triceps Dip",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Beginner",
+    "instructions": "Lower and lift yourself on parallel bars.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Crunch",
+    "muscle": "Abs",
+    "method": "Upper Abs",
+    "difficulty": "Beginner",
+    "instructions": "Lift shoulders off the floor contracting abs.",
+    "imageName": null,
+    "videoName": "crunch.mp4"
+  },
+  {
+    "name": "Leg Raise",
+    "muscle": "Abs",
+    "method": "Lower Abs",
+    "difficulty": "Intermediate",
+    "instructions": "Raise your legs while lying down.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Shoulder Press",
+    "muscle": "Shoulders",
+    "method": "Shoulder Press",
+    "difficulty": "Intermediate",
+    "instructions": "Push weights above your head.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Lateral Raise",
+    "muscle": "Shoulders",
+    "method": "Lateral Raise",
+    "difficulty": "Beginner",
+    "instructions": "Raise arms sideways.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "Lower and push your body back up.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Leg Press",
+    "muscle": "Legs",
+    "method": "Horizontal Push",
+    "difficulty": "Intermediate",
+    "instructions": "Push the platform with your feet.",
+    "imageName": null,
+    "videoName": null
+  }
+]
+
