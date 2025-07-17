@@ -11,6 +11,7 @@ struct ExploreView: View {
     @Environment(\.managedObjectContext) private var context
     @State private var selectedTab = "Workouts"
     @State private var explorePath = NavigationPath()
+    @State private var groupedExercises: [MuscleGroup: [Exercise]] = [:]
     @EnvironmentObject var tabRouter: TabRouter
 
 
@@ -73,8 +74,31 @@ struct ExploreView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .frame(height: 300)
                 } else {
-                    Text("Exercise explorer coming soon!")
-                        .foregroundColor(.white)
+                    List {
+                        ForEach(MuscleGroup.allCases, id: \.self) { muscle in
+                            if let exercises = groupedExercises[muscle] {
+                                Section(
+                                    header: Text(muscle.rawValue)
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                ) {
+                                    ForEach(exercises, id: \.objectID) { exercise in
+                                        ExerciseRow(exercise: exercise)
+                                            .listRowBackground(Color("PrimaryColor")) // sfondo coerente dark
+                                    }
+                                }
+                                // Sfondo scuro anche per l’intestazione di sezione
+                                .listRowBackground(Color("PrimaryColor"))
+                            }
+                        }
+                    }
+                    .listStyle(.insetGrouped)
+                    .scrollContentBackground(.hidden)
+                    .background(Color("PrimaryColor").ignoresSafeArea())
+                    .onAppear {
+                        let manager = ExerciseManager(context: context)
+                        groupedExercises = manager.fetchExercisesGroupedByMuscle()
+                    }
                 }
 
                 Spacer()
