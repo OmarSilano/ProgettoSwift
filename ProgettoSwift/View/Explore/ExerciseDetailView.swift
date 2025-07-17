@@ -45,11 +45,13 @@ struct ExerciseDetailView: View {
             
             // Video Player
             if let path = exercise?.pathToVideo,
-               let url = Bundle.main.url(forResource: path, withExtension: "mp4") {
-                
+               let url = Bundle.main.url(forResource: path, withExtension: nil) {
+
+                // Debug: stampa il path usato
                 VideoPlayer(player: AVPlayer(url: url))
                     .frame(height: 200)
                     .onAppear {
+                        print("Video path usato per cercare il file: '\(path)'")
                         player = AVPlayer(url: url)
                         player?.play()
                         isPlaying = true
@@ -67,6 +69,7 @@ struct ExerciseDetailView: View {
                         print("❌ Video non trovato: \(exercise?.pathToVideo ?? "nil")")
                     }
             }
+
 
             
             
