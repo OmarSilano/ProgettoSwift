@@ -36,10 +36,8 @@ struct AddWorkoutView: View {
                 .padding(.horizontal)
 
                 
-                // Qui l'icona immagine o preview immagine selezionata
-                Button {
-                    isShowingImagePicker = true
-                } label: {
+                // Sezione immagine + image picker
+                ZStack {
                     if let image = selectedImage {
                         Image(uiImage: image)
                             .resizable()
@@ -47,20 +45,64 @@ struct AddWorkoutView: View {
                             .frame(height: 200)
                             .cornerRadius(10)
                     } else {
-                        Image(systemName: "photo.badge.plus")
+                        Image(systemName: "photo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(Color("PrimaryColor"))
-                            .background(Color("SecondaryColor"))
+                            .frame(width: 200, height: 200)
+                            .foregroundColor(Color("FourthColor"))
+                            .background(Color("PrimaryColor"))
                             .cornerRadius(10)
-                            .padding()
-
+                    }
+                    
+                    // Bottone centrato sopra l'immagine
+                    Button {
+                        isShowingImagePicker = true
+                    } label: {
+                        Image(systemName: "photo.badge.plus")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(Color("PrimaryColor"))
+                            .padding(10)
+                            .background(Color("SecondaryColor"))
+                            .clipShape(Circle())
+                            .shadow(radius: 3)
                     }
                 }
-                .buttonStyle(PlainButtonStyle()) // Per togliere effetti button default
-                
+                .frame(height: 200)
+
                 Spacer()
+                
+                HStack(spacing: 40) {
+                    VStack(alignment: .leading) {
+                        Text("Days")
+                            .foregroundColor(Color("FourthColor"))
+                            .font(.headline)
+                        
+                        TextField("0", text: .constant(""))
+                            .keyboardType(.numberPad)
+                            .padding(10)
+                            .background(Color("ThirdColor"))
+                            .foregroundColor(Color("FourthColor"))
+                            .cornerRadius(8)
+                            .frame(width: 100)
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("Weeks")
+                            .foregroundColor(Color("FourthColor"))
+                            .font(.headline)
+                        
+                        TextField("0", text: .constant(""))
+                            .keyboardType(.numberPad)
+                            .padding(10)
+                            .background(Color("ThirdColor"))
+                            .foregroundColor(Color("FourthColor"))
+                            .cornerRadius(8)
+                            .frame(width: 100)
+                    }
+                }
+                .padding(.top, 10)
+
             }
             .padding()
             .background(Color("PrimaryColor").edgesIgnoringSafeArea(.all))
