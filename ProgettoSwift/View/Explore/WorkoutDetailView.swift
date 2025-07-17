@@ -136,7 +136,7 @@ struct WorkoutDayRowView: View {
             if expandedDayID == day.id {
                 if let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] {
                     ForEach(details, id: \.id) { detail in
-                        WorkoutExerciseDetailView(detail: detail)
+                        WorkoutExerciseDetailView(detail: detail, isCompletedToday: nil)
                     }
                 }
             }
@@ -169,8 +169,11 @@ struct WorkoutDayRowView: View {
 
 struct WorkoutExerciseDetailView: View {
     let detail: WorkoutDayDetail
+    let isCompletedToday: Bool?
 
     var body: some View {
+        let completed = isCompletedToday ?? false // fallback a false se nil
+
         NavigationLink(destination: ExerciseDetailView(exercise: detail.exercise)) {
             HStack(spacing: 12) {
                 if let path = detail.exercise?.pathToImage, !path.isEmpty {
@@ -196,12 +199,14 @@ struct WorkoutExerciseDetailView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(detail.exercise?.name ?? "Exercise")
-                        .foregroundColor(.white)
+                        .foregroundColor(completed ? Color("PrimaryColor") : .white)
                         .font(.subheadline)
+
                     Text(detail.typology?.name ?? "Method")
-                        .foregroundColor(Color("SubtitleColor"))
+                        .foregroundColor(completed ? Color("PrimaryColor") : Color("SubtitleColor"))
                         .font(.caption)
                 }
+
                 Spacer()
             }
             .padding(.vertical, 4)
@@ -209,6 +214,7 @@ struct WorkoutExerciseDetailView: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
+
 
 
 struct WorkoutImageView: View {
