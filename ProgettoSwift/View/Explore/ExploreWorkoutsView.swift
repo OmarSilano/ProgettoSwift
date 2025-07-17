@@ -14,7 +14,7 @@ struct WorkoutCardView: View {
                 Text(workout.name ?? "Unnamed")
                     .foregroundColor(.white)
                     .font(.headline)
-                Text("\(workout.weeks) weeks • \(workout.days ?? 0) days")
+                Text("\(workout.weeks) weeks • \(workout.days) days")
                     .foregroundColor(Color("SubtitleColor"))
                     .font(.subheadline)
             }

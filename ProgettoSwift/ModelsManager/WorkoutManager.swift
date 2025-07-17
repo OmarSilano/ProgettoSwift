@@ -261,6 +261,7 @@ class WorkoutManager {
         } else {
             print("⚠️ Crunch non trovato nei beginnerExercises.")
         }
+        
 
         print("✅ Workout di default 'Hypertrophy A' con 3 giorni creato.")
     }
