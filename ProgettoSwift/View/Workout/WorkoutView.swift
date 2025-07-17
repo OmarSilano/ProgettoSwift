@@ -54,33 +54,21 @@ struct WorkoutView: View {
                 } else {
                     List {
                         ForEach(workouts) { workout in
-                            WorkoutRow(workout: workout)
-                                .onLongPressGesture {
-                                    selectedWorkout = workout
-                                    showActionSheet = true
-                                }
-                                .listRowBackground(Color("PrimaryColor"))
-                        }
-                        .confirmationDialog("Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
-                            Button("Replicate and Improve") {
-                                // Azione futura
+                            NavigationLink(destination: SavedWorkoutDetailView(workout: workout)) {
+                                WorkoutRow(workout: workout)
                             }
-                            Button("Edit") {
-                                // Azione futura
-                            }
-                            Button("Share") {
-                                // Azione futura
-                            }
-                            Button("Delete", role: .destructive) {
-                                if let workoutToDelete = selectedWorkout {
-                                    deleteWorkout(workoutToDelete)
+                            .contextMenu {
+                                Button("Replicate and Improve") { /* Da fare */ }
+                                Button("Edit") { /* Da fare */ }
+                                Button("Share") { /* Da fare */ }
+                                Button("Delete", role: .destructive) {
+                                    deleteWorkout(workout)
                                 }
                             }
-
-                            Button("Cancel", role: .cancel) { }
+                            .listRowBackground(Color("PrimaryColor"))
                         }
-                        .tint(nil)
                     }
+
                     .listStyle(PlainListStyle())
                 }
             }
