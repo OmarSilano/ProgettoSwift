@@ -9,9 +9,10 @@ struct CategoryCard: Identifiable {
 
 struct ExploreView: View {
     @Environment(\.managedObjectContext) private var context
-    @EnvironmentObject var tabRouter: TabRouter
     @State private var selectedTab = "Workouts"
     @State private var explorePath = NavigationPath()
+    @EnvironmentObject var tabRouter: TabRouter
+
 
     private let categories: [CategoryCard] = Category.allCases.map {
         CategoryCard(category: $0, imageName: $0.rawValue, description: "Explore \($0.rawValue) workouts.")
@@ -81,6 +82,7 @@ struct ExploreView: View {
             .background(Color("PrimaryColor").ignoresSafeArea())
             .navigationDestination(for: Category.self) { category in
                 ExploreWorkoutsView(workoutCategory: category, explorePath: $explorePath)
+                    .environmentObject(tabRouter)
                     .navigationBarHidden(true)
             }
             .navigationDestination(for: Workout.self) { workout in
@@ -89,6 +91,7 @@ struct ExploreView: View {
             }
         }
         .navigationBarHidden(true)
+        .background(Color("PrimaryColor").ignoresSafeArea())
     }
 }
 

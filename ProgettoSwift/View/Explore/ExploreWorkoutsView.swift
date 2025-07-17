@@ -25,6 +25,7 @@ struct WorkoutCardView: View {
 
 struct ExploreWorkoutsView: View {
     @Environment(\.managedObjectContext) private var context
+    @EnvironmentObject var tabRouter: TabRouter
 
     let workoutCategory: Category
     @Binding var explorePath: NavigationPath
@@ -108,9 +109,15 @@ struct ExploreWorkoutsView: View {
             }
         }
         .background(Color("PrimaryColor").ignoresSafeArea())
-        .onAppear { loadWorkouts() }
+        .onAppear {
+            tabRouter.isTabBarHidden = true
+            loadWorkouts()
+        }
+        .onDisappear {
+            tabRouter.isTabBarHidden = false
+        }
         .onChange(of: selectedDifficulty) { _ in loadWorkouts() }
-        .toolbar(.hidden, for: .tabBar)
+        
         .navigationBarHidden(true)
     }
 
