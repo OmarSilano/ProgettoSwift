@@ -13,6 +13,120 @@ class ExerciseManager {
     init(context: NSManagedObjectContext) {
         self.context = context
     }
+    
+    // MARK: - Private Seed Struct
+        private struct ExerciseSeed: Codable {
+            let name: String
+            let muscle: String
+            let method: String
+            let difficulty: String
+            let instructions: String
+            let imageName: String?
+            let videoName: String?
+        }
+        
+    /*
+        // Versione definitiva, non inserisce esercizi se già presenti
+        func preloadDefaultExercises() {
+            let existing = fetchAllExercises()
+            if !existing.isEmpty {
+                print("⚠️ Esercizi già presenti, skip.")
+                return
+            }
+            
+            if let bundlePath = Bundle.main.resourcePath {
+                print("📁 Contenuto del bundle:")
+                let fileManager = FileManager.default
+                if let contents = try? fileManager.contentsOfDirectory(atPath: bundlePath) {
+                    contents.forEach { print($0) }
+                }
+            }
+
+            guard let url = Bundle.main.url(forResource: "exercises", withExtension: "json") else {
+                print("❌ JSON esercizi non trovato")
+                return
+            }
+
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let seeds = try decoder.decode([ExerciseSeed].self, from: data)
+
+                for seed in seeds {
+                    guard
+                        let muscle = MuscleGroup(rawValue: seed.muscle),
+                        let method = Method(rawValue: seed.method),
+                        let difficulty = Difficulty(rawValue: seed.difficulty)
+                    else {
+                        print("⚠️ Dato non valido in \(seed.name)")
+                        continue
+                    }
+
+                    _ = createExercise(
+                        name: seed.name,
+                        difficulty: difficulty,
+                        muscle: muscle,
+                        method: method,
+                        pathToImage: seed.imageName,
+                        pathToVideo: seed.videoName,
+                        instructions: seed.instructions
+                    )
+                }
+
+                print("✅ Esercizi predefiniti caricati da JSON.")
+            } catch {
+                print("❌ Errore caricamento JSON: \(error)")
+            }
+        }
+ */
+    // Utile in sviluppo, carica ogni volta gli esercizi da capo
+    func preloadDefaultExercises() {
+        // 1) Cancella tutti gli esercizi esistenti
+        let existing = fetchAllExercises()
+        for exercise in existing {
+            context.delete(exercise)
+        }
+        saveContext()  // salva le cancellazioni
+        
+        // 2) Procedi con il caricamento dal JSON
+        guard let url = Bundle.main.url(forResource: "exercises", withExtension: "json") else {
+            print("❌ JSON esercizi non trovato")
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let seeds = try decoder.decode([ExerciseSeed].self, from: data)
+
+            for seed in seeds {
+                guard
+                    let muscle = MuscleGroup(rawValue: seed.muscle),
+                    let method = Method(rawValue: seed.method),
+                    let difficulty = Difficulty(rawValue: seed.difficulty)
+                else {
+                    print("⚠️ Dato non valido in \(seed.name)")
+                    continue
+                }
+
+                _ = createExercise(
+                    name: seed.name,
+                    difficulty: difficulty,
+                    muscle: muscle,
+                    method: method,
+                    pathToImage: seed.imageName,   // assicurati di usare il nome corretto
+                    pathToVideo: seed.videoName,
+                    instructions: seed.instructions
+                )
+            }
+
+            print("✅ Esercizi predefiniti caricati da JSON.")
+        } catch {
+            print("❌ Errore caricamento JSON: \(error)")
+        }
+    }
+
+    
 
     // MARK: - Create
     @discardableResult
@@ -102,42 +216,4 @@ class ExerciseManager {
         }
     }
     
-    func preloadDefaultExercises() {
-        let existing = fetchAllExercises()
-        if !existing.isEmpty {
-            print("⚠️ Esercizi già presenti, skip.")
-            return
-        }
-
-        let exercises: [(String, MuscleGroup, Method, Difficulty, String, String?)] = [
-            ("Bench Press", .chest, .pushChest, .beginner, "Lie on a bench and push the barbell upward.", "bench_press"),
-            ("Incline Dumbbell Press", .chest, .pushChest, .intermediate, "Press dumbbells upward at an incline.", nil),
-            ("Pull-Up", .back, .pullUpBack, .intermediate, "Hang and pull yourself up.", "pull_up"),
-            ("Barbell Row", .back, .rowBack, .beginner, "Pull barbell to your abdomen while bent over.", nil),
-            ("Bicep Curl", .arms, .bicepsArms, .beginner, "Curl the dumbbell upwards.", "bicep_curl"),
-            ("Triceps Dip", .arms, .tricepsArms, .beginner, "Lower and lift yourself on parallel bars.", nil),
-            ("Crunch", .abs, .upperAbs, .beginner, "Lift shoulders off the floor contracting abs.", "crunch"),
-            ("Leg Raise", .abs, .lowerAbs, .intermediate, "Raise your legs while lying down.", "leg_raise"),
-            ("Shoulder Press", .shoulders, .pushShoulders, .intermediate, "Push weights above your head.", "shoulder_press"),
-            ("Lateral Raise", .shoulders, .lateralRaiseShoulders, .beginner, "Raise arms sideways.", nil),
-            ("Squat", .legs, .vPushLegs, .beginner, "Lower and push your body back up.", "squat"),
-            ("Leg Press", .legs, .hPushLegs, .intermediate, "Push the platform with your feet.", nil)
-        ]
-
-        for (name, muscle, method, difficulty, instructions, imageName) in exercises {
-            _ = createExercise(
-                name: name,
-                difficulty: difficulty,
-                muscle: muscle,
-                method: method,
-                pathToImage: imageName,
-                instructions: instructions
-            )
-        }
-
-        print("✅ Esercizi predefiniti caricati.")
-    }
-
-
-
 }
