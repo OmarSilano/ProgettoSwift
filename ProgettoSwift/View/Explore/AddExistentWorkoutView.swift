@@ -54,6 +54,7 @@ struct AddExistentWorkoutView: View {
                     .frame(width:350, height: 350)
                     .foregroundColor(Color("FourthColor"))
                 
+                
                 HStack{
                     Text("\(workout.days) Days")
                         .font(Font.bodyRegular)
