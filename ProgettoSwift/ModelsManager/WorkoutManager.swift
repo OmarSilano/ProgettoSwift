@@ -21,7 +21,7 @@ class WorkoutManager {
                        difficulty: Difficulty? = nil,
                        weeks: Int16,
                        pathToImage: String? = nil,
-                       category: Category) -> Workout {
+                       category: Category? = nil) -> Workout {
 
         let workout = Workout(context: context,
                               name: name,

@@ -1,27 +1,32 @@
 import SwiftUI
 
 struct AddWorkoutView: View {
-    @Environment(\.managedObjectContext) var context
-    
-    @State private var workoutName: String = ""
+    @Environment(\.managedObjectContext) private var context
+    @Environment(\.dismiss) var dismiss
+    @State private var workoutName = "New Workout"
     @State private var selectedImage: UIImage? = nil
     @State private var isShowingImagePicker = false
+    @State private var numberDays = 0
+    @State private var numberWeeks = "0"
+    @State private var workoutDays: [TempWorkoutDay] = []
+
+    struct TempWorkoutDay: Identifiable {
+        var id = UUID()
+        var name: String
+    }
     
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("CREATE WORKOUT")
-                    .font(Font.titleLarge)
-                    .bold()
-                    .foregroundColor(Color("FourthColor"))
                 
+                // TextField + X button
                 HStack {
                     TextField("", text: $workoutName)
-                        .padding(10)
-                        .background(Color("ThirdColor"))    // sfondo personalizzato
-                        .foregroundColor(Color("FourthColor"))  // colore testo
+                        .padding()
+                        .background(Color("ThirdColor"))
+                        .foregroundColor(Color("FourthColor"))
                         .cornerRadius(8)
-
+                        .font(.headline)
                     
                     if !workoutName.isEmpty {
                         Button(action: {
@@ -30,84 +35,170 @@ struct AddWorkoutView: View {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(Color("SecondaryColor"))
                         }
-                        .buttonStyle(BorderlessButtonStyle()) // per evitare che catturi tutto il tap
                     }
                 }
                 .padding(.horizontal)
-
                 
-                // Sezione immagine + image picker
+                // Image picker
                 ZStack {
+                    
                     if let image = selectedImage {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
                             .frame(height: 200)
                             .cornerRadius(10)
-                    } else {
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                            .foregroundColor(Color("FourthColor"))
-                            .background(Color("PrimaryColor"))
-                            .cornerRadius(10)
                     }
-                    
-                    // Bottone centrato sopra l'immagine
-                    Button {
+
+                    Button(action: {
                         isShowingImagePicker = true
-                    } label: {
+                    }) {
                         Image(systemName: "photo.badge.plus")
                             .resizable()
-                            .frame(width: 40, height: 40)
+                            .frame(width: 30, height: 25)
                             .foregroundColor(Color("PrimaryColor"))
-                            .padding(10)
+                            .padding(8)
                             .background(Color("SecondaryColor"))
                             .clipShape(Circle())
-                            .shadow(radius: 3)
                     }
                 }
                 .frame(height: 200)
+                .padding(.horizontal)
 
-                Spacer()
-                
-                HStack(spacing: 40) {
-                    VStack(alignment: .leading) {
-                        Text("Days")
-                            .foregroundColor(Color("FourthColor"))
-                            .font(.headline)
-                        
-                        TextField("0", text: .constant(""))
-                            .keyboardType(.numberPad)
-                            .padding(10)
-                            .background(Color("ThirdColor"))
-                            .foregroundColor(Color("FourthColor"))
-                            .cornerRadius(8)
-                            .frame(width: 100)
-                    }
+                // Days and Weeks
+                HStack {
+                    Text("\(numberDays) Days")
                     
-                    VStack(alignment: .leading) {
-                        Text("Weeks")
-                            .foregroundColor(Color("FourthColor"))
-                            .font(.headline)
+                    Spacer()
+                    
+                    HStack(spacing: 4) {
+                        Text("∞")
                         
-                        TextField("0", text: .constant(""))
-                            .keyboardType(.numberPad)
-                            .padding(10)
+                        TextField("", text: $numberWeeks)
+                            .frame(width: 40, height: 40)
+                            .multilineTextAlignment(.center)
                             .background(Color("ThirdColor"))
                             .foregroundColor(Color("FourthColor"))
                             .cornerRadius(8)
-                            .frame(width: 100)
+                            .font(.headline)
+                            .keyboardType(.numberPad)
+                            .onChange(of: numberWeeks) { newValue in
+                                let filtered = newValue.filter { "0123456789".contains($0) }
+                                if filtered != newValue {
+                                    numberWeeks = filtered
+                                }
+                            }
+
+                        
+                        Text("Weeks")
                     }
                 }
-                .padding(.top, 10)
+                .foregroundColor(Color("FourthColor"))
+                .font(.headline)
+                .padding(.horizontal, 30)
+                
+                
+                // Lista Workout Days
+                if !workoutDays.isEmpty {
+                    ScrollView {
+                        VStack(spacing: 10) {
+                            ForEach(workoutDays) { day in
+                                HStack {
+                                    // Icona elimina
+                                    Button(action: {
+                                        if let index = workoutDays.firstIndex(where: { $0.id == day.id }) {
+                                            workoutDays.remove(at: index)
+                                            numberDays = workoutDays.count
+                                        }
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(Color("FourthColor"))
+                                    }
 
+                                    Spacer()
+
+                                    // Testo centrato
+                                    Text(day.name)
+                                        .foregroundColor(Color("FourthColor"))
+                                        .multilineTextAlignment(.center)
+                                        .frame(maxWidth: .infinity)
+
+                                    Spacer()
+
+                                    // Icona modifica
+                                    Button(action: {
+                                        // Azione di modifica qui
+                                        print("Modifica \(day.name)")
+                                    }) {
+                                        Image(systemName: "pencil")
+                                            .foregroundColor(Color("FourthColor"))
+                                    }
+                                }
+                                .padding()
+                                .background(Color("ThirdColor"))
+                                .cornerRadius(8)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .frame(height: 180)
+                }
+
+                
+                
+                // Add Day button
+                Button(action: {
+                    numberDays += 1
+                    let newDay = TempWorkoutDay(name: "Day \(numberDays)")
+                    workoutDays.append(newDay)
+                    numberDays = workoutDays.count
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add Day")
+                    }
+                    .foregroundColor(Color("PrimaryColor"))
+                    .padding()
+                    .background(Color("SecondaryColor"))
+                    .cornerRadius(25)
+                }
+                .padding(.top)
+
+                Spacer()
             }
-            .padding()
-            .background(Color("PrimaryColor").edgesIgnoringSafeArea(.all))
+            .padding(.top)
+            .background(Color("PrimaryColor").ignoresSafeArea())
             .sheet(isPresented: $isShowingImagePicker) {
                 ImagePicker(selectedImage: $selectedImage)
+            }
+            .navigationBarItems(
+                leading: Button("Annulla") {
+                    dismiss()
+                }.foregroundColor(Color("FourthColor")),
+                
+                trailing: Button("Salva") {
+                    // salva workout
+                    //////////DEVO CAPIRE COME MANDARE IL PATH IMAGE
+                    let newWorkout: Workout = WorkoutManager.init(context: context).createWorkout(name: workoutName, weeks: numberWeeks as Int16)
+                    
+                    // Crea ogni WorkoutDay associato in un REALE oggetto WorkoutDay
+                        for tempDay in workoutDays {
+                            workoutDayManager.createWorkoutDay(
+                                isCompleted: false,
+                                name: tempDay.name,
+                                workout: newWorkout
+                            )
+                        }
+                    
+                }.foregroundColor(Color("FourthColor"))
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("CREATE WORKOUT")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(Color("FourthColor"))
+                }
             }
         }
     }
