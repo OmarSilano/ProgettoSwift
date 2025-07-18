@@ -179,9 +179,11 @@ struct AddWorkoutView: View {
                 trailing: Button("Salva") {
                     // salva workout
                     //////////DEVO CAPIRE COME MANDARE IL PATH IMAGE
-                    let newWorkout: Workout = WorkoutManager.init(context: context).createWorkout(name: workoutName, weeks: numberWeeks as Int16)
+                    let weeksValue = Int16(numberWeeks) ?? 0
+                    let newWorkout: Workout = WorkoutManager.init(context: context).createWorkout(name: workoutName, weeks: weeksValue, isSaved: true)
                     
                     // Crea ogni WorkoutDay associato in un REALE oggetto WorkoutDay
+                    let workoutDayManager = WorkoutDayManager.init(context: context)
                         for tempDay in workoutDays {
                             workoutDayManager.createWorkoutDay(
                                 isCompleted: false,
@@ -189,6 +191,7 @@ struct AddWorkoutView: View {
                                 workout: newWorkout
                             )
                         }
+                    dismiss()
                     
                 }.foregroundColor(Color("FourthColor"))
             )

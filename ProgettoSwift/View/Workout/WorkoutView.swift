@@ -23,33 +23,34 @@ struct WorkoutView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // MARK: – Header
-                HStack {
-                    Button(action: {
-                        // Help action
-                    }) {
-                        Image(systemName: "questionmark.circle")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(Color("FourthColor"))
-                    }
+HStack {
+    Button(action: {
+        // Help action
+    }) {
+        Image(systemName: "questionmark.circle")
+            .resizable()
+            .frame(width: 24, height: 24)
+            .foregroundColor(Color("FourthColor"))
+    }
 
-                    Spacer()
+    Spacer()
 
-                    Text("WORKOUT")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(Color("FourthColor"))
+    Text("WORKOUT")
+        .font(.title2)
+        .bold()
+        .foregroundColor(Color("FourthColor"))
 
-                    Spacer()
-                    
-                    // pulsante + (per future funzioni)
-                    Button { /* add workout action */ } label: {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 22, height: 22)
-                            .foregroundColor(Color("FourthColor"))
-                    }
-                }
+    Spacer()
+
+    // Qui puoi scegliere se mettere NavigationLink o Button per aggiungere workout
+    NavigationLink(destination: AddWorkoutView()) {
+        Image(systemName: "plus")
+            .resizable()
+            .frame(width: 22, height: 22)
+            .foregroundColor(Color("FourthColor"))
+    }
+}
+
 
                 .padding()
                 .background(Color("PrimaryColor"))
