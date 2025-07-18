@@ -175,6 +175,20 @@ class ExerciseManager {
             return nil
         }
     }
+    
+    func fetchExercisesGroupedByMuscle() -> [MuscleGroup: [Exercise]] {
+        let allExercises = fetchAllExercises()
+        var grouped: [MuscleGroup: [Exercise]] = [:]
+
+        for exercise in allExercises {
+            guard let muscleRaw = exercise.muscle,
+                  let muscle = MuscleGroup(rawValue: muscleRaw) else { continue }
+
+            grouped[muscle, default: []].append(exercise)
+        }
+
+        return grouped
+    }
 
     // MARK: - Update
     func updateExercise(_ exercise: Exercise,

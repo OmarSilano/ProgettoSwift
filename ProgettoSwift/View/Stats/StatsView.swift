@@ -37,6 +37,15 @@ struct StatsView: View {
         )
     }
     
+    private var chartData: [MuscleGroupCount] {
+        let manager = WorkoutDayCompletedManager(context: context)
+        let countsDict = manager.fetchCountLast7DaysByMuscle()
+        
+        return MuscleGroup.allCases.map { group in
+            MuscleGroupCount(muscleGroup: group, count: countsDict[group] ?? 0)
+        }
+    }
+    
     
     var body: some View {
         NavigationStack {
@@ -69,16 +78,12 @@ struct StatsView: View {
                     
                     Spacer()
                     
-                    /*
-                     ISTOGRAMMA ALLENAMENTI
-                     */
-                    
-                    
-                    
+                    ChartView(data: chartData)
+                        .padding(.horizontal)
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
-
+            
         }
     }
     
