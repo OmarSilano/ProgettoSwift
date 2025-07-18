@@ -14,7 +14,7 @@ struct WorkoutCardView: View {
                 Text(workout.name ?? "Unnamed")
                     .foregroundColor(.white)
                     .font(.headline)
-                Text("\(workout.weeks) weeks • \(workout.days ?? 0) days")
+                Text("\(workout.weeks) weeks • \(workout.days) days")
                     .foregroundColor(Color("SubtitleColor"))
                     .font(.subheadline)
             }
@@ -25,16 +25,19 @@ struct WorkoutCardView: View {
 
 struct ExploreWorkoutsView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var tabRouter: TabRouter
 
     let workoutCategory: Category
+    @Binding var explorePath: NavigationPath
+
     @State private var selectedDifficulty: Difficulty = .beginner
     @State private var workouts: [Workout] = []
 
     private let workoutManager: WorkoutManager
 
-    init(workoutCategory: Category) {
+    init(workoutCategory: Category, explorePath: Binding<NavigationPath>) {
         self.workoutCategory = workoutCategory
+        self._explorePath = explorePath
         self.workoutManager = WorkoutManager(context: PersistenceController.shared.container.viewContext)
 
         let appearance = UISegmentedControl.appearance()
@@ -46,10 +49,9 @@ struct ExploreWorkoutsView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            // Header personalizzato
             HStack {
                 Button {
-                    presentationMode.wrappedValue.dismiss()
+                    explorePath.removeLast()
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white)
@@ -66,7 +68,7 @@ struct ExploreWorkoutsView: View {
                 Spacer()
 
                 Button {
-                    // Help action
+                    // Help
                 } label: {
                     Image(systemName: "questionmark.circle")
                         .resizable()
@@ -77,17 +79,15 @@ struct ExploreWorkoutsView: View {
             .padding(.horizontal)
             .padding(.top, 20)
 
-            // Picker difficoltà
             Picker("Difficulty", selection: $selectedDifficulty) {
-                ForEach(Difficulty.allCases, id: \.self) { difficulty in
-                    Text(difficulty.rawValue).tag(difficulty)
+                ForEach(Difficulty.allCases, id: \.self) {
+                    Text($0.rawValue).tag($0)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
             .tint(Color("SecondaryColor"))
 
-            // Lista workout
             if workouts.isEmpty {
                 Spacer()
                 Text("No workouts available.")
@@ -97,7 +97,9 @@ struct ExploreWorkoutsView: View {
             } else {
                 List {
                     ForEach(workouts) { workout in
-                        NavigationLink(destination: WorkoutDetailView(workout: workout).navigationBarHidden(true)) {
+                        Button {
+                            explorePath.append(workout)
+                        } label: {
                             WorkoutCardView(workout: workout)
                         }
                         .listRowBackground(Color("PrimaryColor"))
@@ -107,9 +109,15 @@ struct ExploreWorkoutsView: View {
             }
         }
         .background(Color("PrimaryColor").ignoresSafeArea())
-        .onAppear { loadWorkouts() }
+        .onAppear {
+            tabRouter.isTabBarHidden = true
+            loadWorkouts()
+        }
+        .onDisappear {
+            tabRouter.isTabBarHidden = false
+        }
         .onChange(of: selectedDifficulty) { _ in loadWorkouts() }
-        .toolbar(.hidden, for: .tabBar)
+        
         .navigationBarHidden(true)
     }
 
@@ -120,4 +128,5 @@ struct ExploreWorkoutsView: View {
         }
     }
 }
+
 

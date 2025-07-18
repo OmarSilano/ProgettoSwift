@@ -61,6 +61,52 @@ class WorkoutDayCompletedManager {
             return []
         }
     }
+    
+    
+    func fetchCompletionsLast7Days() -> [WorkoutDayCompleted] {
+            let request: NSFetchRequest<WorkoutDayCompleted> = WorkoutDayCompleted.fetchRequest()
+
+            let calendar = Calendar.current
+            let now = Date()
+            guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: now) else {
+                return []
+            }
+
+            // Filtriamo per date negli ultimi 7 giorni
+            request.predicate = NSPredicate(format: "date >= %@ AND date <= %@", sevenDaysAgo as NSDate, now as NSDate)
+
+            do {
+                return try context.fetch(request)
+            } catch {
+                print("Errore nel recupero completamenti ultimi 7 giorni: \(error)")
+                return []
+            }
+        }
+    
+    func fetchCountLast7DaysByMuscle() -> [MuscleGroup: Int] {
+            let completions = fetchCompletionsLast7Days()
+            var counts: [MuscleGroup: Int] = [:]
+            
+            for completion in completions {
+                // Dal WorkoutDayCompleted prendo il relativo workoutDay
+                guard let workoutDay = completion.workoutDay else { continue }
+                
+                // Dal WorkoutDay prendo i dettagli (to-many)
+                guard let details = workoutDay.workoutDayDetail as? Set<WorkoutDayDetail> else { continue }
+                
+                for detail in details {
+                    guard let exercise = detail.exercise else { continue }
+                    
+                    // Leggiamo il muscle dell'esercizio
+                    if let raw = exercise.muscle,
+                       let group = MuscleGroup(rawValue: raw) {
+                        counts[group, default: 0] += 1
+                    }
+                }
+            }
+            
+            return counts
+        }
 
     // MARK: - Delete
     func deleteCompletion(for workoutDay: WorkoutDay, on date: Date) {

@@ -121,6 +121,50 @@ class WorkoutManager {
         }
     }
     
+    func cloneWorkout(_ original: Workout) {
+        let clonedWorkout = Workout(
+            context: context,
+            name: original.name ?? "Unnamed",
+            weeks: original.weeks,
+            imagePath: original.pathToImage,
+            difficulty: Difficulty(rawValue: original.difficulty ?? ""),
+            category: Category(rawValue: original.category ?? ""),
+            isSaved: true
+        )
+
+        var totalDays: Int = 0
+
+        if let originalDays = original.workoutDay?.allObjects as? [WorkoutDay] {
+            for originalDay in originalDays {
+                let clonedDay = WorkoutDay(context: context)
+                clonedDay.id = UUID()
+                clonedDay.name = originalDay.name
+                clonedDay.isCompleted = false
+                clonedDay.workout = clonedWorkout
+                clonedDay.muscles = originalDay.muscles
+
+                totalDays += 1
+
+                if let originalDetails = originalDay.workoutDayDetail?.allObjects as? [WorkoutDayDetail] {
+                    for originalDetail in originalDetails {
+                        let clonedDetail = WorkoutDayDetail(context: context)
+                        clonedDetail.id = UUID()
+                        clonedDetail.exercise = originalDetail.exercise
+                        clonedDetail.typology = originalDetail.typology
+                        clonedDetail.workoutDay = clonedDay
+                    }
+                }
+            }
+        }
+
+        // Imposta i giorni totali
+        clonedWorkout.days = Int16(totalDays)
+
+        saveContext()
+        print("✅ Workout '\(clonedWorkout.name ?? "Workout")' clonato con successo.")
+    }
+
+    
     func preloadDefaultWorkouts() {
         let workoutDayManager = WorkoutDayManager(context: context)
         let exerciseManager = ExerciseManager(context: context)
@@ -217,6 +261,7 @@ class WorkoutManager {
         } else {
             print("⚠️ Crunch non trovato nei beginnerExercises.")
         }
+        
 
         print("✅ Workout di default 'Hypertrophy A' con 3 giorni creato.")
     }
