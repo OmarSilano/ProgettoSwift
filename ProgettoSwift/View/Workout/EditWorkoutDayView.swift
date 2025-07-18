@@ -24,13 +24,38 @@ struct EditWorkoutDayView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 12) {
+                
+                HStack {
+                    Button("Annulla") {
+                        dismiss()
+                    }
+                    .foregroundColor(.white)
+
+                    Spacer()
+
+                    Text("EDIT DAY")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundColor(.white)
+
+                    Spacer()
+
+                    Button("Salva") {
+                        onSave(tempDay)
+                        dismiss()
+                    }
+                    .foregroundColor(.white)
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+
                 // Nome giorno
                 TextField("Day name", text: $tempDay.name)
-                    .padding()
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 16)
                     .background(Color("ThirdColor"))
                     .foregroundColor(.white)
                     .cornerRadius(8)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 16)
 
                 // Lista esercizi
                 if tempDay.exercises.isEmpty {
@@ -39,42 +64,65 @@ struct EditWorkoutDayView: View {
                 } else {
                     List {
                         ForEach(tempDay.exercises) { exercise in
-                            HStack {
-                                // Delete
+                            HStack(spacing: 12) {
                                 Button(action: {
                                     removeExercise(exercise)
                                 }) {
-                                    Image(systemName: "minus.circle.fill")
-                                        .foregroundColor(.red)
-                                }
-
-                                VStack(alignment: .leading) {
-                                    Text(exercise.name)
+                                    Image(systemName: "minus.circle")
+                                        .resizable()
+                                        .frame(width: 26, height: 26)
                                         .foregroundColor(.white)
-                                    Picker("Typology", selection: Binding(
-                                        get: {
-                                            selectedTypologies[exercise.id] ?? typologies.first!
-                                        },
-                                        set: { newValue in
-                                            selectedTypologies[exercise.id] = newValue
-                                        }
-                                    )) {
-                                        ForEach(typologies, id: \.self) { typ in
-                                            Text(typ.name ?? "").tag(typ)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .contentShape(Circle())
+
+                                VStack(alignment: .leading, spacing: 6) {
+                                    HStack {
+                                        Text(exercise.name)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+
+                                        Spacer()
+
+                                        Menu {
+                                            ForEach(typologies, id: \.self) { typ in
+                                                Button(action: {
+                                                    selectedTypologies[exercise.id] = typ
+                                                }) {
+                                                    Text(typ.name ?? "")
+                                                }
+                                            }
+                                        } label: {
+                                            HStack(spacing: 4) {
+                                                Text(selectedTypologies[exercise.id]?.name ?? typologies.first?.name ?? "")
+                                                    .foregroundColor(Color("SubtitleColor"))
+                                                    .font(.subheadline)
+
+                                                Image(systemName: "chevron.down")
+                                                    .resizable()
+                                                    .frame(width: 10, height: 6)
+                                                    .foregroundColor(Color("SubtitleColor"))
+                                                    .padding(.top, 2)
+                                            }
                                         }
                                     }
-                                    .pickerStyle(.menu)
                                 }
-
-                                Spacer()
 
                                 Image(systemName: "line.3.horizontal")
                                     .foregroundColor(.gray)
                             }
+                            .padding(.vertical, 10)
+                            .listRowBackground(Color("ThirdColor"))
                         }
+
+
+
+
                         .onMove(perform: moveExercise)
                     }
                     .listStyle(PlainListStyle())
+                    .scrollContentBackground(.hidden)
+                    .background(Color("PrimaryColor"))
                 }
 
                 // Bottone add exercise
@@ -95,29 +143,23 @@ struct EditWorkoutDayView: View {
                 Spacer()
             }
             .background(Color.black.ignoresSafeArea())
-            .navigationTitle("Edit Day")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading:
-                    Button("Annulla") {
-                        dismiss()
-                    }.foregroundColor(.white),
-                trailing:
-                    Button("Salva") {
-                        onSave(tempDay)
-                        dismiss()
-                    }.foregroundColor(.green)
-            )
             .onAppear {
                 typologies = typologyManager.fetchAllTypologies()
             }
             .sheet(isPresented: $isShowingExercisePicker) {
                 ExercisePickerView(
                     onSelect: { newExercises in
+                        if let defaultTypology = typologies.first(where: { $0.name == "4x10" }) {
+                            for exercise in newExercises {
+                                selectedTypologies[exercise.id] = defaultTypology
+                            }
+                        }
+
                         tempDay.exercises.append(contentsOf: newExercises)
                     }
                 )
             }
+
         }
     }
 
