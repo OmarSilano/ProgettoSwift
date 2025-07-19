@@ -42,7 +42,11 @@ struct WorkoutDetailView: View {
                 .padding(.horizontal)
                 .padding(.top, 20)
 
-                WorkoutImageView(imageName: workout.pathToImage)
+                if (workout.category != nil) {    //allora è un workout di default
+                    DefaultWorkoutImageView(imageName: workout.pathToImage)
+                } else {    //...altrimenti è un workout creato dall'utente
+                    UserWorkoutImageView(imageName: workout.pathToImage)
+                }
 
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {

@@ -21,14 +21,17 @@ class WorkoutManager {
                        difficulty: Difficulty? = nil,
                        weeks: Int16,
                        pathToImage: String? = nil,
-                       category: Category? = nil) -> Workout {
+                       category: Category? = nil,
+                       isSaved: Bool? = nil) -> Workout {
 
         let workout = Workout(context: context,
                               name: name,
                               weeks: weeks,
                               imagePath: pathToImage,
                               difficulty: difficulty ?? .beginner,
-                              category: category) 
+                              category: category,
+                              isSaved: isSaved ?? false
+                            )
 
         saveContext()
         return workout

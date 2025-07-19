@@ -101,19 +101,33 @@ private struct WorkoutRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            if let img = workout.pathToImage, !img.isEmpty {
-                Image(img)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .cornerRadius(6)
-                    .clipped()
+            
+            if let imgPath = workout.pathToImage, !imgPath.isEmpty {        //se è un'immagine caricata
+                if let uiImage = UIImage(contentsOfFile: imgPath) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40, height: 40)
+                        .cornerRadius(6)
+                        .clipped()
+                } else if let img = workout.pathToImage, !img.isEmpty {
+                    Image(img)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40, height: 40)
+                        .cornerRadius(6)
+                        .clipped()
+                }
+
             } else {
                 Image(systemName: "photo")
                     .resizable()
+                    .scaledToFit()
                     .frame(width: 40, height: 40)
                     .foregroundColor(Color("FourthColor"))
             }
+
+
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(workout.name ?? "Unnamed")

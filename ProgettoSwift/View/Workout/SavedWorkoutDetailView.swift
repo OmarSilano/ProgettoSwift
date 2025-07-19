@@ -9,10 +9,6 @@ struct SavedWorkoutDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var completedTodayIDs: Set<UUID> = []
 
-
-
-
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -48,7 +44,11 @@ struct SavedWorkoutDetailView: View {
                 .padding(.top, 20)
 
                 // MARK: – Immagine
-                WorkoutImageView(imageName: workout.pathToImage)
+                if (workout.category != nil) {    //allora è un workout di default
+                    DefaultWorkoutImageView(imageName: workout.pathToImage)
+                } else {    //...altrimenti è un workout creato dall'utente
+                    UserWorkoutImageView(imageName: workout.pathToImage)
+                }
 
                 // MARK: – Info
                 HStack {
@@ -87,7 +87,7 @@ struct SavedWorkoutDetailView: View {
         }
         
         .background(Color("PrimaryColor").ignoresSafeArea())
-        .navigationBarHidden(true) // nessuna nav bar nativa
+//        .navigationBarHidden(true) // nessuna nav bar nativa
         .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
             Button("Mark as Done") {
                 if let selectedDay {
@@ -122,6 +122,8 @@ struct SavedWorkoutDetailView: View {
                     }
                     .compactMap { $0.workoutDay?.id }
             )
+                print("Workout pathToImage: \(workout.pathToImage ?? "nil")")
+
         }
 
 

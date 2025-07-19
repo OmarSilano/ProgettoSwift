@@ -1,6 +1,7 @@
 import SwiftUI
 
-struct WorkoutImageView: View {
+//CARICA LE IMAGEVIEW DEI WORKOUT DI DEFAULT
+struct DefaultWorkoutImageView: View {
     let imageName: String?
 
     var body: some View {
@@ -29,5 +30,9 @@ struct WorkoutImageView: View {
                     .padding(.horizontal)
             }
         }
+        .onAppear {
+            print("Image '\(imageName ?? "nil")' exists: \(UIImage(named: imageName ?? "") != nil)")
+        }
+
     }
 }
