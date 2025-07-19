@@ -4,13 +4,14 @@ struct AddWorkoutView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) var dismiss
 
-    @State private var workoutName = ""
+    @State private var workoutName = "New Workout"
     @State private var selectedImage: UIImage? = nil
     @State private var isShowingImagePicker = false
     @State private var numberWeeks = ""
     @State private var workoutDays: [TempWorkoutDay] = []
     @State private var expandedDayID: UUID? = nil
     @State private var dayBeingEdited: TempWorkoutDay? = nil
+    @State private var pathToImage: String? = nil
 
 
     // Manager
@@ -20,6 +21,16 @@ struct AddWorkoutView: View {
 
     private var workoutDayManager: WorkoutDayManager {
         WorkoutDayManager(context: context)
+    }
+    
+    //salva immagine selezionata del workout in Documents/Images
+    private func handleImageSelected(_ image: UIImage) {
+        createImagesDirectoryIfNeeded()
+        let imageName = UUID().uuidString + ".jpg"  // univoco
+        if let savedPath = saveImageToDocuments(image, imageName: imageName) {
+            print("Immagine salvata in: \(savedPath)")
+            pathToImage = savedPath
+        }
     }
 
     struct TempWorkoutDay: Identifiable {
@@ -74,14 +85,26 @@ struct AddWorkoutView: View {
                     .padding(.horizontal)
                     .padding(.top, 20)
 
-                    // Workout name
-                    TextField("Workout name", text: $workoutName)
-                        .padding()
-                        .background(Color("ThirdColor"))
-                        .foregroundColor(Color("FourthColor"))
-                        .cornerRadius(8)
-                        .font(.headline)
-                        .padding(.horizontal)
+                    // TextField WorkoutName+ X button
+                    HStack {
+                        TextField("",text: $workoutName)
+                            .foregroundColor(Color("FourthColor"))
+                            .font(.headline)
+
+                        if !workoutName.isEmpty {
+                            Button(action: {
+                                workoutName = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(Color("SecondaryColor"))
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding()
+                    .background(Color("ThirdColor"))
+                    .cornerRadius(8)
+
 
                     // Image picker
                     ZStack {
@@ -144,7 +167,7 @@ struct AddWorkoutView: View {
                     }
                     .padding(.horizontal, 30)
 
-                    Divider().background(Color.gray)
+                    Divider().background(Color("ThirdColor"))
 
                     // Workout days list
                     if !workoutDays.isEmpty {
@@ -191,6 +214,12 @@ struct AddWorkoutView: View {
             .sheet(isPresented: $isShowingImagePicker) {
                 ImagePicker(selectedImage: $selectedImage)
             }
+            .onChange(of: selectedImage) { newImage in
+                if let img = newImage {
+                    handleImageSelected(img)
+                }
+            }
+
             .sheet(item: $dayBeingEdited) { day in
                 EditWorkoutDayView(
                     tempDay: day,
@@ -213,27 +242,30 @@ struct AddWorkoutView: View {
 
         let weeksValue = Int16(numberWeeks) ?? 0
 
+        //CREATE WORKOUT
         let newWorkout = workoutManager.createWorkout(
             name: workoutName,
             weeks: weeksValue,
-            pathToImage: nil
-        )
+            pathToImage: pathToImage,
+            isSaved: true)
 
+        //CREATE WORKOUTDAY(S)
         for day in workoutDays {
-            _ = workoutDayManager.createWorkoutDay(
-                isCompleted: false,
-                name: day.name,
-                muscles: [],
-                workout: newWorkout
-            )
+                workoutDayManager.createWorkoutDay(
+                    isCompleted: false,
+                    name: day.name,
+                    muscles: [],
+                    workout: newWorkout
+                )
+            
+        //CREATE WORKOUTDAYDETAIL(S)
+        
         }
 
         newWorkout.days = Int16(workoutDays.count)
         dismiss()
     }
 }
-
-import SwiftUI
 
 struct TempWorkoutDayRowView: View {
     var day: AddWorkoutView.TempWorkoutDay
@@ -306,7 +338,7 @@ struct TempWorkoutDayRowView: View {
                 }
             }
 
-            Divider().background(Color.gray.opacity(0.3))
+            Divider().background(Color("ThirdColor").opacity(0.3))
         }
         .padding(.horizontal)
     }
@@ -316,8 +348,36 @@ struct TempWorkoutDayRowView: View {
     }
 }
 
+private func createImagesDirectoryIfNeeded() {
+    let fileManager = FileManager.default
+    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let imagesURL = documentsURL.appendingPathComponent("images")
 
-
-#Preview {
-    AddWorkoutView()
+    if !fileManager.fileExists(atPath: imagesURL.path) {
+        do {
+            try fileManager.createDirectory(at: imagesURL, withIntermediateDirectories: true, attributes: nil)
+            print("Cartella images creata")
+        } catch {
+            print("Errore creando la cartella images: \(error)")
+        }
+    }
 }
+
+
+func saveImageToDocuments(_ image: UIImage, imageName: String) -> String? {
+    let fileManager = FileManager.default
+    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let imagesURL = documentsURL.appendingPathComponent("images")
+    let fileURL = imagesURL.appendingPathComponent(imageName)
+
+    guard let data = image.jpegData(compressionQuality: 0.8) else { return nil }
+
+    do {
+        try data.write(to: fileURL)
+        return fileURL.path // questo è il percorso assoluto da salvare
+    } catch {
+        print("Errore salvando l'immagine: \(error)")
+        return nil
+    }
+}
+
