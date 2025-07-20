@@ -149,15 +149,20 @@ struct ExercisePickerView: View {
                     Divider()
                         .background(Color.gray.opacity(0.5))
                     Button(action: {
-                        let selected: [AddWorkoutView.ExercisePreview] = groupedExercises
+                        let allExercises: [Exercise] = groupedExercises
                             .flatMap { $0.value }
+
+                        let filtered: [Exercise] = allExercises
                             .filter { selectedExercises.contains($0.id!) }
-                            .map {
-                                AddWorkoutView.ExercisePreview(
-                                    name: $0.name ?? "Unnamed",
-                                    muscle: $0.muscle ?? "Unknown"
-                                )
-                            }
+
+                        let selected: [AddWorkoutView.ExercisePreview] = filtered.map { ex in
+                            AddWorkoutView.ExercisePreview(
+                                id: ex.id ?? UUID(),
+                                name: ex.name ?? "Unnamed",
+                                muscle: ex.muscle ?? "Unknown",
+                                typology: nil
+                            )
+                        }
                         onSelect(selected)
                         dismiss()
                     }) {
