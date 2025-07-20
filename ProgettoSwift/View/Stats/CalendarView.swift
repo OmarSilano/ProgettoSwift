@@ -18,18 +18,18 @@ struct CalendarView: UIViewRepresentable {
         calendarView.delegate = context.coordinator
         calendarView.calendar = Calendar.current
         calendarView.availableDateRange = interval
-
+        
         let selection = UICalendarSelectionSingleDate(delegate: context.coordinator)
         calendarView.selectionBehavior = selection
-
+        
         calendarView.backgroundColor = UIColor(named: "CardBackground")
         calendarView.layer.cornerRadius = 16
         calendarView.clipsToBounds = true
         calendarView.overrideUserInterfaceStyle = .dark
-
+        
         return calendarView
     }
-
+    
     
     func updateUIView(_ uiView: UICalendarView, context: Context) {
         uiView.reloadDecorations(forDateComponents: Array(markedDates), animated: true)
@@ -53,24 +53,23 @@ struct CalendarView: UIViewRepresentable {
         
         func dateSelection(_ selection: UICalendarSelectionSingleDate,
                            canSelectDate dateComponents: DateComponents?) -> Bool {
-            return dateComponents.map { parent.markedDates.contains($0) } ?? false
+            guard let tapped = dateComponents?.normalized() else { return false }
+            
+            // Normalizziamo tutte le markedDates
+            let normalizedMarked = parent.markedDates.map { $0.normalized() }
+            
+            // Controlliamo se esiste almeno una data che coincide
+            return normalizedMarked.contains(tapped)
         }
         
         func calendarView(_ calendarView: UICalendarView,
                           decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-            // Normalizziamo i dateComponents arrivati dal calendario
-            let normalized = DateComponents(
-                year: dateComponents.year,
-                month: dateComponents.month,
-                day: dateComponents.day
-            )
             
-            // Normalizziamo anche markedDates
-            let normalizedMarked = parent.markedDates.map {
-                DateComponents(year: $0.year, month: $0.month, day: $0.day)
-            }
+            let normalizedDay = dateComponents.normalized()
             
-            if normalizedMarked.contains(normalized) {
+            let normalizedMarked = parent.markedDates.map { $0.normalized() }
+            
+            if normalizedMarked.contains(normalizedDay) {
                 return .default(
                     color: UIColor(named: "SecondaryColor") ?? .systemBlue,
                     size: .medium
