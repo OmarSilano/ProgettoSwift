@@ -40,9 +40,17 @@ struct EditWorkoutDayView: View {
                     Spacer()
 
                     Button("Salva") {
+                        for index in tempDay.exercises.indices {
+                            let ex = tempDay.exercises[index]
+                            if let selected = selectedTypologies[ex.id] {
+                                tempDay.exercises[index].typology = selected
+                            }
+                        }
+
                         onSave(tempDay)
                         dismiss()
                     }
+
                     .foregroundColor(.white)
                 }
                 .padding(.horizontal, 16)
@@ -145,20 +153,37 @@ struct EditWorkoutDayView: View {
             .background(Color.black.ignoresSafeArea())
             .onAppear {
                 typologies = typologyManager.fetchAllTypologies()
+
+                for ex in tempDay.exercises {
+                    if let typ = ex.typology {
+                        selectedTypologies[ex.id] = typ
+                    }
+                }
             }
+
             .sheet(isPresented: $isShowingExercisePicker) {
                 ExercisePickerView(
                     onSelect: { newExercises in
                         if let defaultTypology = typologies.first(where: { $0.name == "4x10" }) {
-                            for exercise in newExercises {
+                            let previewsWithTypology = newExercises.map { exercise in
                                 selectedTypologies[exercise.id] = defaultTypology
-                            }
-                        }
 
-                        tempDay.exercises.append(contentsOf: newExercises)
+                                return AddWorkoutView.ExercisePreview(
+                                    id: exercise.id,
+                                    name: exercise.name,
+                                    muscle: exercise.muscle,
+                                    typology: defaultTypology
+                                )
+                            }
+
+                            tempDay.exercises.append(contentsOf: previewsWithTypology)
+                        } else {
+                            tempDay.exercises.append(contentsOf: newExercises)
+                        }
                     }
                 )
             }
+
 
         }
     }

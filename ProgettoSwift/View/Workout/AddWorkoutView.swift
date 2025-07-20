@@ -50,10 +50,12 @@ struct AddWorkoutView: View {
     }
 
     struct ExercisePreview: Identifiable {
-        let id = UUID()
+        let id: UUID
         let name: String
         let muscle: String
+        var typology: Typology?
     }
+
 
 
     var body: some View {
@@ -242,27 +244,43 @@ struct AddWorkoutView: View {
 
         let weeksValue = Int16(numberWeeks) ?? 0
 
-        //CREATE WORKOUT
         let newWorkout = workoutManager.createWorkout(
             name: workoutName,
             weeks: weeksValue,
             pathToImage: pathToImage,
-            isSaved: true)
+            isSaved: true
+        )
 
-        //CREATE WORKOUTDAY(S)
+        let exerciseManager = ExerciseManager(context: context)
+        let workoutDayDetailManager = WorkoutDayDetailManager(context: context)
+
+        var totalDays = 0
+
         for day in workoutDays {
-                workoutDayManager.createWorkoutDay(
-                    isCompleted: false,
-                    name: day.name,
-                    muscles: [],
-                    workout: newWorkout
-                )
-            
-        //CREATE WORKOUTDAYDETAIL(S)
-        
-        }
+            let newDay = workoutDayManager.createWorkoutDay(
+                isCompleted: false,
+                name: day.name,
+                muscles: [],
+                workout: newWorkout
+            )
 
-        newWorkout.days = Int16(workoutDays.count)
+            totalDays += 1
+            for exercisePreview in day.exercises {
+                guard let originalExercise = exerciseManager.fetchExercise(byID: exercisePreview.id),
+                      let typology = exercisePreview.typology else {
+                    print("⚠️ Esercizio o tipologia mancanti per \(exercisePreview.name)")
+                    continue
+                }
+
+                _ = workoutDayDetailManager.createWorkoutDayDetail(
+                    workoutDay: newDay,
+                    exercise: originalExercise,
+                    typology: typology
+                )
+            }
+            newDay.updateMusclesFromDetails()
+        }
+        newWorkout.days = Int16(totalDays)
         dismiss()
     }
 }
@@ -274,67 +292,76 @@ struct TempWorkoutDayRowView: View {
     @Binding var expandedDayID: UUID?
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 0) {
             HStack {
                 // Delete button
                 Button(action: {
                     onDelete()
                 }) {
-                    Image(systemName: "minus.circle.fill")
-                        .foregroundColor(.red)
+                    Image(systemName: "minus.circle")
+                        .resizable()
+                        .frame(width: 26, height: 26)
+                        .foregroundColor(.white)
                 }
+                .buttonStyle(PlainButtonStyle())
+                .contentShape(Circle())
 
-                // Center tappable area
-                Button(action: {
+
+                // Area centrale tappabile
+                VStack(spacing: 2) {
+                    Text(day.name)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    if !day.muscleGroupsText.isEmpty {
+                        Text(day.muscleGroupsText)
+                            .font(.subheadline)
+                            .foregroundColor(Color("SubtitleColor"))
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle()) // Rende tappabile tutta l'area del VStack
+                .onTapGesture {
                     withAnimation {
                         toggleExpansion()
                     }
-                }) {
-                    VStack(spacing: 2) {
-                        Text(day.name)
-                            .font(.headline)
-                            .foregroundColor(.white)
-
-                        if !day.muscleGroupsText.isEmpty {
-                            Text(day.muscleGroupsText)
-                                .font(.subheadline)
-                                .foregroundColor(Color("SubtitleColor"))
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(PlainButtonStyle())
-                .contentShape(Rectangle())
 
                 // Edit button
                 Button(action: {
                     onEdit()
                 }) {
-                    Image(systemName: "pencil.circle.fill")
-                        .foregroundColor(.blue)
+                    Image(systemName: "pencil")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(.white)
                 }
+                .buttonStyle(PlainButtonStyle())
+                .contentShape(Circle())
+
             }
             .padding()
             .background(Color("ThirdColor"))
-            .cornerRadius(8)
 
             // Espansione: mostra gli esercizi
             if expandedDayID == day.id {
                 if day.exercises.isEmpty {
-                    Text("Nessun esercizio")
+                    Text("No exercises yet...")
                         .font(.subheadline)
                         .foregroundColor(Color("SubtitleColor"))
                         .padding(.bottom, 4)
                 } else {
-                    VStack(alignment: .leading, spacing: 6) {
-                        ForEach(day.exercises, id: \.id) { exercise in
-                            Text(exercise.name)
-                                .foregroundColor(.white)
-                                .font(.body)
+                    if expandedDayID == day.id {
+                        VStack(alignment: .leading, spacing: 6) {
+                            ForEach(day.exercises, id: \.id) { exercise in
+                                WorkoutExercisePreviewRowView(preview: exercise)
+                            }
                         }
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
+                        .background(Color("ThirdColor"))
+                        .transition(.opacity)
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom, 8)
                 }
             }
 
@@ -347,6 +374,58 @@ struct TempWorkoutDayRowView: View {
         expandedDayID = (expandedDayID == day.id) ? nil : day.id
     }
 }
+
+struct WorkoutExercisePreviewRowView: View {
+    let preview: AddWorkoutView.ExercisePreview
+
+    var body: some View {
+        HStack(spacing: 12) {
+            // Immagine (se disponibile)
+            if let path = previewImagePath(), let image = UIImage(named: path) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 60, height: 60)
+                    .cornerRadius(8)
+                    .clipped()
+            } else {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(width: 60, height: 60)
+                    .cornerRadius(8)
+                    .overlay(
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.gray)
+                    )
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(preview.name)
+                    .foregroundColor(.white)
+                    .font(.subheadline)
+
+                Text(preview.typology?.name ?? "Method")
+                    .foregroundColor(Color("SubtitleColor"))
+                    .font(.caption)
+            }
+
+            Spacer()
+        }
+        .padding(.vertical, 4)
+    }
+
+    private func previewImagePath() -> String? {
+        // Ritorna solo il nome del file, non il percorso completo
+        if let last = preview.typology?.name, !last.isEmpty {
+            return last
+        }
+        return preview.name // oppure nil
+    }
+}
+
 
 private func createImagesDirectoryIfNeeded() {
     let fileManager = FileManager.default
