@@ -25,7 +25,6 @@ struct CalendarView: UIViewRepresentable {
         calendarView.backgroundColor = UIColor(named: "CardBackground")
         calendarView.layer.cornerRadius = 16
         calendarView.clipsToBounds = true
-        calendarView.overrideUserInterfaceStyle = .dark
         
         return calendarView
     }
@@ -33,6 +32,12 @@ struct CalendarView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UICalendarView, context: Context) {
         uiView.reloadDecorations(forDateComponents: Array(markedDates), animated: true)
+        
+        if dateSelected == nil {
+            if let selection = uiView.selectionBehavior as? UICalendarSelectionSingleDate {
+                selection.setSelected(nil, animated: false)
+            }
+        }
     }
     
     func makeCoordinator() -> Coordinator {

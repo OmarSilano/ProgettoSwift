@@ -46,7 +46,7 @@ struct WorkoutDayRowView: View {
             Divider().background(Color.gray.opacity(0.3))
         }
         .padding(.horizontal)
-        .background(Color("PrimaryColor "))
+        .background(Color("PrimaryColor"))
     }
 
     private func toggleDay(_ day: WorkoutDay) {

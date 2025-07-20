@@ -99,7 +99,9 @@ struct StatsView: View {
                             showSheet = true
                         }
                     }
-                    .sheet(isPresented: $showSheet) {
+                    .sheet(isPresented: $showSheet, onDismiss: {
+                        selectedDate = nil
+                    }) {
                         VStack(spacing: 16) {
                             Text("\(formattedDate(selectedDate))")
                                 .font(.largeTitle)
@@ -122,8 +124,7 @@ struct StatsView: View {
                                 }
                             }
                             .listStyle(.plain)
-                            .scrollContentBackground(.hidden) 
-                            .background(Color("PrimaryColor"))
+                            .listRowSeparator(.hidden)
                         }
                         .presentationDetents([.medium, .large])
                         .background(Color("PrimaryColor"))
