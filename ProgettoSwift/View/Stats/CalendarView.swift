@@ -18,21 +18,26 @@ struct CalendarView: UIViewRepresentable {
         calendarView.delegate = context.coordinator
         calendarView.calendar = Calendar.current
         calendarView.availableDateRange = interval
-
+        
         let selection = UICalendarSelectionSingleDate(delegate: context.coordinator)
         calendarView.selectionBehavior = selection
-
+        
         calendarView.backgroundColor = UIColor(named: "CardBackground")
         calendarView.layer.cornerRadius = 16
         calendarView.clipsToBounds = true
-        calendarView.overrideUserInterfaceStyle = .dark
-
+        
         return calendarView
     }
-
+    
     
     func updateUIView(_ uiView: UICalendarView, context: Context) {
         uiView.reloadDecorations(forDateComponents: Array(markedDates), animated: true)
+        
+        if dateSelected == nil {
+            if let selection = uiView.selectionBehavior as? UICalendarSelectionSingleDate {
+                selection.setSelected(nil, animated: false)
+            }
+        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -53,14 +58,29 @@ struct CalendarView: UIViewRepresentable {
         
         func dateSelection(_ selection: UICalendarSelectionSingleDate,
                            canSelectDate dateComponents: DateComponents?) -> Bool {
-            return dateComponents.map { parent.markedDates.contains($0) } ?? false
+            guard let tapped = dateComponents?.normalized() else { return false }
+            
+            // Normalizziamo tutte le markedDates
+            let normalizedMarked = parent.markedDates.map { $0.normalized() }
+            
+            // Controlliamo se esiste almeno una data che coincide
+            return normalizedMarked.contains(tapped)
         }
         
         func calendarView(_ calendarView: UICalendarView,
                           decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-            if parent.markedDates.contains(dateComponents) {
-                return .default(color: .systemGreen, size: .large)
+            
+            let normalizedDay = dateComponents.normalized()
+            
+            let normalizedMarked = parent.markedDates.map { $0.normalized() }
+            
+            if normalizedMarked.contains(normalizedDay) {
+                return .default(
+                    color: UIColor(named: "SecondaryColor") ?? .systemBlue,
+                    size: .medium
+                )
             }
+            
             return nil
         }
     }

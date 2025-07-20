@@ -12,13 +12,16 @@ struct ExploreView: View {
     @State private var selectedTab = "Workouts"
     @State private var explorePath = NavigationPath()
     @State private var groupedExercises: [MuscleGroup: [Exercise]] = [:]
+    @State private var searchText = ""
+    
+    
     @EnvironmentObject var tabRouter: TabRouter
-
-
+    
+    
     private let categories: [CategoryCard] = Category.allCases.map {
         CategoryCard(category: $0, imageName: $0.rawValue, description: "Explore \($0.rawValue) workouts.")
     }
-
+    
     init() {
         let segmentedAppearance = UISegmentedControl.appearance()
         segmentedAppearance.selectedSegmentTintColor = UIColor(named: "SecondaryColor")
@@ -26,7 +29,30 @@ struct ExploreView: View {
         segmentedAppearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "FourthColor")], for: .normal)
         segmentedAppearance.setTitleTextAttributes([.foregroundColor: UIColor(named: "PrimaryColor")], for: .selected)
     }
-
+    
+    private var filteredExercises: [MuscleGroup: [Exercise]] {
+        let normalizedQuery = searchText
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+        
+        // Se query vuota → mostra tutto
+        guard !normalizedQuery.isEmpty else { return groupedExercises }
+        
+        var filtered: [MuscleGroup: [Exercise]] = [:]
+        
+        for (muscle, exercises) in groupedExercises {
+            let matching = exercises.filter { exercise in
+                let exerciseName = (exercise.name ?? "").lowercased()
+                return exerciseName.contains(normalizedQuery)
+            }
+            if !matching.isEmpty {
+                filtered[muscle] = matching
+            }
+        }
+        
+        return filtered
+    }
+    
     var body: some View {
         NavigationStack(path: $explorePath) {
             VStack(spacing: 20) {
@@ -35,16 +61,16 @@ struct ExploreView: View {
                     .bold()
                     .foregroundColor(Color("FourthColor"))
                     .padding(.top, 20)
-
+                
                 Picker("Select Tab", selection: $selectedTab) {
                     Text("Workouts").tag("Workouts")
                     Text("Exercises").tag("Exercises")
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-
+                
                 Spacer()
-
+                
                 if selectedTab == "Workouts" {
                     TabView {
                         ForEach(categories) { card in
@@ -58,11 +84,11 @@ struct ExploreView: View {
                                         .frame(width: 300, height: 200)
                                         .clipped()
                                         .cornerRadius(20)
-
+                                    
                                     Text(card.category.rawValue)
                                         .font(.title2)
                                         .foregroundColor(Color("SecondaryColor"))
-
+                                    
                                     Text(card.description)
                                         .font(.subheadline)
                                         .foregroundColor(.white)
@@ -74,33 +100,46 @@ struct ExploreView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .frame(height: 300)
                 } else {
-                    List {
-                        ForEach(MuscleGroup.allCases, id: \.self) { muscle in
-                            if let exercises = groupedExercises[muscle] {
-                                Section(
-                                    header: Text(muscle.rawValue)
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                ) {
-                                    ForEach(exercises, id: \.objectID) { exercise in
-                                        ExerciseRow(exercise: exercise)
-                                            .listRowBackground(Color("PrimaryColor")) // sfondo coerente dark
+                    VStack(spacing: 12) {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.gray)
+                            TextField("Cerca un esercizio...", text: $searchText)
+                                .foregroundColor(.white)
+                            
+                        }
+                        .padding(10)
+                        .background(Color("CardBackground"))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        
+                        List {
+                            ForEach(MuscleGroup.allCases, id: \.self) { muscle in
+                                if let exercises = filteredExercises[muscle] {
+                                    Section(
+                                        header: Text(muscle.rawValue)
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    ) {
+                                        ForEach(exercises, id: \.objectID) { exercise in
+                                            ExerciseRow(exercise: exercise)
+                                                .listRowBackground(Color("PrimaryColor"))
+                                        }
                                     }
+                                    .listRowBackground(Color("PrimaryColor"))
                                 }
-                                // Sfondo scuro anche per l’intestazione di sezione
-                                .listRowBackground(Color("PrimaryColor"))
                             }
                         }
-                    }
-                    .listStyle(.insetGrouped)
-                    .scrollContentBackground(.hidden)
-                    .background(Color("PrimaryColor").ignoresSafeArea())
-                    .onAppear {
-                        let manager = ExerciseManager(context: context)
-                        groupedExercises = manager.fetchExercisesGroupedByMuscle()
+                        .listStyle(.plain)
+                        .scrollContentBackground(.hidden)
+                        .background(Color("PrimaryColor").ignoresSafeArea())
+                        .onAppear {
+                            let manager = ExerciseManager(context: context)
+                            groupedExercises = manager.fetchExercisesGroupedByMuscle()
+                        }
                     }
                 }
-
+                
                 Spacer()
             }
             .background(Color("PrimaryColor").ignoresSafeArea())

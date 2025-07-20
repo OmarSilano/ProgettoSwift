@@ -27,15 +27,30 @@ struct StatsView: View {
     
     @State private var selectedDate: DateComponents? = nil
     
-    private var markedDates: Set<DateComponents> {
-        let calendar = Calendar.current
-        return Set(
-            completions.compactMap { completion in
-                guard let date = completion.date else { return nil }
-                return calendar.dateComponents([.year, .month, .day], from: date)
+    private var completionsForSelectedDate: [WorkoutDayCompleted] {
+            guard let selectedDate else { return [] }
+            
+            let normalizedSelected = selectedDate.normalized()
+            
+            return completions.filter { completion in
+                guard let date = completion.date else { return false }
+                let comp = date.asNormalizedComponents()
+                return comp == normalizedSelected
             }
-        )
-    }
+        }
+    
+    @State private var showSheet = false
+    
+    @State var expandedDayID: UUID? = nil
+    
+    private var markedDates: Set<DateComponents> {
+            let calendar = Calendar.current
+            return Set(
+                completions.compactMap { completion in
+                    completion.date?.asNormalizedComponents(calendar: calendar)
+                }
+            )
+        }
     
     private var chartData: [MuscleGroupCount] {
         let manager = WorkoutDayCompletedManager(context: context)
@@ -46,6 +61,14 @@ struct StatsView: View {
         }
     }
     
+    
+    private func formattedDate(_ comp: DateComponents?) -> String {
+        guard let comp = comp,
+              let date = Calendar.current.date(from: comp) else { return "—" }
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: date)
+    }
     
     var body: some View {
         NavigationStack {
@@ -71,23 +94,54 @@ struct StatsView: View {
                     .frame(height: 500)
                     .cornerRadius(8)
                     .padding(.top, 10)
-                    
-                    /*
-                     LOGICA PER VISUALIZZARE ALLENAMENTI SVOLTI
-                     */
+                    .onChange(of: selectedDate) {
+                        if !completionsForSelectedDate.isEmpty {
+                            showSheet = true
+                        }
+                    }
+                    .sheet(isPresented: $showSheet, onDismiss: {
+                        selectedDate = nil
+                    }) {
+                        VStack(spacing: 16) {
+                            Text("\(formattedDate(selectedDate))")
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(Color("FourthColor"))
+                                .padding(.top, 16)
+
+                            List(completionsForSelectedDate, id: \.objectID) { completion in
+                                if let workoutDay = completion.workoutDay {
+                                    let workoutName = workoutDay.workout?.name ?? "Workout"
+                                    let workoutDayName = workoutDay.name ?? "WorkoutDay"
+                                    let formattedName = "\(workoutName) - \(workoutDayName)"
+
+                                    WorkoutDayRowView(
+                                        day: workoutDay,
+                                        expandedDayID: $expandedDayID,
+                                        overrideName: formattedName
+                                    )
+                                    .listRowBackground(Color("PrimaryColor"))
+                                }
+                            }
+                            .listStyle(.plain)
+                            .listRowSeparator(.hidden)
+                        }
+                        .presentationDetents([.medium, .large])
+                        .background(Color("PrimaryColor"))
+                    }
                     
                     Spacer()
                     
                     ChartView(data: chartData)
-                        .padding(.horizontal)
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
-            
+            .scrollIndicators(.hidden)
         }
+        
     }
-    
 }
+
 
 #Preview {
     StatsView()

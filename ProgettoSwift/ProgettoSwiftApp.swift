@@ -4,6 +4,10 @@ import SwiftUI
 struct ProgettoSwiftApp: App {
     let persistenceController = PersistenceController.shared
     
+    init() {
+            UIView.appearance().overrideUserInterfaceStyle = .dark // UIKit
+        }
+    
     // Per testare il calendario nell'ipotesi in cui
     // l'app sia stata scaricata da un paio di mesi
     // (calendario navigabile)
@@ -25,6 +29,7 @@ struct ProgettoSwiftApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(.dark)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .onAppear {
                     let context = persistenceController.container.viewContext

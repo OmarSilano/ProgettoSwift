@@ -4,6 +4,8 @@ struct WorkoutDayRowView: View {
     let day: WorkoutDay
     @Binding var expandedDayID: UUID?
 
+    var overrideName: String? = nil // nome alternativo opzionale (utile nel calendario)
+    
     var body: some View {
         VStack(spacing: 4) {
             Button(action: {
@@ -13,7 +15,7 @@ struct WorkoutDayRowView: View {
                     Spacer()
 
                     VStack(spacing: 2) {
-                        Text(day.name ?? "Unnamed Day")
+                        Text(overrideName ?? (day.name ?? "Unnamed Day"))
                             .font(.headline)
                             .foregroundColor(.white)
 
@@ -44,6 +46,7 @@ struct WorkoutDayRowView: View {
             Divider().background(Color.gray.opacity(0.3))
         }
         .padding(.horizontal)
+        .background(Color("PrimaryColor"))
     }
 
     private func toggleDay(_ day: WorkoutDay) {
