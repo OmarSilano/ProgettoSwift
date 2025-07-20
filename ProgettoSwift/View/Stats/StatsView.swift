@@ -83,11 +83,11 @@ struct StatsView: View {
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
             .scrollIndicators(.hidden)
-        
         }
+        
     }
-    
 }
+
 
 #Preview {
     StatsView()

@@ -58,9 +58,25 @@ struct CalendarView: UIViewRepresentable {
         
         func calendarView(_ calendarView: UICalendarView,
                           decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-            if parent.markedDates.contains(dateComponents) {
-                return .default(color: .systemGreen, size: .large)
+            // Normalizziamo i dateComponents arrivati dal calendario
+            let normalized = DateComponents(
+                year: dateComponents.year,
+                month: dateComponents.month,
+                day: dateComponents.day
+            )
+            
+            // Normalizziamo anche markedDates
+            let normalizedMarked = parent.markedDates.map {
+                DateComponents(year: $0.year, month: $0.month, day: $0.day)
             }
+            
+            if normalizedMarked.contains(normalized) {
+                return .default(
+                    color: UIColor(named: "SecondaryColor") ?? .systemBlue,
+                    size: .medium
+                )
+            }
+            
             return nil
         }
     }
