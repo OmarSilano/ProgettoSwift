@@ -125,7 +125,7 @@ struct SavedWorkoutDetailView: View {
                 print("Workout pathToImage: \(workout.pathToImage ?? "nil")")
 
         }
-
+        .navigationBarBackButtonHidden(true)
 
     }
 }

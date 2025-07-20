@@ -234,8 +234,8 @@ struct AddWorkoutView: View {
                     context: context
                 )
             }
-
-        }
+        .navigationBarBackButtonHidden(true)
+    }
     
 
     // MARK: - Save logic

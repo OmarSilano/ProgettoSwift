@@ -100,45 +100,50 @@ private struct WorkoutRow: View {
     let workout: Workout
     
     var body: some View {
-        HStack(spacing: 12) {
-            
-            if let imgPath = workout.pathToImage, !imgPath.isEmpty {        //se è un'immagine caricata
+        HStack(spacing: 16) {
+            // Immagine
+            if let imgPath = workout.pathToImage, !imgPath.isEmpty {
                 if let uiImage = UIImage(contentsOfFile: imgPath) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 40, height: 40)
-                        .cornerRadius(6)
+                        .frame(width: 60, height: 60)
+                        .cornerRadius(10)
                         .clipped()
                 } else if let img = workout.pathToImage, !img.isEmpty {
                     Image(img)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 40, height: 40)
-                        .cornerRadius(6)
+                        .frame(width: 60, height: 60)
+                        .cornerRadius(10)
                         .clipped()
                 }
-
             } else {
                 Image(systemName: "photo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40, height: 40)
+                    .frame(width: 60, height: 60)
                     .foregroundColor(Color("FourthColor"))
+                    .background(Color("ThirdColor"))
+                    .cornerRadius(10)
             }
 
-
-            
-            VStack(alignment: .leading, spacing: 2) {
+            // Testi
+            VStack(alignment: .leading, spacing: 6) {
                 Text(workout.name ?? "Unnamed")
                     .foregroundColor(Color("FourthColor"))
                     .font(.headline)
-                
+                    .lineLimit(1)
+
                 Text("\(workout.days) days • \(workout.weeks) weeks")
                     .font(.subheadline)
                     .foregroundColor(Color("SubtitleColor"))
             }
+
+            Spacer()
         }
-        .padding(.vertical, 6)
+        .padding(12)
+        .cornerRadius(12)
     }
 }
+
