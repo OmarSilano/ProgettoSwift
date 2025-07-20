@@ -79,11 +79,11 @@ struct StatsView: View {
                     Spacer()
                     
                     ChartView(data: chartData)
-                        .padding(.horizontal)
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
-            
+            .scrollIndicators(.hidden)
+        
         }
     }
     

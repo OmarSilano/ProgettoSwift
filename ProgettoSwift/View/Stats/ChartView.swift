@@ -21,6 +21,8 @@ struct ChartView: View {
             Text("Last 7 Days: Exercises Done by Muscle")
                 .font(.headline)
                 .padding(.bottom, 8)
+                .padding(.leading, 16)
+                .foregroundColor(.white)
             
             Chart(data) { item in
                 BarMark(
@@ -50,7 +52,12 @@ struct ChartView: View {
                 }
             }
             .frame(height: 250)
+            .padding(.horizontal)
         }
-        .padding()
+        .padding(.vertical, 24)
+        .frame(maxWidth: .infinity)
+        .background(Color("CardBackground"))
+        .cornerRadius(16)
     }
 }
+
