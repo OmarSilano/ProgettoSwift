@@ -1,31 +1,15 @@
 import SwiftUI
+import CoreData
 
 @main
 struct ProgettoSwiftApp: App {
     let persistenceController = PersistenceController.shared
     
     init() {
-            UIView.appearance().overrideUserInterfaceStyle = .dark // UIKit
-        }
+        UIView.appearance().overrideUserInterfaceStyle = .dark // UIKit
+    }
     
-    // Per testare il calendario nell'ipotesi in cui
-    // l'app sia stata scaricata da un paio di mesi
-    // (calendario navigabile)
-    /*
-    init() {
-            #if DEBUG
-            let twoMonthsAgo = Calendar.current.date(
-                byAdding: .month,
-                value: -2,
-                to: Date()
-            )!
-            UserDefaults.standard.set(twoMonthsAgo, forKey: "appInstallDate")
-            #endif
-        }
-     */
-
-    
-     // Utilizza onAppear, va bene utilizzarlo quando verranno definiti tutti gli elementi di default
+    // Utilizza onAppear, va bene utilizzarlo quando verranno definiti tutti gli elementi di default
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -33,28 +17,48 @@ struct ProgettoSwiftApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .onAppear {
                     let context = persistenceController.container.viewContext
+                    
+                    /* DEBUG: RESET DATABASE */
+                    resetDatabase()
+                    
                     TypologyManager(context: context).preloadDefaultTypologies()
                     ExerciseManager(context: context).preloadDefaultExercises()
                     WorkoutManager(context: context).preloadDefaultWorkouts()
                 }
         }
     }
-    
-    /*
-    // Carica ogni volta gli elementi di default da capo, utile in fase di sviluppo
-    var body: some Scene {
-        let context = persistenceController.container.viewContext
-
-        // Preload prima della UI
-        TypologyManager(context: context).preloadDefaultTypologies()
-        ExerciseManager(context: context).preloadDefaultExercises()
-        WorkoutManager(context: context).preloadDefaultWorkouts()
-
-        return WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, context)
+    /* DEBUG */
+    private func resetDatabase() {
+        let coordinator = persistenceController.container.persistentStoreCoordinator
+        
+        for store in coordinator.persistentStores {
+            if let url = store.url {
+                do {
+                    // 1. Rimuove lo store dal coordinator
+                    try coordinator.destroyPersistentStore(
+                        at: url,
+                        ofType: store.type,
+                        options: nil
+                    )
+                    print("🗑 Database store removed at \(url)")
+                } catch {
+                    print("❌ Error destroying persistent store: \(error)")
+                }
+            }
+        }
+        
+        // 2. Ricrea lo store
+        do {
+            try coordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: persistenceController.container.persistentStoreDescriptions.first?.url,
+                options: nil
+            )
+            print("✅ New persistent store created successfully")
+        } catch {
+            print("❌ Error creating new persistent store: \(error)")
         }
     }
-     */
 }
 

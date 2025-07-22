@@ -10,7 +10,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="pathToImage" optional="YES" attributeType="String"/>
         <attribute name="pathToVideo" optional="YES" attributeType="String"/>
-        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="WorkoutDayDetail" inverseName="exercise" inverseEntity="WorkoutDayDetail"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="exercise" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="Typology" representedClassName="Typology" syncable="YES" codeGenerationType="class">
         <attribute name="detail" optional="YES" attributeType="String"/>

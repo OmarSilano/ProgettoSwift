@@ -2,10 +2,16 @@ import SwiftUI
 import AVKit
 
 struct ExerciseDetailView: View {
-    let exercise: Exercise?
+    let exercise: Exercise
+    
+    @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) var dismiss
     
     @State private var player: AVPlayer? = nil
+    
+    private var exerciseManager: ExerciseManager {
+        ExerciseManager(context: context)
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -19,28 +25,27 @@ struct ExerciseDetailView: View {
                 
                 Spacer()
                 
-                Text(exercise?.name ?? "Exercise")
+                Text(exercise.name ?? "Exercise")
                     .font(.headline)
                     .foregroundColor(.white)
                 
                 Spacer()
                 
                 Button(action: {
-                    if let player = player {
-                        player.seek(to: .zero)
-                        player.play()
-                    }
+                    print("🔍 Stato attuale prima del toggle: \(exercise.isBanned)")
+                    exerciseManager.toggleBan(for: exercise)
+                    print("✅ Stato dopo il toggle: \(exercise.isBanned)")
                 }) {
-                    Image(systemName: "nosign")
-                        .foregroundColor(Color("FourthColor"))
-                        .font(.title2)
+                    Text(exercise.isBanned ? "Unban" : "Ban")
+                        .foregroundColor(exercise.isBanned ? .green : .red)
                 }
+
             }
             .padding()
             .background(Color("PrimaryColor"))
             
             // Video Player
-            if let path = exercise?.pathToVideo,
+            if let path = exercise.pathToVideo,
                let url = Bundle.main.url(forResource: path, withExtension: nil) {
                 
                 let localPlayer = AVPlayer(url: url)
@@ -68,7 +73,7 @@ struct ExerciseDetailView: View {
                             .foregroundColor(.gray)
                     )
                     .onAppear {
-                        print("❌ Video non trovato: \(exercise?.pathToVideo ?? "nil")")
+                        print("❌ Video non trovato: \(exercise.pathToVideo ?? "nil")")
                     }
             }
             
@@ -81,7 +86,7 @@ struct ExerciseDetailView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Text(exercise?.instructions ?? "No description available.")
+                    Text(exercise.instructions ?? "No description available.")
                         .foregroundColor(.white)
                         .font(.body)
                         .frame(maxWidth: .infinity, alignment: .leading)
