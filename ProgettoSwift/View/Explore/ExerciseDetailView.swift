@@ -5,16 +5,13 @@ struct ExerciseDetailView: View {
     let exercise: Exercise?
     @Environment(\.dismiss) var dismiss
     
-    @State private var isPlaying: Bool = true
     @State private var player: AVPlayer? = nil
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 20) {
             // Header
             HStack {
-                Button(action: {
-                    dismiss()
-                }) {
+                Button(action: { dismiss() }) {
                     Image(systemName: "xmark")
                         .foregroundColor(.white)
                         .font(.title2)
@@ -32,10 +29,9 @@ struct ExerciseDetailView: View {
                     if let player = player {
                         player.seek(to: .zero)
                         player.play()
-                        isPlaying = true
                     }
                 }) {
-                    Image(systemName: "arrow.clockwise")
+                    Image(systemName: "nosign")
                         .foregroundColor(Color("FourthColor"))
                         .font(.title2)
                 }
@@ -46,16 +42,22 @@ struct ExerciseDetailView: View {
             // Video Player
             if let path = exercise?.pathToVideo,
                let url = Bundle.main.url(forResource: path, withExtension: nil) {
-
-                // Debug: stampa il path usato
-                VideoPlayer(player: AVPlayer(url: url))
-                    .frame(height: 200)
+                
+                let localPlayer = AVPlayer(url: url)
+                
+                AVPlayerControllerRepresented(player: localPlayer)
+                    .frame(height: 250)
                     .onAppear {
-                        print("Video path usato per cercare il file: '\(path)'")
-                        player = AVPlayer(url: url)
-                        player?.play()
-                        isPlaying = true
+                        if player == nil {
+                            player = localPlayer
+                            player?.pause()
+                        }
                     }
+                    .onDisappear {
+                        player?.pause()
+                        player?.seek(to: .zero)
+                    }
+                
             } else {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
@@ -69,53 +71,45 @@ struct ExerciseDetailView: View {
                         print("❌ Video non trovato: \(exercise?.pathToVideo ?? "nil")")
                     }
             }
-
-
-            
-            
-            
-            // Play/Pause
-            HStack {
-                Button(action: {
-                    if let player = player {
-                        if isPlaying {
-                            player.pause()
-                        } else {
-                            player.play()
-                        }
-                        isPlaying.toggle()
-                    }
-                }) {
-                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color("SecondaryColor"))
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
-            }
-            .padding(.horizontal)
-            .padding(.top, 8)
             
             // Description
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Istruzioni:")
+                    Text("Instructions:")
                         .font(.title3)
                         .bold()
                         .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Text(exercise?.instructions ?? "No description available.")
                         .foregroundColor(.white)
                         .font(.body)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding()
+                .padding(.top, 20)
+                .padding(.horizontal, 16)
             }
             
             Spacer()
         }
         .background(Color("PrimaryColor").ignoresSafeArea())
         .navigationBarHidden(true)
+    }
+}
+
+
+// Implementa i controlli completi del VideoPlayer
+struct AVPlayerControllerRepresented: UIViewControllerRepresentable {
+    let player: AVPlayer
+    
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let controller = AVPlayerViewController()
+        controller.player = player
+        controller.showsPlaybackControls = true
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
+        uiViewController.player = player
     }
 }
