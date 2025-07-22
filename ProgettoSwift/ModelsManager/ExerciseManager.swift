@@ -212,6 +212,11 @@ class ExerciseManager {
         
         saveContext()
     }
+    
+    func toggleBan(for exercise: Exercise) {
+        exercise.isBanned.toggle()
+        saveContext()
+    }
 
     // MARK: - Delete
     func deleteExercise(_ exercise: Exercise) {
