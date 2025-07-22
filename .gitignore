@@ -51,3 +51,8 @@ xcuserdata
 # Classi marcate come deprecate da Xcode
 
 *.moved-aside
+
+####
+# File contenenti credenziali o chiavi private
+
+Secrets.plist
