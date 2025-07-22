@@ -17,7 +17,7 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isDefault" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="WorkoutDayDetail" inverseName="typology" inverseEntity="WorkoutDayDetail"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutDayDetail" inverseName="typology" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
