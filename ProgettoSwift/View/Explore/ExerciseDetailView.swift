@@ -2,7 +2,7 @@ import SwiftUI
 import AVKit
 
 struct ExerciseDetailView: View {
-    let exercise: Exercise
+    @ObservedObject var exercise: Exercise
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) var dismiss
@@ -22,60 +22,28 @@ struct ExerciseDetailView: View {
                         .foregroundColor(.white)
                         .font(.title2)
                 }
+                .frame(width: 70, alignment: .leading)
                 
                 Spacer()
                 
                 Text(exercise.name ?? "Exercise")
-                    .font(.headline)
+                    .font(.largeTitle)
                     .foregroundColor(.white)
                 
                 Spacer()
                 
                 Button(action: {
-                    print("🔍 Stato attuale prima del toggle: \(exercise.isBanned)")
                     exerciseManager.toggleBan(for: exercise)
-                    print("✅ Stato dopo il toggle: \(exercise.isBanned)")
                 }) {
                     Text(exercise.isBanned ? "Unban" : "Ban")
                         .foregroundColor(exercise.isBanned ? .green : .red)
+                        .frame(width: 70)
                 }
-
             }
             .padding()
             .background(Color("PrimaryColor"))
             
-            // Video Player
-            if let path = exercise.pathToVideo,
-               let url = Bundle.main.url(forResource: path, withExtension: nil) {
-                
-                let localPlayer = AVPlayer(url: url)
-                
-                AVPlayerControllerRepresented(player: localPlayer)
-                    .frame(height: 250)
-                    .onAppear {
-                        if player == nil {
-                            player = localPlayer
-                            player?.pause()
-                        }
-                    }
-                    .onDisappear {
-                        player?.pause()
-                        player?.seek(to: .zero)
-                    }
-                
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(height: 200)
-                    .overlay(
-                        Image(systemName: "video.slash")
-                            .font(.system(size: 30))
-                            .foregroundColor(.gray)
-                    )
-                    .onAppear {
-                        print("❌ Video non trovato: \(exercise.pathToVideo ?? "nil")")
-                    }
-            }
+            ExerciseVideoView(pathToVideo: exercise.pathToVideo)
             
             // Description
             ScrollView {
@@ -102,6 +70,43 @@ struct ExerciseDetailView: View {
     }
 }
 
+// Sottoview isolata per il video, così che non venga ricaricato ad ogni Ban\Unban
+struct ExerciseVideoView: View {
+    let pathToVideo: String?
+    @State private var player: AVPlayer? = nil
+    
+    var body: some View {
+        if let path = pathToVideo,
+           let url = Bundle.main.url(forResource: path, withExtension: nil) {
+            
+            AVPlayerControllerRepresented(player: player ?? AVPlayer(url: url))
+                .frame(height: 250)
+                .onAppear {
+                    if player == nil {
+                        player = AVPlayer(url: url)
+                        player?.pause()
+                    }
+                }
+                .onDisappear {
+                    player?.pause()
+                    player?.seek(to: .zero)
+                }
+            
+        } else {
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+                .frame(height: 200)
+                .overlay(
+                    Image(systemName: "video.slash")
+                        .font(.system(size: 30))
+                        .foregroundColor(.gray)
+                )
+                .onAppear {
+                    print("❌ Video non trovato: \(pathToVideo ?? "nil")")
+                }
+        }
+    }
+}
 
 // Implementa i controlli completi del VideoPlayer
 struct AVPlayerControllerRepresented: UIViewControllerRepresentable {
