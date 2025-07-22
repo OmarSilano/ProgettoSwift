@@ -14,6 +14,26 @@ class WorkoutManager {
     init(context: NSManagedObjectContext) {
         self.context = context
     }
+    
+    func createTempWorkout(
+        name: String,
+        difficulty: Difficulty? = nil,
+        weeks: Int16,
+        pathToImage: String? = nil,
+        category: Category? = nil,
+        isSaved: Bool? = nil
+    ) -> Workout {
+        let workout = Workout(
+            context: context,
+            name: name,
+            weeks: weeks,
+            imagePath: pathToImage,
+            difficulty: difficulty ?? .beginner,
+            category: category,
+            isSaved: isSaved ?? false
+        )
+        return workout
+    }
 
     // MARK: - Create
     @discardableResult
@@ -174,14 +194,24 @@ class WorkoutManager {
         let detailManager = WorkoutDayDetailManager(context: context)
         let typologyManager = TypologyManager(context: context)
 
+        // ✅ Controlla se il workout default esiste già
         let existing = fetchWorkoutByCategory(.hypertrophy).filter {
             $0.name == "Hypertrophy A" && $0.isSaved == false
         }
-        if !existing.isEmpty { return }
+        if !existing.isEmpty {
+            print("✅ Workout default già presente, skip preload")
+            return
+        }
 
+        // ✅ Recupera o crea la tipologia base
         let typology = typologyManager.fetchAllTypologies().first { $0.name == "4x10" }
-            ?? typologyManager.createTypology(name: "4x10", detail: "4 sets of 10 reps", isDefault: true)
+            ?? typologyManager.createTypology(
+                name: "4x10",
+                detail: "4 sets of 10 reps",
+                isDefault: true
+            )
 
+        // ✅ Recupera esercizi beginner
         let allExercises = exerciseManager.fetchAllExercises()
         let beginnerExercises = allExercises.filter {
             guard let raw = $0.difficulty, let diff = Difficulty(rawValue: raw) else { return false }
@@ -199,7 +229,7 @@ class WorkoutManager {
             let benchPress = pick(.chest, method: .pushChest),
             let tricepsDip = pick(.arms, method: .tricepsArms)
         else {
-            print("⚠️ Giorno 1: esercizi non sufficienti.")
+            print("⚠️ Giorno 1: esercizi non sufficienti, preload annullato")
             return
         }
 
@@ -208,7 +238,7 @@ class WorkoutManager {
             let barbellRow = pick(.back, method: .rowBack),
             let bicepCurl = pick(.arms, method: .bicepsArms)
         else {
-            print("⚠️ Giorno 2: esercizi non sufficienti.")
+            print("⚠️ Giorno 2: esercizi non sufficienti, preload annullato")
             return
         }
 
@@ -217,12 +247,12 @@ class WorkoutManager {
             let squat = pick(.legs, method: .vPushLegs),
             let lateralRaise = pick(.shoulders, method: .lateralRaiseShoulders)
         else {
-            print("⚠️ Giorno 3: esercizi non sufficienti.")
+            print("⚠️ Giorno 3: esercizi non sufficienti, preload annullato")
             return
         }
 
-        // Crea Workout
-        let workout = createWorkout(
+        // ✅ CREA IL WORKOUT (temp, non salvato subito)
+        let workout = createTempWorkout(
             name: "Hypertrophy A",
             difficulty: .beginner,
             weeks: 4,
@@ -231,43 +261,77 @@ class WorkoutManager {
         )
 
         // --- GIORNO 1
-        let day1 = workoutDayManager.createWorkoutDay(
+        let day1 = workoutDayManager.createTempWorkoutDay(
             isCompleted: false,
             name: "Day 1 - Chest & Triceps",
             muscles: [.chest, .arms],
             workout: workout
         )
-        _ = detailManager.createWorkoutDayDetail(workoutDay: day1, exercise: benchPress, typology: typology)
-        _ = detailManager.createWorkoutDayDetail(workoutDay: day1, exercise: tricepsDip, typology: typology)
+        _ = detailManager.createTempWorkoutDayDetail(
+            workoutDay: day1,
+            exercise: benchPress,
+            typology: typology
+        )
+        _ = detailManager.createTempWorkoutDayDetail(
+            workoutDay: day1,
+            exercise: tricepsDip,
+            typology: typology
+        )
 
         // --- GIORNO 2
-        let day2 = workoutDayManager.createWorkoutDay(
+        let day2 = workoutDayManager.createTempWorkoutDay(
             isCompleted: false,
             name: "Day 2 - Back & Biceps",
             muscles: [.back, .arms],
             workout: workout
         )
-        _ = detailManager.createWorkoutDayDetail(workoutDay: day2, exercise: barbellRow, typology: typology)
-        _ = detailManager.createWorkoutDayDetail(workoutDay: day2, exercise: bicepCurl, typology: typology)
+        _ = detailManager.createTempWorkoutDayDetail(
+            workoutDay: day2,
+            exercise: barbellRow,
+            typology: typology
+        )
+        _ = detailManager.createTempWorkoutDayDetail(
+            workoutDay: day2,
+            exercise: bicepCurl,
+            typology: typology
+        )
 
         // --- GIORNO 3
-        let day3 = workoutDayManager.createWorkoutDay(
+        let day3 = workoutDayManager.createTempWorkoutDay(
             isCompleted: false,
             name: "Day 3 - Legs & Shoulders",
             muscles: [.legs, .shoulders],
             workout: workout
         )
-        _ = detailManager.createWorkoutDayDetail(workoutDay: day3, exercise: squat, typology: typology)
-        _ = detailManager.createWorkoutDayDetail(workoutDay: day3, exercise: lateralRaise, typology: typology)
+        _ = detailManager.createTempWorkoutDayDetail(
+            workoutDay: day3,
+            exercise: squat,
+            typology: typology
+        )
+        _ = detailManager.createTempWorkoutDayDetail(
+            workoutDay: day3,
+            exercise: lateralRaise,
+            typology: typology
+        )
         if let crunch = beginnerExercises.first(where: { $0.name == "Crunch" }) {
-            _ = detailManager.createWorkoutDayDetail(workoutDay: day3, exercise: crunch, typology: typology)
+            _ = detailManager.createTempWorkoutDayDetail(
+                workoutDay: day3,
+                exercise: crunch,
+                typology: typology
+            )
         } else {
-            print("⚠️ Crunch non trovato nei beginnerExercises.")
+            print("⚠️ Crunch non trovato nei beginnerExercises")
         }
-        
 
-        print("✅ Workout di default 'Hypertrophy A' con 3 giorni creato.")
+        // ✅ SALVATAGGIO UNICO di tutto il grafo
+        do {
+            try context.save()
+            print("✅ Workout di default 'Hypertrophy A' con 3 giorni e dettagli salvato con successo.")
+        } catch {
+            print("❌ Errore salvataggio workout default: \(error)")
+        }
     }
+
 
 
 

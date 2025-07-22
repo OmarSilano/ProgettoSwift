@@ -25,8 +25,7 @@ class ExerciseManager {
             let videoName: String?
         }
         
-    /*
-        // Versione definitiva, non inserisce esercizi se già presenti
+    
         func preloadDefaultExercises() {
             let existing = fetchAllExercises()
             if !existing.isEmpty {
@@ -78,55 +77,7 @@ class ExerciseManager {
                 print("❌ Errore caricamento JSON: \(error)")
             }
         }
- */
-    // Utile in sviluppo, carica ogni volta gli esercizi da capo
-    func preloadDefaultExercises() {
-        // 1) Cancella tutti gli esercizi esistenti
-        let existing = fetchAllExercises()
-        for exercise in existing {
-            context.delete(exercise)
-        }
-        saveContext()  // salva le cancellazioni
-        
-        // 2) Procedi con il caricamento dal JSON
-        guard let url = Bundle.main.url(forResource: "exercises", withExtension: "json") else {
-            print("❌ JSON esercizi non trovato")
-            return
-        }
 
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            let seeds = try decoder.decode([ExerciseSeed].self, from: data)
-
-            for seed in seeds {
-                guard
-                    let muscle = MuscleGroup(rawValue: seed.muscle),
-                    let method = Method(rawValue: seed.method),
-                    let difficulty = Difficulty(rawValue: seed.difficulty)
-                else {
-                    print("⚠️ Dato non valido in \(seed.name)")
-                    continue
-                }
-
-                _ = createExercise(
-                    name: seed.name,
-                    difficulty: difficulty,
-                    muscle: muscle,
-                    method: method,
-                    pathToImage: seed.imageName,   // assicurati di usare il nome corretto
-                    pathToVideo: seed.videoName,
-                    instructions: seed.instructions
-                )
-            }
-
-            print("✅ Esercizi predefiniti caricati da JSON.")
-        } catch {
-            print("❌ Errore caricamento JSON: \(error)")
-        }
-    }
-
-    
 
     // MARK: - Create
     @discardableResult

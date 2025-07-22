@@ -8,7 +8,6 @@ struct AddMetodologyView: View {
     
     @State private var title: String = ""
     @State private var description: String = ""
-    
     @State private var showAlert = false
     
     var body: some View {
@@ -26,12 +25,11 @@ struct AddMetodologyView: View {
                 
                 Spacer()
                 
-                Text("TRAINING METODOLOGY")
-                    .font(.titleLarge)
+                Text("TRAINING METHODOLOGY")
+                    .font(.title)
                     .foregroundColor(.white)
                 
                 Spacer()
-                
                 Spacer().frame(width: 44)
             }
             .padding(.top, 20)
@@ -72,26 +70,9 @@ struct AddMetodologyView: View {
             
             // MARK: - Add Button
             Button(action: {
-                if !title.trimmingCharacters(in: .whitespaces).isEmpty {
-                    // Crea nuova tipologia nel database
-                    _ = Typology(
-                        context: context,
-                        name: title,
-                        detail: description.trimmingCharacters(in: .whitespaces).isEmpty ? nil : description,
-                        isDefault: false
-                    )
-                    
-                    do {
-                        try context.save()
-                        presentationMode.wrappedValue.dismiss()
-                    } catch {
-                        print("Errore durante il salvataggio: \(error)")
-                    }
-                } else {
-                    showAlert = true
-                }
+                addMetodology()
             }) {
-                Text("ADD METODOLOGY")
+                Text("ADD METHODOLOGY")
                     .foregroundColor(.black)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
@@ -104,12 +85,33 @@ struct AddMetodologyView: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Missing Title"),
-                    message: Text("Please insert a title for the metodology."),
+                    message: Text("Please insert a title for the methodology."),
                     dismissButton: .default(Text("OK"))
                 )
             }
         }
         .background(Color("PrimaryColor").ignoresSafeArea())
         .navigationBarHidden(true)
+    }
+    
+    // MARK: - Logic to Add Typology
+    private func addMetodology() {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedDescription = description.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedTitle.isEmpty else {
+            showAlert = true
+            return
+        }
+        
+        let typologyManager = TypologyManager(context: context)
+        typologyManager.createTypology(
+            name: trimmedTitle,
+            detail: trimmedDescription.isEmpty ? nil : trimmedDescription,
+            isDefault: false
+        )
+        
+        print("✅ Metodologia '\(trimmedTitle)' salvata correttamente.")
+        presentationMode.wrappedValue.dismiss()
     }
 }

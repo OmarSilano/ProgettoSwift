@@ -15,6 +15,22 @@ class WorkoutDayManager {
         self.context = context
     }
     
+    func createTempWorkoutDay(
+        isCompleted: Bool,
+        name: String,
+        muscles: [MuscleGroup],
+        workout: Workout
+    ) -> WorkoutDay {
+        let workoutDay = WorkoutDay(
+            context: context,
+            name: name,
+            isCompleted: isCompleted,
+            workout: workout
+        )
+        workoutDay.musclesList = muscles
+        return workoutDay
+    }
+    
     // MARK: - Create
     @discardableResult
     func createWorkoutDay(isCompleted: Bool,

@@ -92,25 +92,16 @@ class TypologyManager {
         }
     }
     
-    func fetchDefaultTypologies() -> [Typology] {
-        let request: NSFetchRequest<Typology> = Typology.fetchRequest()
-        request.predicate = NSPredicate(format: "isDefault == true")
-        
-        do {
-            return try context.fetch(request)
-        } catch {
-            print("Errore nel recupero delle tipologie default: \(error)")
-            return []
-        }
-    }
-    
     func preloadDefaultTypologies() {
         let request: NSFetchRequest<Typology> = Typology.fetchRequest()
-        request.predicate = NSPredicate(format: "isDefault == true")
+        request.predicate = NSPredicate(format: "isDefault == true") // controlliamo solo le default
 
         do {
             let count = try context.count(for: request)
+            
             if count == 0 {
+                print("ℹ️ Nessuna tipologia default trovata, eseguo preload...")
+                
                 let defaultData: [(String, String)] = [
                     ("4x10", "4 sets of 10 reps."),
                     ("8x4x4", "8 sets of 4 reps x 4 exercises."),
@@ -119,16 +110,22 @@ class TypologyManager {
                 ]
                 
                 for (title, desc) in defaultData {
-                    _ = Typology(context: context, name: title, detail: desc, isDefault: true)
+                    _ = createTypology(
+                        name: title,
+                        detail: desc,
+                        isDefault: true
+                    )
                 }
                 
-                try context.save()
-                print("✅ Tipologie di default caricate.")
+                print("✅ Tipologie di default create e salvate")
+            } else {
+                print("✅ Tipologie default già presenti (\(count)), skip preload")
             }
         } catch {
             print("❌ Errore nel preload delle tipologie di default: \(error)")
         }
     }
+
 
 
     
