@@ -15,6 +15,21 @@ class WorkoutDayDetailManager {
         self.context = context
     }
     
+    func createTempWorkoutDayDetail(
+        workoutDay: WorkoutDay,
+        exercise: Exercise,
+        typology: Typology
+    ) -> WorkoutDayDetail {
+        let detail = WorkoutDayDetail(
+            context: context,
+            workoutDay: workoutDay,
+            exercise: exercise,
+            typology: typology
+        )
+        workoutDay.updateMusclesFromDetails()
+        return detail
+    }
+    
     // MARK: - Create
     @discardableResult
     func createWorkoutDayDetail(workoutDay: WorkoutDay,
