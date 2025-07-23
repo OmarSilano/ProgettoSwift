@@ -9,76 +9,76 @@ import CoreData
 
 class ExerciseManager {
     private let context: NSManagedObjectContext
-
+    
     init(context: NSManagedObjectContext) {
         self.context = context
     }
     
     // MARK: - Private Seed Struct
-        private struct ExerciseSeed: Codable {
-            let name: String
-            let muscle: String
-            let method: String
-            let difficulty: String
-            let instructions: String
-            let imageName: String?
-            let videoName: String?
+    private struct ExerciseSeed: Codable {
+        let name: String
+        let muscle: String
+        let method: String
+        let difficulty: String
+        let instructions: String
+        let imageName: String?
+        let videoName: String?
+    }
+    
+    
+    func preloadDefaultExercises() {
+        let existing = fetchAllExercises()
+        if !existing.isEmpty {
+            print("⚠️ Esercizi già presenti, skip.")
+            return
         }
         
-    
-        func preloadDefaultExercises() {
-            let existing = fetchAllExercises()
-            if !existing.isEmpty {
-                print("⚠️ Esercizi già presenti, skip.")
-                return
-            }
-            
-            if let bundlePath = Bundle.main.resourcePath {
-                print("📁 Contenuto del bundle:")
-                let fileManager = FileManager.default
-                if let contents = try? fileManager.contentsOfDirectory(atPath: bundlePath) {
-                    contents.forEach { print($0) }
-                }
-            }
-
-            guard let url = Bundle.main.url(forResource: "exercises", withExtension: "json") else {
-                print("❌ JSON esercizi non trovato")
-                return
-            }
-
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let seeds = try decoder.decode([ExerciseSeed].self, from: data)
-
-                for seed in seeds {
-                    guard
-                        let muscle = MuscleGroup(rawValue: seed.muscle),
-                        let method = Method(rawValue: seed.method),
-                        let difficulty = Difficulty(rawValue: seed.difficulty)
-                    else {
-                        print("⚠️ Dato non valido in \(seed.name)")
-                        continue
-                    }
-
-                    _ = createExercise(
-                        name: seed.name,
-                        difficulty: difficulty,
-                        muscle: muscle,
-                        method: method,
-                        pathToImage: seed.imageName,
-                        pathToVideo: seed.videoName,
-                        instructions: seed.instructions
-                    )
-                }
-
-                print("✅ Esercizi predefiniti caricati da JSON.")
-            } catch {
-                print("❌ Errore caricamento JSON: \(error)")
+        if let bundlePath = Bundle.main.resourcePath {
+            print("📁 Contenuto del bundle:")
+            let fileManager = FileManager.default
+            if let contents = try? fileManager.contentsOfDirectory(atPath: bundlePath) {
+                contents.forEach { print($0) }
             }
         }
-
-
+        
+        guard let url = Bundle.main.url(forResource: "exercise", withExtension: "json") else {
+            print("❌ JSON esercizi non trovato")
+            return
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let seeds = try decoder.decode([ExerciseSeed].self, from: data)
+            
+            for seed in seeds {
+                guard
+                    let muscle = MuscleGroup(rawValue: seed.muscle),
+                    let method = Method(rawValue: seed.method),
+                    let difficulty = Difficulty(rawValue: seed.difficulty)
+                else {
+                    print("⚠️ Dato non valido in \(seed.name)")
+                    continue
+                }
+                
+                _ = createExercise(
+                    name: seed.name,
+                    difficulty: difficulty,
+                    muscle: muscle,
+                    method: method,
+                    pathToImage: seed.imageName,
+                    pathToVideo: seed.videoName,
+                    instructions: seed.instructions
+                )
+            }
+            
+            print("✅ Esercizi predefiniti caricati da JSON.")
+        } catch {
+            print("❌ Errore caricamento JSON: \(error)")
+        }
+    }
+    
+    
     // MARK: - Create
     @discardableResult
     func createExercise(name: String,
@@ -103,7 +103,7 @@ class ExerciseManager {
         saveContext()
         return exercise
     }
-
+    
     // MARK: - Read
     func fetchAllExercises() -> [Exercise] {
         let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
@@ -114,7 +114,7 @@ class ExerciseManager {
             return []
         }
     }
-
+    
     func fetchExercise(byID id: UUID) -> Exercise? {
         let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
@@ -130,17 +130,17 @@ class ExerciseManager {
     func fetchExercisesGroupedByMuscle() -> [MuscleGroup: [Exercise]] {
         let allExercises = fetchAllExercises()
         var grouped: [MuscleGroup: [Exercise]] = [:]
-
+        
         for exercise in allExercises {
             guard let muscleRaw = exercise.muscle,
                   let muscle = MuscleGroup(rawValue: muscleRaw) else { continue }
-
+            
             grouped[muscle, default: []].append(exercise)
         }
-
+        
         return grouped
     }
-
+    
     // MARK: - Update
     func updateExercise(_ exercise: Exercise,
                         name: String? = nil,
@@ -168,13 +168,13 @@ class ExerciseManager {
         exercise.isBanned.toggle()
         saveContext()
     }
-
+    
     // MARK: - Delete
     func deleteExercise(_ exercise: Exercise) {
         context.delete(exercise)
         saveContext()
     }
-
+    
     // MARK: - Save Context
     private func saveContext() {
         if context.hasChanges {

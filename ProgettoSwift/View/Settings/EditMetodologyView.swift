@@ -79,19 +79,7 @@ struct EditMetodologyView: View {
             
             // MARK: - Save Button
             Button(action: {
-                if !title.trimmingCharacters(in: .whitespaces).isEmpty {
-                    typology.name = title
-                    typology.detail = description.trimmingCharacters(in: .whitespaces).isEmpty ? nil : description
-                    
-                    do {
-                        try context.save()
-                        presentationMode.wrappedValue.dismiss()
-                    } catch {
-                        print("Errore durante il salvataggio: \(error)")
-                    }
-                } else {
-                    showAlert = true
-                }
+                editMetodology()
             }) {
                 Text("SAVE CHANGES")
                     .foregroundColor(.black)
@@ -106,7 +94,7 @@ struct EditMetodologyView: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Missing Title"),
-                    message: Text("Please insert a title for the metodology."),
+                    message: Text("Please insert a title for the methodology."),
                     dismissButton: .default(Text("OK"))
                 )
             }
@@ -114,4 +102,25 @@ struct EditMetodologyView: View {
         .background(Color("PrimaryColor").ignoresSafeArea())
         .navigationBarHidden(true)
     }
+    
+    // MARK: - Logic to Edit Typology
+    private func editMetodology() {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedDescription = description.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedTitle.isEmpty else {
+            showAlert = true
+            return
+        }
+        
+        let typologyManager = TypologyManager(context: context)
+        typologyManager.updateTypology(
+            typology,
+            name: trimmedTitle,
+            detail: trimmedDescription.isEmpty ? nil : trimmedDescription
+        )
+        
+        presentationMode.wrappedValue.dismiss()
+    }
+
 }
