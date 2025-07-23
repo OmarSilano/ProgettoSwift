@@ -41,7 +41,7 @@ class ExerciseManager {
                 }
             }
 
-            guard let url = Bundle.main.url(forResource: "exercises", withExtension: "json") else {
+            guard let url = Bundle.main.url(forResource: "exercise", withExtension: "json") else {
                 print("❌ JSON esercizi non trovato")
                 return
             }

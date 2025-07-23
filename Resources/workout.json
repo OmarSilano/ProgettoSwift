@@ -1,0 +1,54 @@
+[
+  {
+    "category": "Hypertrophy",
+    "difficulty": "Beginner",
+    "name": "Hypertrophy A",
+    "weeks": 4,
+    "pathToImage": "Hypertrophy",
+    "days": [
+      {
+        "name": "Day 1 - Chest & Triceps",
+        "details": [
+          {
+            "exerciseName": "Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Triceps Dip",
+            "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 2 - Back & Biceps",
+        "details": [
+          {
+            "exerciseName": "Barbell Row",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Bicep Curl",
+            "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 3 - Legs & Shoulders",
+        "details": [
+          {
+            "exerciseName": "Squat",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Lateral Raise",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Crunch",
+            "typologyName": "4x10"
+          }
+        ]
+      }
+    ]
+  }
+]

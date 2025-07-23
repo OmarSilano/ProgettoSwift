@@ -37,7 +37,7 @@
         <attribute name="name" attributeType="String"/>
         <relationship name="workout" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="workoutDay" inverseEntity="Workout"/>
         <relationship name="workoutDayCompleted" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutDayCompleted" inverseName="workoutDay" inverseEntity="WorkoutDayCompleted"/>
-        <relationship name="workoutDayDetail" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutDayDetail" inverseName="workoutDay" inverseEntity="WorkoutDayDetail"/>
+        <relationship name="workoutDayDetail" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutDayDetail" inverseName="workoutDay" inverseEntity="WorkoutDayDetail"/>
     </entity>
     <entity name="WorkoutDayCompleted" representedClassName="WorkoutDayCompleted" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
