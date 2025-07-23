@@ -48,37 +48,15 @@ struct SettingsView: View {
                         .cornerRadius(10)
                     }
                     
-                    // Rate App
-                    Button(action: {
-                        // TODO: Implement Rate App action
-                    }) {
+                    NavigationLink(destination: ChatBotView()) {
                         HStack {
-                            Text("Rate App")
-                                .foregroundColor(Color("SecondaryColor"))
+                            Text("Chiedi a Atlas🤖")
+                                .foregroundColor(.white)
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .center)
                             
-                            Image(systemName: "star")
-                                .foregroundColor(Color("SecondaryColor"))
-                        }
-                        .padding(.horizontal)
-                        .frame(height: 80)
-                        .background(Color.black)
-                        .cornerRadius(10)
-                    }
-                    
-                    // Contact Us
-                    Button(action: {
-                        sendEmail()
-                    }) {
-                        HStack {
-                            Text("Contact Us")
-                                .foregroundColor(Color("SecondaryColor"))
-                                .font(.title3)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Image(systemName: "paperplane")
-                                .foregroundColor(Color("SecondaryColor"))
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
                         }
                         .padding(.horizontal)
                         .frame(height: 80)
@@ -100,13 +78,6 @@ struct BannedExercisesView: View {
         Text("Banned Exercises List details here.")
             .foregroundColor(.white)
             .background(Color("PrimaryColor"))
-    }
-}
-
-func sendEmail() {
-    let email = "v.nunziato2@studenti.unisa.it"
-    if let url = URL(string: "mailto:\(email)") {
-        UIApplication.shared.open(url)
     }
 }
 
