@@ -29,6 +29,22 @@ extension Workout {
         self.category = category?.rawValue
         self.days = Int16(self.workoutDay?.count ?? 0)
     }
-
+    
+    
+    func toPlainText() -> String {
+        var txt = "🏋️ WORKOUT: \(name ?? "Unnamed")\n"
+        txt += "Weeks: \(weeks)\n"
+        txt += "Days: \(days)\n\n"
+        
+        let workoutDays = (workoutDay?.allObjects as? [WorkoutDay]) ?? []
+        for day in workoutDays.sorted(by: { ($0.name ?? "") < ($1.name ?? "") }) {
+            txt += day.toPlainText()
+            txt += "\n"
+        }
+        
+        return txt
+    }
+    
+    
 }
 

@@ -20,7 +20,7 @@ extension MuscleGroup {
             return [.pullUpBack, .rowBack]
             
         case .abs:
-            return [.upperAbs, .lowerAbs]
+            return [.upperAbs, .lowerAbs, .fullPack]
             
         case .arms:
             return [.bicepsArms, .tricepsArms]

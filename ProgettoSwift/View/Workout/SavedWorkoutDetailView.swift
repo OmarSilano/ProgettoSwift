@@ -10,6 +10,8 @@ struct SavedWorkoutDetailView: View {
     @State private var selectedDay: WorkoutDay?
     @State private var showActionSheet = false
     @State private var completedTodayIDs: Set<UUID> = []
+    @State private var shareURL: URL?
+    
     @Environment(\.dismiss) private var dismiss
     @State private var navigateToEdit = false
 
@@ -100,6 +102,11 @@ struct SavedWorkoutDetailView: View {
                 }
                 .padding(.top)
             }
+            .sheet(item: $shareURL) { url in
+                ShareSheet(items: [url]) {
+                    shareURL = nil
+                }
+            }
             .background(Color("PrimaryColor").ignoresSafeArea())
             .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
                 if let selectedDay = selectedDay, let id = selectedDay.id {
@@ -121,7 +128,11 @@ struct SavedWorkoutDetailView: View {
                 Button("Edit") {
                     navigateToEdit = true
                 }
-                Button("Share") { /* Da implementare */ }
+                Button("Share") {
+                    if let selectedDay = selectedDay {
+                        shareDay(selectedDay) // ✅ chiamiamo la funzione
+                    }
+                }
                 Button("Delete", role: .destructive) { /* Da implementare */ }
                 Button("Cancel", role: .cancel) {}
             }
@@ -149,6 +160,20 @@ struct SavedWorkoutDetailView: View {
                 .foregroundColor(.gray)
                 .padding()
         }
+        
+        
+    }
+    
+    
+    
+    private func shareDay(_ day: WorkoutDay) {
+        let text = day.toPlainText()
+        
+        // Salva come file temporaneo
+        if let url = saveAsTextFile(text, filename: day.name ?? "WorkoutDay") {
+            print("✅ File pronto per condivisione: \(url.path)")
+            shareURL = url
+        }
     }
 }
 
@@ -159,7 +184,7 @@ struct WorkoutDayRowViewWithActionSheet: View {
     let isCompletedToday: Bool
     @Binding var expandedDayID: UUID?
     let onLongPress: () -> Void
-
+    
     var body: some View {
         VStack(spacing: 4) {
             HStack {
@@ -169,18 +194,18 @@ struct WorkoutDayRowViewWithActionSheet: View {
                     Text(day.name ?? "Unnamed Day")
                         .font(.headline)
                         .foregroundColor(isCompletedToday ? Color("PrimaryColor") : .white)
-
+                    
                     Text(muscleGroupsText(from: day))
                         .font(.subheadline)
                         .foregroundColor(isCompletedToday ? Color("PrimaryColor") : Color("SubtitleColor"))
                         .lineLimit(1)
                 }
-
+                
                 Spacer()
-
+                
                 Image(systemName: expandedDayID == day.id ? "chevron.up" : "plus")
                     .foregroundColor(isCompletedToday ? Color("SecondaryColor") : .white)
-
+                
             }
             .padding(.vertical, 8)
             .contentShape(Rectangle())
@@ -192,30 +217,30 @@ struct WorkoutDayRowViewWithActionSheet: View {
             .onLongPressGesture {
                 onLongPress()
             }
-
-
-
+            
+            
+            
             if expandedDayID == day.id {
                 if let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] {
                     ForEach(details, id: \.id) { detail in
                         WorkoutExerciseDetailView(detail: detail, isCompletedToday: isCompletedToday)
                     }
-
+                    
                 }
             }
-
+            
             Divider().background(Color.gray.opacity(0.3))
         }
         .background(isCompletedToday ? Color("SecondaryColor") : Color.clear)
         .cornerRadius(10)
         .padding(.horizontal)
     }
-
+    
     private func toggleDay(_ day: WorkoutDay) {
         guard let id = day.id else { return }
         expandedDayID = (expandedDayID == id) ? nil : id
     }
-
+    
     private func muscleGroupsText(from day: WorkoutDay) -> String {
         guard let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] else { return "—" }
         let allGroups = details.compactMap { $0.exercise?.muscle }
@@ -224,5 +249,7 @@ struct WorkoutDayRowViewWithActionSheet: View {
         if allGroups.count > 2 { text += " ..." }
         return text
     }
+    
 }
+
 

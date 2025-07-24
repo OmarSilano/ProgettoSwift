@@ -266,7 +266,7 @@ class WorkoutManager {
             weeks: original.weeks,
             imagePath: original.pathToImage,
             difficulty: nil,
-            category: nil,
+            category: original.category != nil ? Category(rawValue: original.category!) : nil,
             isSaved: true
         )
 
