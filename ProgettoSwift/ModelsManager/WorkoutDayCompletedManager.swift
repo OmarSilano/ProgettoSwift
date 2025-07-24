@@ -63,12 +63,12 @@ class WorkoutDayCompletedManager {
     }
     
     
-    func fetchCompletionsLast7Days() -> [WorkoutDayCompleted] {
+    func fetchCompletionsLastNDays(n: Int) -> [WorkoutDayCompleted] {
             let request: NSFetchRequest<WorkoutDayCompleted> = WorkoutDayCompleted.fetchRequest()
 
             let calendar = Calendar.current
             let now = Date()
-            guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: now) else {
+            guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -n, to: now) else {
                 return []
             }
 
@@ -78,13 +78,13 @@ class WorkoutDayCompletedManager {
             do {
                 return try context.fetch(request)
             } catch {
-                print("Errore nel recupero completamenti ultimi 7 giorni: \(error)")
+                print("Errore nel recupero completamenti ultimi \(n) giorni: \(error)")
                 return []
             }
         }
     
-    func fetchCountLast7DaysByMuscle() -> [MuscleGroup: Int] {
-            let completions = fetchCompletionsLast7Days()
+    func fetchCountLastNDaysByMuscle(n: Int) -> [MuscleGroup: Int] {
+        let completions = fetchCompletionsLastNDays(n: n)
             var counts: [MuscleGroup: Int] = [:]
             
             for completion in completions {
