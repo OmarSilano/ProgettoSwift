@@ -146,8 +146,15 @@ struct ExploreView: View {
                                             } label: {
                                                 HStack {
                                                     // Immagine
-                                                    if let imageName = exercise.pathToImage,
-                                                       let uiImage = UIImage(named: imageName) {
+                                                    if exercise.isBanned {
+                                                        Image(systemName: "lock.fill")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .foregroundColor(Color(red: 46/255, green: 44/255, blue: 44/255))
+                                                            .frame(width: 40, height: 40)
+                                                            .cornerRadius(6)
+                                                    } else if let imageName = exercise.pathToImage,
+                                                              let uiImage = UIImage(named: imageName) {
                                                         Image(uiImage: uiImage)
                                                             .resizable()
                                                             .frame(width: 40, height: 40)
@@ -159,21 +166,30 @@ struct ExploreView: View {
                                                             .cornerRadius(6)
                                                     }
 
+                                                    
                                                     // Nome esercizio
                                                     Text(exercise.name ?? "Unnamed")
                                                         .foregroundColor(.white)
+                                                        .opacity(exercise.isBanned ? 0.4 : 1.0)
                                                         .font(.body)
                                                         .padding(.leading, 8)
-
+                                                    
                                                     Spacer()
                                                 }
                                                 .padding(8)
                                                 .background(
                                                     RoundedRectangle(cornerRadius: 8)
-                                                        .fill(Color(red: 46/255, green: 44/255, blue: 44/255))
-                                                )
+                                                        .fill(
+                                                                    exercise.isBanned
+                                                                        ? Color(red: 13/255, green: 13/255, blue: 13/255)
+                                                                        : Color(red: 46/255, green: 44/255, blue: 44/255)
+                                                                )                                                )
                                             }
-                                            .listRowBackground(Color(red: 46/255, green: 44/255, blue: 44/255))
+                                            .listRowBackground(
+                                                exercise.isBanned
+                                                    ? Color(red: 13/255, green: 13/255, blue: 13/255)
+                                                    : Color(red: 46/255, green: 44/255, blue: 44/255)
+                                                )
                                         }
                                     }
                                     .listRowBackground(Color("PrimaryColor"))
@@ -186,7 +202,6 @@ struct ExploreView: View {
                         .onAppear {
                             let manager = ExerciseManager(context: context)
                             groupedExercises = manager.fetchExercisesGroupedByMuscle()
-                                .mapValues { $0.filter { !$0.isBanned } }
                         }
                     }
                 }
