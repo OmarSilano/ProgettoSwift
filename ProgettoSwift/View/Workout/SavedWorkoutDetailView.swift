@@ -3,34 +3,37 @@ import SwiftUI
 struct SavedWorkoutDetailView: View {
     let workout: Workout
     @State private var expandedDayID: UUID? = nil
-    @Environment(\.dismiss) private var dismiss
     @State private var selectedDay: WorkoutDay?
     @State private var showActionSheet = false
-    @Environment(\.managedObjectContext) private var viewContext
     @State private var completedTodayIDs: Set<UUID> = []
-
+    @State private var shareURL: URL?
+    
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // MARK: – Header
                 HStack {
                     Button {
-                    dismiss()
+                        dismiss()
                     } label: {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.white)
                             .font(.title3)
                     }
-
+                    
                     Spacer()
-
+                    
                     Text(workout.name ?? "Workout")
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.white)
-
+                    
                     Spacer()
-
+                    
                     Button {
                         // Azione modifica (implementerai dopo)
                     } label: {
@@ -42,30 +45,30 @@ struct SavedWorkoutDetailView: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 20)
-
+                
                 // MARK: – Immagine
                 if (workout.category != nil) {    //allora è un workout di default
                     DefaultWorkoutImageView(imageName: workout.pathToImage)
                 } else {    //...altrimenti è un workout creato dall'utente
                     UserWorkoutImageView(imageName: workout.pathToImage)
                 }
-
+                
                 // MARK: – Info
                 HStack {
                     Text("\(workout.days) Days")
                         .font(.headline)
                         .foregroundColor(.white)
-
+                    
                     Spacer()
-
+                    
                     Text("\(workout.weeks) Weeks")
                         .font(.headline)
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
-
+                
                 Divider().background(Color.gray)
-
+                
                 // MARK: – Giorni
                 if let days = workout.workoutDay?.allObjects as? [WorkoutDay] {
                     ForEach(days.sorted(by: { ($0.name ?? "") < ($1.name ?? "") })) { day in
@@ -80,14 +83,18 @@ struct SavedWorkoutDetailView: View {
                         )
                     }
                 }
-
+                
                 Spacer(minLength: 40)
             }
             .padding(.top)
         }
-        
         .background(Color("PrimaryColor").ignoresSafeArea())
-//        .navigationBarHidden(true) // nessuna nav bar nativa
+        .sheet(item: $shareURL) { url in
+            ShareSheet(items: [url]) {
+                shareURL = nil
+            }
+        }
+        //        .navigationBarHidden(true) // nessuna nav bar nativa
         .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
             Button("Mark as Done") {
                 if let selectedDay {
@@ -98,19 +105,24 @@ struct SavedWorkoutDetailView: View {
                     }
                 }
             }
-
+            
             Button("Edit") { /* Da implementare */ }
-            Button("Share") { /* Da implementare */ }
+            Button("Share") {
+                if let selectedDay = selectedDay {
+                    shareDay(selectedDay)
+                }
+            }
+            
             Button("Delete", role: .destructive) { /* Da implementare */ }
             Button("Cancel", role: .cancel) {}
         }
-
+        
         .tint(nil)
         .onAppear {
             let manager = WorkoutDayCompletedManager(context: viewContext)
             let completions = manager.fetchCompletionsLast7Days()
             let today = Calendar.current.startOfDay(for: Date())
-
+            
             completedTodayIDs = Set(
                 completions
                     .filter {
@@ -122,11 +134,22 @@ struct SavedWorkoutDetailView: View {
                     }
                     .compactMap { $0.workoutDay?.id }
             )
-                print("Workout pathToImage: \(workout.pathToImage ?? "nil")")
-
+            print("Workout pathToImage: \(workout.pathToImage ?? "nil")")
+            
         }
         .navigationBarBackButtonHidden(true)
-
+        
+    }
+    
+    
+    private func shareDay(_ day: WorkoutDay) {
+        let text = day.toPlainText()
+        
+        // Salva come file temporaneo
+        if let url = saveAsTextFile(text, filename: day.name ?? "WorkoutDay") {
+            print("✅ File pronto per condivisione: \(url.path)")
+            shareURL = url
+        }
     }
 }
 
@@ -135,7 +158,7 @@ struct WorkoutDayRowViewWithActionSheet: View {
     let isCompletedToday: Bool
     @Binding var expandedDayID: UUID?
     let onLongPress: () -> Void
-
+    
     var body: some View {
         VStack(spacing: 4) {
             HStack {
@@ -145,18 +168,18 @@ struct WorkoutDayRowViewWithActionSheet: View {
                     Text(day.name ?? "Unnamed Day")
                         .font(.headline)
                         .foregroundColor(isCompletedToday ? Color("PrimaryColor") : .white)
-
+                    
                     Text(muscleGroupsText(from: day))
                         .font(.subheadline)
                         .foregroundColor(isCompletedToday ? Color("PrimaryColor") : Color("SubtitleColor"))
                         .lineLimit(1)
                 }
-
+                
                 Spacer()
-
+                
                 Image(systemName: expandedDayID == day.id ? "chevron.up" : "plus")
                     .foregroundColor(isCompletedToday ? Color("SecondaryColor") : .white)
-
+                
             }
             .padding(.vertical, 8)
             .contentShape(Rectangle())
@@ -168,30 +191,30 @@ struct WorkoutDayRowViewWithActionSheet: View {
             .onLongPressGesture {
                 onLongPress()
             }
-
-
-
+            
+            
+            
             if expandedDayID == day.id {
                 if let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] {
                     ForEach(details, id: \.id) { detail in
                         WorkoutExerciseDetailView(detail: detail, isCompletedToday: isCompletedToday)
                     }
-
+                    
                 }
             }
-
+            
             Divider().background(Color.gray.opacity(0.3))
         }
         .background(isCompletedToday ? Color("SecondaryColor") : Color.clear)
         .cornerRadius(10)
         .padding(.horizontal)
     }
-
+    
     private func toggleDay(_ day: WorkoutDay) {
         guard let id = day.id else { return }
         expandedDayID = (expandedDayID == id) ? nil : id
     }
-
+    
     private func muscleGroupsText(from day: WorkoutDay) -> String {
         guard let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] else { return "—" }
         let allGroups = details.compactMap { $0.exercise?.muscle }
@@ -200,5 +223,7 @@ struct WorkoutDayRowViewWithActionSheet: View {
         if allGroups.count > 2 { text += " ..." }
         return text
     }
+    
 }
+
 

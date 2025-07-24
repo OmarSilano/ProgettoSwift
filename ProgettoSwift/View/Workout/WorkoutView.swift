@@ -14,44 +14,45 @@ struct WorkoutView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Workout.name, ascending: true)],
         predicate: NSPredicate(format: "isSaved == true")
     ) private var workouts: FetchedResults<Workout>
-    @State private var selectedWorkout: Workout?
-    @State private var showActionSheet = false
+    
+    @State private var shareURL: URL?
+    
     @Environment(\.managedObjectContext) private var context
-
+    
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // MARK: – Header
-HStack {
-    Button(action: {
-        // Help action
-    }) {
-        Image(systemName: "questionmark.circle")
-            .resizable()
-            .frame(width: 24, height: 24)
-            .foregroundColor(Color("FourthColor"))
-    }
-
-    Spacer()
-
-    Text("WORKOUT")
-        .font(.title2)
-        .bold()
-        .foregroundColor(Color("FourthColor"))
-
-    Spacer()
-
-    // Qui puoi scegliere se mettere NavigationLink o Button per aggiungere workout
-    NavigationLink(destination: AddWorkoutView()) {
-        Image(systemName: "plus")
-            .resizable()
-            .frame(width: 22, height: 22)
-            .foregroundColor(Color("FourthColor"))
-    }
-}
-
-
+                HStack {
+                    Button(action: {
+                        // Help action
+                    }) {
+                        Image(systemName: "questionmark.circle")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Color("FourthColor"))
+                    }
+                    
+                    Spacer()
+                    
+                    Text("WORKOUT")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(Color("FourthColor"))
+                    
+                    Spacer()
+                    
+                    // Qui puoi scegliere se mettere NavigationLink o Button per aggiungere workout
+                    NavigationLink(destination: AddWorkoutView()) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 22, height: 22)
+                            .foregroundColor(Color("FourthColor"))
+                    }
+                }
+                
+                
                 .padding()
                 .background(Color("PrimaryColor"))
                 
@@ -71,7 +72,9 @@ HStack {
                             .contextMenu {
                                 Button("Replicate and Improve") { /* Da fare */ }
                                 Button("Edit") { /* Da fare */ }
-                                Button("Share") { /* Da fare */ }
+                                Button("Share") {
+                                    shareWorkout(workout)
+                                }
                                 Button("Delete", role: .destructive) {
                                     deleteWorkout(workout)
                                 }
@@ -79,13 +82,28 @@ HStack {
                             .listRowBackground(Color("PrimaryColor"))
                         }
                     }
-
+                    
                     .listStyle(PlainListStyle())
                 }
+                
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
             .navigationBarHidden(true)
             .toolbar(.visible, for: .tabBar)
+            .sheet(item: $shareURL) { url in
+                ShareSheet(items: [url]) {
+                    shareURL = nil
+                }
+            }
+        }
+        
+    }
+    
+    private func shareWorkout(_ workout: Workout) {
+        let plainText = workout.toPlainText()  // ✅ ora usa la versione pulita
+        if let url = saveAsTextFile(plainText, filename: workout.name ?? "Workout") {
+            print("✅ File pronto per la condivisione: \(url.path)")
+            shareURL = url
         }
     }
     
@@ -127,19 +145,19 @@ private struct WorkoutRow: View {
                     .background(Color("ThirdColor"))
                     .cornerRadius(10)
             }
-
+            
             // Testi
             VStack(alignment: .leading, spacing: 6) {
                 Text(workout.name ?? "Unnamed")
                     .foregroundColor(Color("FourthColor"))
                     .font(.headline)
                     .lineLimit(1)
-
+                
                 Text("\(workout.days) days • \(workout.weeks) weeks")
                     .font(.subheadline)
                     .foregroundColor(Color("SubtitleColor"))
             }
-
+            
             Spacer()
         }
         .padding(12)
@@ -147,3 +165,7 @@ private struct WorkoutRow: View {
     }
 }
 
+// MARK: - URL Identifiable (per .sheet(item:))
+extension URL: Identifiable {
+    public var id: String { absoluteString }
+}
