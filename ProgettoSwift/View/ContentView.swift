@@ -14,7 +14,7 @@ struct ContentView: View {
         
         TabBarView()
             .task {
-                await Notifications().requestNotificationPermission()
+                await Permissions().requestNotificationPermission()
             }
         
     }

@@ -12,6 +12,8 @@ struct AddWorkoutView: View {
     @State private var expandedDayID: UUID? = nil
     @State private var dayBeingEdited: TempWorkoutDay? = nil
     @State private var pathToImage: String? = nil
+    @State private var showPermissionAlert = false
+
 
 
     // Manager
@@ -124,7 +126,15 @@ struct AddWorkoutView: View {
                         }
 
                         Button(action: {
-                            isShowingImagePicker = true
+                            Task {
+                                //chiedo il permesso per la galleria se non ce l'ho
+                                let granted = await Permissions().requestGalleryPermission()
+                                if granted {
+                                    isShowingImagePicker = true
+                                } else {
+                                    showPermissionAlert = true
+                                }
+                            }
                         }) {
                             Image(systemName: "photo.badge.plus")
                                 .resizable()
@@ -134,6 +144,7 @@ struct AddWorkoutView: View {
                                 .background(Color("SecondaryColor"))
                                 .clipShape(Circle())
                         }
+
                     }
                     .padding(.horizontal)
 
@@ -235,6 +246,17 @@ struct AddWorkoutView: View {
                 )
             }
         .navigationBarBackButtonHidden(true)
+        .alert("Accesso alla galleria negato", isPresented: $showPermissionAlert) {
+            Button("Apri Impostazioni") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("Annulla", role: .cancel) {}
+        } message: {
+            Text("Abilita l’accesso alla galleria dalle impostazioni per selezionare un'immagine.")
+        }
+
     }
     
 

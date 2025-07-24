@@ -48,23 +48,7 @@ struct SettingsView: View {
                         .cornerRadius(10)
                     }
                     
-                    // Permissions
-                    NavigationLink(destination: PermissionsView()) {
-                        HStack {
-                            Text("Permissions")
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.horizontal)
-                        .frame(height: 80)
-                        .background(Color.black)
-                        .cornerRadius(10)
-                    }
-                    
+                    //ChatBotView
                     NavigationLink(destination: ChatBotView()) {
                         HStack {
                             Text("Ask to Atlas🤖")
