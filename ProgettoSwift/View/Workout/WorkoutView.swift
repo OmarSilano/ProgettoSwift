@@ -1,10 +1,3 @@
-//
-//  WorkoutView.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 04/07/25.
-//
-
 import SwiftUI
 import CoreData
 
@@ -14,47 +7,45 @@ struct WorkoutView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Workout.name, ascending: true)],
         predicate: NSPredicate(format: "isSaved == true")
     ) private var workouts: FetchedResults<Workout>
+
     @State private var selectedWorkout: Workout?
     @State private var showActionSheet = false
+    @State private var workoutToEdit: Workout? = nil
     @Environment(\.managedObjectContext) private var context
 
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // MARK: – Header
-HStack {
-    Button(action: {
-        // Help action
-    }) {
-        Image(systemName: "questionmark.circle")
-            .resizable()
-            .frame(width: 24, height: 24)
-            .foregroundColor(Color("FourthColor"))
-    }
+                HStack {
+                    Button(action: {
+                        // Help action
+                    }) {
+                        Image(systemName: "questionmark.circle")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Color("FourthColor"))
+                    }
 
-    Spacer()
+                    Spacer()
 
-    Text("WORKOUT")
-        .font(.title2)
-        .bold()
-        .foregroundColor(Color("FourthColor"))
+                    Text("WORKOUT")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(Color("FourthColor"))
 
-    Spacer()
+                    Spacer()
 
-    // Qui puoi scegliere se mettere NavigationLink o Button per aggiungere workout
-    NavigationLink(destination: AddWorkoutView()) {
-        Image(systemName: "plus")
-            .resizable()
-            .frame(width: 22, height: 22)
-            .foregroundColor(Color("FourthColor"))
-    }
-}
-
-
+                    NavigationLink(destination: AddWorkoutView()) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 22, height: 22)
+                            .foregroundColor(Color("FourthColor"))
+                    }
+                }
                 .padding()
                 .background(Color("PrimaryColor"))
-                
+
                 // MARK: – Lista workout salvati
                 if workouts.isEmpty {
                     Spacer()
@@ -70,7 +61,9 @@ HStack {
                             }
                             .contextMenu {
                                 Button("Replicate and Improve") { /* Da fare */ }
-                                Button("Edit") { /* Da fare */ }
+                                Button("Edit") {
+                                    workoutToEdit = workout
+                                }
                                 Button("Share") { /* Da fare */ }
                                 Button("Delete", role: .destructive) {
                                     deleteWorkout(workout)
@@ -79,16 +72,25 @@ HStack {
                             .listRowBackground(Color("PrimaryColor"))
                         }
                     }
-
                     .listStyle(PlainListStyle())
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
             .navigationBarHidden(true)
             .toolbar(.visible, for: .tabBar)
+            .navigationDestination(isPresented: Binding(
+                get: { workoutToEdit != nil },
+                set: { isActive in
+                    if !isActive { workoutToEdit = nil }
+                }
+            )) {
+                if let workout = workoutToEdit {
+                    EditWorkoutView(workout: workout)
+                }
+            }
         }
     }
-    
+
     private func deleteWorkout(_ workout: Workout) {
         let manager = WorkoutManager(context: context)
         manager.deleteWorkout(workout)
@@ -98,7 +100,7 @@ HStack {
 // MARK: – Cellula riga singola
 private struct WorkoutRow: View {
     let workout: Workout
-    
+
     var body: some View {
         HStack(spacing: 16) {
             // Immagine
@@ -110,8 +112,8 @@ private struct WorkoutRow: View {
                         .frame(width: 60, height: 60)
                         .cornerRadius(10)
                         .clipped()
-                } else if let img = workout.pathToImage, !img.isEmpty {
-                    Image(img)
+                } else {
+                    Image(imgPath)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 60, height: 60)
@@ -146,4 +148,3 @@ private struct WorkoutRow: View {
         .cornerRadius(12)
     }
 }
-
