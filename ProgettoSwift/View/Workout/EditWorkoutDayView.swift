@@ -167,7 +167,6 @@ struct EditWorkoutDayView: View {
                         if let defaultTypology = typologies.first(where: { $0.name == "4x10" }) {
                             let previewsWithTypology = newExercises.map { exercise in
                                 selectedTypologies[exercise.id] = defaultTypology
-
                                 return AddWorkoutView.ExercisePreview(
                                     id: exercise.id,
                                     name: exercise.name,
@@ -176,13 +175,19 @@ struct EditWorkoutDayView: View {
                                 )
                             }
 
-                            tempDay.exercises.append(contentsOf: previewsWithTypology)
+                            let newOnly = previewsWithTypology.filter { new in
+                                !tempDay.exercises.contains(where: { $0.id == new.id })
+                            }
+
+                            tempDay.exercises.append(contentsOf: newOnly)
                         } else {
                             tempDay.exercises.append(contentsOf: newExercises)
                         }
-                    }
+                    },
+                    preselectedExerciseIDs: Set(tempDay.exercises.map { $0.id }) // 🔹 passa gli ID già presenti
                 )
             }
+
 
 
         }
