@@ -102,6 +102,11 @@ struct SavedWorkoutDetailView: View {
                 }
                 .padding(.top)
             }
+            .sheet(item: $shareURL) { url in
+                ShareSheet(items: [url]) {
+                    shareURL = nil
+                }
+            }
             .background(Color("PrimaryColor").ignoresSafeArea())
             .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
                 if let selectedDay = selectedDay, let id = selectedDay.id {
@@ -123,7 +128,11 @@ struct SavedWorkoutDetailView: View {
                 Button("Edit") {
                     navigateToEdit = true
                 }
-                Button("Share") { /* Da implementare */ }
+                Button("Share") {
+                    if let selectedDay = selectedDay {
+                        shareDay(selectedDay) // ✅ chiamiamo la funzione
+                    }
+                }
                 Button("Delete", role: .destructive) { /* Da implementare */ }
                 Button("Cancel", role: .cancel) {}
             }
@@ -151,9 +160,10 @@ struct SavedWorkoutDetailView: View {
                 .foregroundColor(.gray)
                 .padding()
         }
-        .navigationBarBackButtonHidden(true)
+        
         
     }
+    
     
     
     private func shareDay(_ day: WorkoutDay) {
