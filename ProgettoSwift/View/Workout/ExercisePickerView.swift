@@ -6,6 +6,7 @@ struct ExercisePickerView: View {
     @Environment(\.managedObjectContext) private var context
 
     var onSelect: ([AddWorkoutView.ExercisePreview]) -> Void
+    var preselectedExerciseIDs: Set<UUID>
 
     @State private var groupedExercises: [MuscleGroup: [Exercise]] = [:]
     @State private var selectedExercises: Set<UUID> = []
@@ -140,6 +141,9 @@ struct ExercisePickerView: View {
                     let manager = ExerciseManager(context: context)
                     groupedExercises = manager.fetchExercisesGroupedByMuscle()
                         .mapValues { $0.filter { !$0.isBanned } }
+                    
+                    selectedExercises = preselectedExerciseIDs
+
                 }
             }
 
