@@ -427,7 +427,7 @@ struct WorkoutExercisePreviewRowView: View {
 }
 
 
-private func createImagesDirectoryIfNeeded() {
+func createImagesDirectoryIfNeeded() {
     let fileManager = FileManager.default
     let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let imagesURL = documentsURL.appendingPathComponent("images")
