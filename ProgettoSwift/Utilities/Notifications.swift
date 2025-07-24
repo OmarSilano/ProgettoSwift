@@ -4,36 +4,25 @@ import CoreData
 
 class Notifications {
     
-    private let context: NSManagedObjectContext
-    
-    init(context: NSManagedObjectContext) {
-        self.context = context
-    }
-    
     // Chiedo il permesso all'utente di inviargli notifiche
-    func requestNotificationPermission() {
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.getNotificationSettings { settings in
-            switch settings.authorizationStatus {
-                
-            case .authorized:
-                UserDefaults.standard.set(true, forKey: "notificationsAllowed")
-                
-            case .denied:
-                UserDefaults.standard.set(false, forKey: "notificationsAllowed")
-                
-            case .notDetermined:
-                notificationCenter.requestAuthorization(options: [.alert, .sound]) { granted, error in
-                    
-                    if granted {
-                        UserDefaults.standard.set(true, forKey: "notificationsAllowed")
-                    }
-                }
-            default:
-                UserDefaults.standard.set(false, forKey: "notificationsAllowed")
+    @discardableResult
+    func requestNotificationPermission() async -> Bool {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        
+        if settings.authorizationStatus == .notDetermined {
+            do {
+                return try await center.requestAuthorization(options: [.alert, .sound, .badge])
+            } catch {
+                print("Error: request notification permission")
+                return false
             }
         }
+        
+        return settings.authorizationStatus == .authorized
     }
+
+
     
     //è solo una prova va eliminata
     func dispatchNotification() {
@@ -41,8 +30,8 @@ class Notifications {
         let identifier = "prova"
         let title = "notifica di prova"
         let body = "Funziona?????"
-        let hour = 10
-        let minute = 2
+        let hour = 12
+        let minute = 17
         let repeats = true
         
         var dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current)
