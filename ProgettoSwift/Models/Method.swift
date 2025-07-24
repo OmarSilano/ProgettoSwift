@@ -13,6 +13,7 @@ enum Method: String, CaseIterable, Codable {
     // Abs
     case upperAbs = "Upper Abs"
     case lowerAbs = "Lower Abs"
+    case fullPack = "Full Pack"
     
     // Arms
     case bicepsArms = "Biceps"
@@ -21,7 +22,7 @@ enum Method: String, CaseIterable, Codable {
     // Shoulders
     case pushShoulders = "Shoulder Press"
     case lateralRaiseShoulders = "Lateral Raise"
-    case rotationShoulders = "Rotation"
+    case rotationShoulders = "Shoulder Pull"
     
     // Legs
     case hPushLegs = "Horizontal Push"

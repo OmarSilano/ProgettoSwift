@@ -48,9 +48,10 @@ struct SettingsView: View {
                         .cornerRadius(10)
                     }
                     
+                    //ChatBotView
                     NavigationLink(destination: ChatBotView()) {
                         HStack {
-                            Text("Chiedi a Atlas🤖")
+                            Text("Ask to Atlas🤖")
                                 .foregroundColor(.white)
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -63,6 +64,7 @@ struct SettingsView: View {
                         .background(Color.black)
                         .cornerRadius(10)
                     }
+                    
                 }
                 .padding(.horizontal)
                 
@@ -81,6 +83,3 @@ struct BannedExercisesView: View {
     }
 }
 
-#Preview {
-    SettingsView()
-}

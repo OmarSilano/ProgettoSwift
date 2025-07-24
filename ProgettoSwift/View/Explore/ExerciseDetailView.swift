@@ -88,12 +88,13 @@ struct ExerciseVideoView: View {
                             player = AVPlayer(url: url)
                             player?.pause()
                         }
-                    }
+                    }/*
                     .onDisappear {
                         player?.pause()
                         player?.seek(to: .zero)
                         isPlaying = false
                     }
+                      */
                 
                 // Play icon overlay
                 if !isPlaying {
