@@ -54,7 +54,7 @@ struct StatsView: View {
     
     private var chartData: [MuscleGroupCount] {
         let manager = WorkoutDayCompletedManager(context: context)
-        let countsDict = manager.fetchCountLast7DaysByMuscle()
+        let countsDict = manager.fetchCountLastNDaysByMuscle(n: 7)
         
         return MuscleGroup.allCases.map { group in
             MuscleGroupCount(muscleGroup: group, count: countsDict[group] ?? 0)
