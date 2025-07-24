@@ -63,12 +63,12 @@ class WorkoutDayCompletedManager {
     }
     
     
-    func fetchCompletionsLast7Days() -> [WorkoutDayCompleted] {
+    func fetchCompletionsLastNDays(n: Int) -> [WorkoutDayCompleted] {
             let request: NSFetchRequest<WorkoutDayCompleted> = WorkoutDayCompleted.fetchRequest()
 
             let calendar = Calendar.current
             let now = Date()
-            guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: now) else {
+            guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -n, to: now) else {
                 return []
             }
 
@@ -78,13 +78,13 @@ class WorkoutDayCompletedManager {
             do {
                 return try context.fetch(request)
             } catch {
-                print("Errore nel recupero completamenti ultimi 7 giorni: \(error)")
+                print("Errore nel recupero completamenti ultimi \(n) giorni: \(error)")
                 return []
             }
         }
     
-    func fetchCountLast7DaysByMuscle() -> [MuscleGroup: Int] {
-            let completions = fetchCompletionsLast7Days()
+    func fetchCountLastNDaysByMuscle(n: Int) -> [MuscleGroup: Int] {
+        let completions = fetchCompletionsLastNDays(n: n)
             var counts: [MuscleGroup: Int] = [:]
             
             for completion in completions {
@@ -136,6 +136,28 @@ class WorkoutDayCompletedManager {
             } catch {
                 print("Errore durante il salvataggio: \(error)")
             }
+        }
+    }
+    
+    func removeCompletion(for day: WorkoutDay, on date: Date) {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        let request: NSFetchRequest<WorkoutDayCompleted> = WorkoutDayCompleted.fetchRequest()
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "workoutDay == %@", day),
+            NSPredicate(format: "date >= %@", startOfDay as NSDate),
+            NSPredicate(format: "date < %@", endOfDay as NSDate)
+        ])
+
+        do {
+            let results = try context.fetch(request)
+            for completion in results {
+                context.delete(completion)
+            }
+            try context.save()
+        } catch {
+            print("Errore nella rimozione del completamento: \(error.localizedDescription)")
         }
     }
 }

@@ -74,39 +74,59 @@ struct ExerciseDetailView: View {
 struct ExerciseVideoView: View {
     let pathToVideo: String?
     @State private var player: AVPlayer? = nil
+    @State private var isPlaying: Bool = false
     
     var body: some View {
-        if let path = pathToVideo,
-           let url = Bundle.main.url(forResource: path, withExtension: nil) {
-            
-            AVPlayerControllerRepresented(player: player ?? AVPlayer(url: url))
-                .frame(height: 250)
-                .onAppear {
-                    if player == nil {
-                        player = AVPlayer(url: url)
-                        player?.pause()
+        ZStack {
+            if let path = pathToVideo,
+               let url = Bundle.main.url(forResource: path, withExtension: nil) {
+                
+                AVPlayerControllerRepresented(player: player ?? AVPlayer(url: url))
+                    .frame(height: 250)
+                    .onAppear {
+                        if player == nil {
+                            player = AVPlayer(url: url)
+                            player?.pause()
+                        }
                     }
+                    .onDisappear {
+                        player?.pause()
+                        player?.seek(to: .zero)
+                        isPlaying = false
+                    }
+                
+                // Play icon overlay
+                if !isPlaying {
+                    Rectangle()
+                        .fill(Color.black.opacity(0.3))
+                        .frame(height: 250)
+                    
+                    Image(systemName: "play.circle.fill")
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                        .foregroundColor(.white)
+                        .onTapGesture {
+                            player?.play()
+                            isPlaying = true
+                        }
                 }
-                .onDisappear {
-                    player?.pause()
-                    player?.seek(to: .zero)
-                }
-            
-        } else {
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .frame(height: 200)
-                .overlay(
-                    Image(systemName: "video.slash")
-                        .font(.system(size: 30))
-                        .foregroundColor(.gray)
-                )
-                .onAppear {
-                    print("❌ Video non trovato: \(pathToVideo ?? "nil")")
-                }
+            } else {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(height: 200)
+                    .overlay(
+                        Image(systemName: "video.slash")
+                            .font(.system(size: 30))
+                            .foregroundColor(.gray)
+                    )
+                    .onAppear {
+                        print("❌ Video non trovato: \(pathToVideo ?? "nil")")
+                    }
+            }
         }
     }
 }
+
 
 // Implementa i controlli completi del VideoPlayer
 struct AVPlayerControllerRepresented: UIViewControllerRepresentable {

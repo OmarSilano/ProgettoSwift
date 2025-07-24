@@ -69,9 +69,11 @@ struct ExploreView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
                 
-                Spacer()
                 
                 if selectedTab == "Workouts" {
+                    
+                    Spacer()
+                    
                     TabView {
                         ForEach(categories) { card in
                             Button {
@@ -100,37 +102,101 @@ struct ExploreView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .frame(height: 300)
                 } else {
-                    VStack(spacing: 12) {
+                    VStack(spacing: 0) {
+                        // Search bar in stile ExercisePickerView
                         HStack {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.gray)
-                            TextField("Cerca un esercizio...", text: $searchText)
-                                .foregroundColor(.white)
-                            
+                            ZStack(alignment: .leading) {
+                                if searchText.isEmpty {
+                                    Text("Cerca un esercizio...")
+                                        .foregroundColor(Color("SubtitleColor"))
+                                        .padding(.horizontal, 14)
+                                }
+
+                                TextField("", text: $searchText)
+                                    .foregroundColor(.white)
+                                    .accentColor(Color("SecondaryColor"))
+                                    .padding(10)
+                            }
+                            .background(Color("ThirdColor"))
+                            .cornerRadius(10)
+
+                            if !searchText.isEmpty {
+                                Button("Cancel") {
+                                    searchText = ""
+                                }
+                                .foregroundColor(.green)
+                            }
                         }
-                        .padding(10)
-                        .background(Color("CardBackground"))
-                        .cornerRadius(10)
                         .padding(.horizontal)
-                        
+                        .padding(.vertical, 8)
+                        .background(Color("PrimaryColor"))
+
+                        // Lista esercizi
                         List {
                             ForEach(MuscleGroup.allCases, id: \.self) { muscle in
-                                if let exercises = filteredExercises[muscle] {
+                                if let exercises = filteredExercises[muscle], !exercises.isEmpty {
                                     Section(
                                         header: Text(muscle.rawValue)
-                                            .font(.headline)
+                                            .font(.system(size: 16, weight: .bold))
                                             .foregroundColor(.white)
                                     ) {
                                         ForEach(exercises, id: \.objectID) { exercise in
-                                            ExerciseRow(exercise: exercise)
-                                                .listRowBackground(Color("PrimaryColor"))
+                                            NavigationLink {
+                                                ExerciseDetailView(exercise: exercise)
+                                            } label: {
+                                                HStack {
+                                                    // Immagine
+                                                    if exercise.isBanned {
+                                                        Image(systemName: "lock.fill")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .foregroundColor(Color(red: 46/255, green: 44/255, blue: 44/255))
+                                                            .frame(width: 40, height: 40)
+                                                            .cornerRadius(6)
+                                                    } else if let imageName = exercise.pathToImage,
+                                                              let uiImage = UIImage(named: imageName) {
+                                                        Image(uiImage: uiImage)
+                                                            .resizable()
+                                                            .frame(width: 40, height: 40)
+                                                            .cornerRadius(6)
+                                                    } else {
+                                                        Rectangle()
+                                                            .fill(Color.gray)
+                                                            .frame(width: 40, height: 40)
+                                                            .cornerRadius(6)
+                                                    }
+
+                                                    
+                                                    // Nome esercizio
+                                                    Text(exercise.name ?? "Unnamed")
+                                                        .foregroundColor(.white)
+                                                        .opacity(exercise.isBanned ? 0.4 : 1.0)
+                                                        .font(.body)
+                                                        .padding(.leading, 8)
+                                                    
+                                                    Spacer()
+                                                }
+                                                .padding(8)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .fill(
+                                                                    exercise.isBanned
+                                                                        ? Color(red: 13/255, green: 13/255, blue: 13/255)
+                                                                        : Color(red: 46/255, green: 44/255, blue: 44/255)
+                                                                )                                                )
+                                            }
+                                            .listRowBackground(
+                                                exercise.isBanned
+                                                    ? Color(red: 13/255, green: 13/255, blue: 13/255)
+                                                    : Color(red: 46/255, green: 44/255, blue: 44/255)
+                                                )
                                         }
                                     }
                                     .listRowBackground(Color("PrimaryColor"))
                                 }
                             }
                         }
-                        .listStyle(.plain)
+                        .listStyle(.insetGrouped)
                         .scrollContentBackground(.hidden)
                         .background(Color("PrimaryColor").ignoresSafeArea())
                         .onAppear {
@@ -139,6 +205,7 @@ struct ExploreView: View {
                         }
                     }
                 }
+
                 
                 Spacer()
             }
