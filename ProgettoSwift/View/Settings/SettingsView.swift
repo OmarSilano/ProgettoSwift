@@ -48,9 +48,10 @@ struct SettingsView: View {
                         .cornerRadius(10)
                     }
                     
-                    NavigationLink(destination: ChatBotView()) {
+                    // Permissions
+                    NavigationLink(destination: PermissionsView()) {
                         HStack {
-                            Text("Chiedi a Atlas🤖")
+                            Text("Permissions")
                                 .foregroundColor(.white)
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -63,6 +64,23 @@ struct SettingsView: View {
                         .background(Color.black)
                         .cornerRadius(10)
                     }
+                    
+                    NavigationLink(destination: ChatBotView()) {
+                        HStack {
+                            Text("Ask to Atlas🤖")
+                                .foregroundColor(.white)
+                                .font(.title3)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal)
+                        .frame(height: 80)
+                        .background(Color.black)
+                        .cornerRadius(10)
+                    }
+                    
                 }
                 .padding(.horizontal)
                 
