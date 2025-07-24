@@ -127,7 +127,7 @@ struct SavedWorkoutDetailView: View {
             }
             .onAppear {
                 let manager = WorkoutDayCompletedManager(context: context)
-                let completions = manager.fetchCompletionsLast7Days()
+                let completions = manager.fetchCompletionsLastNDays(n: 7)
                 let today = Calendar.current.startOfDay(for: Date())
 
                 completedTodayIDs = Set(
