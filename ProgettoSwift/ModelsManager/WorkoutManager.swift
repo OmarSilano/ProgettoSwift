@@ -34,6 +34,121 @@ class WorkoutManager {
         )
         return workout
     }
+    
+    // MARK: - Private Seed Structures
+    private struct WorkoutSeed: Codable {
+        let category: String
+        let difficulty: String
+        let name: String
+        let weeks: Int16
+        let pathToImage: String
+        let days: [WorkoutDaySeed]
+    }
+    private struct WorkoutDaySeed: Codable {
+        let name: String
+        let details: [WorkoutDayDetailSeed]
+    }
+    private struct WorkoutDayDetailSeed: Codable {
+        let exerciseName: String
+        let typologyName: String
+    }
+    
+    // MARK: - Caricamento default workout
+    private func createWorkoutFromSeed(_ seed: WorkoutSeed) {
+        let workoutDayManager = WorkoutDayManager(context: context)
+        let detailManager = WorkoutDayDetailManager(context: context)
+        let typologyManager = TypologyManager(context: context)
+        let exerciseManager = ExerciseManager(context: context)
+
+        // Crea il Workout base
+        let workout = Workout(
+            context: context,
+            name: seed.name,
+            weeks: seed.weeks,
+            imagePath: seed.pathToImage,
+            difficulty: Difficulty(rawValue: seed.difficulty),
+            category: Category(rawValue: seed.category),
+            isSaved: false // sempre false per i default
+        )
+
+        // Recupera tutti gli esercizi disponibili
+        let allExercises = exerciseManager.fetchAllExercises()
+
+        for daySeed in seed.days {
+            // Crea WorkoutDay
+            let workoutDay = workoutDayManager.createTempWorkoutDay(
+                isCompleted: false,
+                name: daySeed.name,
+                muscles: [],
+                workout: workout,
+            )
+
+            // Crea i dettagli del giorno
+            for detailSeed in daySeed.details {
+                // Trova l'esercizio per nome
+                guard let exercise = allExercises.first(where: { $0.name == detailSeed.exerciseName }) else {
+                    print("⚠️ Esercizio '\(detailSeed.exerciseName)' non trovato, skip.")
+                    continue
+                }
+
+                // Trova la tipologia
+                guard let typology = typologyManager.fetchAllTypologies().first(where: { $0.name == detailSeed.typologyName }) else {
+                    print("⚠️ Tipologia '\(detailSeed.typologyName)' non trovata, skip.")
+                    continue
+                }
+
+                // Crea il dettaglio
+                _ = detailManager.createTempWorkoutDayDetail(
+                    workoutDay: workoutDay,
+                    exercise: exercise,
+                    typology: typology
+                )
+            }
+
+            // ✅ Aggiorna automaticamente i muscoli del giorno
+            workoutDay.updateMusclesFromDetails()
+        }
+
+        print("✅ Workout '\(seed.name)' creato correttamente!")
+    }
+    
+    func preloadDefaultWorkouts() {
+        // Controllo se i workout di default esistono già
+        let existing = fetchAllWorkouts().filter { $0.category != nil }
+        if !existing.isEmpty {
+            print("⚠️ Workout di default già presenti, skip.")
+            return
+        }
+
+        // Recupero il JSON
+        guard let url = Bundle.main.url(forResource: "workout", withExtension: "json") else {
+            print("❌ JSON workout non trovato!")
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let seeds = try decoder.decode([WorkoutSeed].self, from: data)
+
+            print("📄 Preload di \(seeds.count) workout di default dal JSON...")
+
+            for seed in seeds {
+                print("➡️ Creazione workout '\(seed.name)'...")
+                createWorkoutFromSeed(seed) // Crea TUTTO in memoria
+            }
+
+            // Unico salvataggio per tutto il preload
+            saveContext()
+            print("✅ Tutti i workout di default caricati con successo.")
+
+        } catch {
+            print("❌ Errore caricamento JSON workout: \(error)")
+        }
+    }
+
+
+
 
     // MARK: - Create
     @discardableResult
@@ -150,8 +265,8 @@ class WorkoutManager {
             name: original.name ?? "Unnamed",
             weeks: original.weeks,
             imagePath: original.pathToImage,
-            difficulty: Difficulty(rawValue: original.difficulty ?? ""),
-            category: Category(rawValue: original.category ?? ""),
+            difficulty: nil,
+            category: nil,
             isSaved: true
         )
 
@@ -164,7 +279,6 @@ class WorkoutManager {
                 clonedDay.name = originalDay.name
                 clonedDay.isCompleted = false
                 clonedDay.workout = clonedWorkout
-                clonedDay.muscles = originalDay.muscles
 
                 totalDays += 1
 
@@ -177,6 +291,9 @@ class WorkoutManager {
                         clonedDetail.workoutDay = clonedDay
                     }
                 }
+                
+                // Calcola muscoli del giorno
+                clonedDay.updateMusclesFromDetails()
             }
         }
 
@@ -187,7 +304,7 @@ class WorkoutManager {
         print("✅ Workout '\(clonedWorkout.name ?? "Workout")' clonato con successo.")
     }
 
-    
+    /*
     func preloadDefaultWorkouts() {
         let workoutDayManager = WorkoutDayManager(context: context)
         let exerciseManager = ExerciseManager(context: context)
@@ -332,7 +449,7 @@ class WorkoutManager {
         }
     }
 
-
+*/
 
 
 }

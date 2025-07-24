@@ -1,9 +1,3 @@
-//
-//  Method.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 10/07/25.
-//
 import Foundation
 
 enum Method: String, CaseIterable, Codable {

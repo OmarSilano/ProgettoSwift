@@ -65,7 +65,7 @@ HStack {
                 } else {
                     List {
                         ForEach(workouts) { workout in
-                            NavigationLink(destination: SavedWorkoutDetailView(workout: workout)) {
+                            NavigationLink(destination: SavedWorkoutDetailView(workoutID: workout.objectID)) {
                                 WorkoutRow(workout: workout)
                             }
                             .contextMenu {

@@ -5,11 +5,22 @@ struct WorkoutCardView: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: "dumbbell.fill")
-                .resizable()
-                .frame(width: 40, height: 40)
-                .foregroundColor(Color("FourthColor"))
-            
+            if let imgName = workout.pathToImage,
+               !imgName.isEmpty,
+               UIImage(named: imgName) != nil
+            {
+                Image(imgName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            } else {
+                Image(systemName: "dumbbell.fill")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(Color("FourthColor"))
+            }
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(workout.name ?? "Unnamed")
                     .foregroundColor(.white)
@@ -20,6 +31,7 @@ struct WorkoutCardView: View {
             }
         }
         .padding(.vertical, 8)
+
     }
 }
 

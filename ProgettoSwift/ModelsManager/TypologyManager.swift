@@ -16,12 +16,12 @@ import CoreData
 class TypologyManager {
     
     private let context: NSManagedObjectContext
-    static let defaultDetail :String = "No Details..."
-
+    static let defaultDetail: String = "No Details..."
+    
     init(context: NSManagedObjectContext) {
         self.context = context
     }
-
+    
     // MARK: - Create
     @discardableResult
     func createTypology(name: String,
@@ -29,14 +29,14 @@ class TypologyManager {
                         isDefault: Bool = false) -> Typology {
         
         let typology = Typology(context: context,
-                              name: name,
-                              detail: detail,
-                              isDefault: isDefault)
+                                name: name,
+                                detail: detail,
+                                isDefault: isDefault)
         
         saveContext()
         return typology
     }
-
+    
     // MARK: - Read
     func fetchAllTypologies() -> [Typology] {
         let request: NSFetchRequest<Typology> = Typology.fetchRequest()
@@ -47,7 +47,7 @@ class TypologyManager {
             return []
         }
     }
-
+    
     func fetchTypology(byID id: UUID) -> Typology? {
         let request: NSFetchRequest<Typology> = Typology.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
@@ -60,13 +60,13 @@ class TypologyManager {
             return nil
         }
     }
-
+    
     // MARK: - Update
     func updateTypology(_ typology: Typology,
                         name: String? = nil,
                         detail: String? = nil,
                         isDefault: Bool? = nil
-                       ) {
+    ) {
         
         if let name = name { typology.name = name }
         if let detail = detail { typology.detail = detail }
@@ -74,13 +74,13 @@ class TypologyManager {
         
         saveContext()
     }
-
+    
     // MARK: - Delete
     func deleteTypology(_ typology: Typology) {
         context.delete(typology)
         saveContext()
     }
-
+    
     // MARK: - Save Context
     private func saveContext() {
         if context.hasChanges {
@@ -95,7 +95,7 @@ class TypologyManager {
     func preloadDefaultTypologies() {
         let request: NSFetchRequest<Typology> = Typology.fetchRequest()
         request.predicate = NSPredicate(format: "isDefault == true") // controlliamo solo le default
-
+        
         do {
             let count = try context.count(for: request)
             
@@ -125,8 +125,8 @@ class TypologyManager {
             print("❌ Errore nel preload delle tipologie di default: \(error)")
         }
     }
-
-
-
+    
+    
+    
     
 }

@@ -5,7 +5,7 @@ struct TrainingMetodologyView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) var context
-
+    
     // Fetch metodologie default (non modificabili)
     @FetchRequest(
         entity: Typology.entity(),
@@ -13,7 +13,7 @@ struct TrainingMetodologyView: View {
         predicate: NSPredicate(format: "isDefault == true"),
         animation: .default
     ) var defaultTypologies: FetchedResults<Typology>
-
+    
     // Fetch metodologie utente (modificabili)
     @FetchRequest(
         entity: Typology.entity(),
@@ -21,7 +21,7 @@ struct TrainingMetodologyView: View {
         predicate: NSPredicate(format: "isDefault == false"),
         animation: .default
     ) var userTypologies: FetchedResults<Typology>
-
+    
     @State private var expandedTypologyID: UUID? = nil
     
     var body: some View {
@@ -85,7 +85,7 @@ struct TrainingMetodologyView: View {
                                 )
                             }
                         }
-
+                        
                         Spacer().frame(height: 100)
                     }
                 }
@@ -106,18 +106,21 @@ struct TrainingMetodologyView: View {
             .background(Color("PrimaryColor").ignoresSafeArea())
             .toolbar(.hidden, for: .tabBar)
             .navigationBarHidden(true)
+            .onAppear {
+                expandedTypologyID = nil
+            }
         }
     }
 }
 
+
 struct TypologyRow: View {
-    let typology: Typology
+    @ObservedObject var typology: Typology
     @Binding var expandedID: UUID?
     let canEdit: Bool
     let context: NSManagedObjectContext
-
+    
     @State private var showDeleteConfirmation = false
-    @State private var navigateToEdit = false
     
     var isExpanded: Bool {
         expandedID == typology.id
@@ -133,15 +136,8 @@ struct TypologyRow: View {
                 Spacer()
                 
                 if canEdit {
-                    NavigationLink(
-                        destination: EditMetodologyView(typology: typology),
-                        isActive: $navigateToEdit
-                    ) {
-                        EmptyView()
-                    }
-                    
-                    Button {
-                        navigateToEdit = true
+                    NavigationLink {
+                        EditMetodologyView(typology: typology)
                     } label: {
                         Image(systemName: "pencil")
                             .foregroundColor(.gray)
@@ -196,11 +192,9 @@ struct TypologyRow: View {
     }
     
     private func deleteTypology() {
-        context.delete(typology)
-        do {
-            try context.save()
-        } catch {
-            print("Errore nella cancellazione: \(error)")
+        let manager = TypologyManager(context: context)
+        withAnimation {
+            manager.deleteTypology(typology)
         }
     }
 }
