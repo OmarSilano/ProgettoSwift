@@ -81,6 +81,3 @@ struct BannedExercisesView: View {
     }
 }
 
-#Preview {
-    SettingsView()
-}
