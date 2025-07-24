@@ -11,6 +11,8 @@ struct WorkoutView: View {
     @State private var selectedWorkout: Workout?
     @State private var showActionSheet = false
     @State private var workoutToEdit: Workout? = nil
+    @State private var shareURL: URL?
+    
     @Environment(\.managedObjectContext) private var context
 
     var body: some View {
@@ -64,7 +66,9 @@ struct WorkoutView: View {
                                 Button("Edit") {
                                     workoutToEdit = workout
                                 }
-                                Button("Share") { /* Da fare */ }
+                                Button("Share") {
+                                        shareWorkout(workout)
+                                    }
                                 Button("Delete", role: .destructive) {
                                     deleteWorkout(workout)
                                 }
@@ -75,6 +79,12 @@ struct WorkoutView: View {
                     .listStyle(PlainListStyle())
                 }
             }
+            .sheet(item: $shareURL) { url in
+                ShareSheet(items: [url]) {
+                    shareURL = nil
+                }
+            }
+
             .background(Color("PrimaryColor").ignoresSafeArea())
             .navigationBarHidden(true)
             .toolbar(.visible, for: .tabBar)
@@ -88,6 +98,15 @@ struct WorkoutView: View {
                     EditWorkoutView(workout: workout)
                 }
             }
+        }
+        
+    }
+    
+    private func shareWorkout(_ workout: Workout) {
+        let plainText = workout.toPlainText()  // ✅ ora usa la versione pulita
+        if let url = saveAsTextFile(plainText, filename: workout.name ?? "Workout") {
+            print("✅ File pronto per la condivisione: \(url.path)")
+            shareURL = url
         }
     }
 
@@ -147,4 +166,9 @@ private struct WorkoutRow: View {
         .padding(12)
         .cornerRadius(12)
     }
+}
+
+// MARK: - URL Identifiable (per .sheet(item:))
+extension URL: Identifiable {
+    public var id: String { absoluteString }
 }

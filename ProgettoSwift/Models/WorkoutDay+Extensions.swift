@@ -18,7 +18,7 @@ extension WorkoutDay {
             muscles = newValue.map { $0.rawValue } as NSObject
         }
     }
-
+    
     // ricalcola i gruppi muscolari allenati
     func updateMusclesFromDetails() {
         // Prendi i dettagli associati al giorno di allenamento
@@ -26,20 +26,20 @@ extension WorkoutDay {
             musclesList = []
             return
         }
-
+        
         // Raccogli i muscoli degli esercizi, se validi
         let muscles = details.compactMap { $0.exercise?.muscle }
-
+        
         // Converti le stringhe in enum MuscleGroup
         let groups = muscles.compactMap { MuscleGroup(rawValue: $0) }
-
+        
         // Rimuovi duplicati e ordina
         let uniqueSorted = Array(Set(groups)).sorted { $0.rawValue < $1.rawValue }
-
+        
         // Salva nella variabile musclesList
         musclesList = uniqueSorted
     }
-
+    
     
     convenience init(context: NSManagedObjectContext,
                      id: UUID = UUID(),
@@ -53,5 +53,24 @@ extension WorkoutDay {
         self.isCompleted = isCompleted
         self.workout = workout
         self.musclesList = [] // inizialmente vuoto
+    }
+    
+    func toPlainText() -> String {
+        var txt = "📅 Day: \(name ?? "Workout Day")\n"
+        
+        let muscles = musclesList.map { $0.rawValue }
+        if !muscles.isEmpty {
+            txt += "Muscles: \(muscles.joined(separator: ", "))\n"
+        }
+        
+        let details = (workoutDayDetail?.allObjects as? [WorkoutDayDetail]) ?? []
+        for detail in details {
+            let exName = detail.exercise?.name ?? "Unknown"
+            let typology = detail.typology?.name ?? "-"
+            txt += "- \(exName) • \(typology)\n"
+        }
+        
+        txt += "\n"
+        return txt
     }
 }
