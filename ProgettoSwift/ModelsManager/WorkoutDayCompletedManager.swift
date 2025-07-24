@@ -138,4 +138,26 @@ class WorkoutDayCompletedManager {
             }
         }
     }
+    
+    func removeCompletion(for day: WorkoutDay, on date: Date) {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        let request: NSFetchRequest<WorkoutDayCompleted> = WorkoutDayCompleted.fetchRequest()
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "workoutDay == %@", day),
+            NSPredicate(format: "date >= %@", startOfDay as NSDate),
+            NSPredicate(format: "date < %@", endOfDay as NSDate)
+        ])
+
+        do {
+            let results = try context.fetch(request)
+            for completion in results {
+                context.delete(completion)
+            }
+            try context.save()
+        } catch {
+            print("Errore nella rimozione del completamento: \(error.localizedDescription)")
+        }
+    }
 }
