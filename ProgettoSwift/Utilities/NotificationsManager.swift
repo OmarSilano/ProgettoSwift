@@ -4,28 +4,8 @@ import CoreData
 
 class Notifications {
     
-    // Chiedo il permesso all'utente di inviargli notifiche
-    @discardableResult
-    func requestNotificationPermission() async -> Bool {
-        let center = UNUserNotificationCenter.current()
-        let settings = await center.notificationSettings()
-        
-        if settings.authorizationStatus == .notDetermined {
-            do {
-                return try await center.requestAuthorization(options: [.alert, .sound, .badge])
-            } catch {
-                print("Error: request notification permission")
-                return false
-            }
-        }
-        
-        return settings.authorizationStatus == .authorized
-    }
-
-
-    
     //è solo una prova va eliminata
-    func dispatchNotification() {
+    func dispatchNotification() async {
         
         let identifier = "prova"
         let title = "notifica di prova"
@@ -38,12 +18,12 @@ class Notifications {
         dateComponents.hour = hour
         dateComponents.minute = minute
         
-        scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
+        await scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
         
     }
     
     //Notifica che ogni lunedì alle 7 di mattina ti ricorda di allenarti
-    func dispatchNotificationEveryMonday() {
+    func dispatchNotificationEveryMonday() async {
         
         let identifier = "monday"
         let title = "A new week has started!"
@@ -58,7 +38,7 @@ class Notifications {
         dateComponents.hour = hour
         dateComponents.minute = minute
         
-        scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
+        await scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
     }
     
     /*
@@ -92,13 +72,21 @@ class Notifications {
     }
      */
     
+    //metodo per cancellare le notifiche
+    func cancelNotification(with identifier: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        print("Notifica \(identifier) cancellata.")
+    }
+
+    
     
     // Funzione generica per pianificare una notifica, chiamato dai dispatch
-    private func scheduleNotification(title: String, body: String, identifier: String, dateComponents: DateComponents, repeats: Bool) {
+    private func scheduleNotification(title: String, body: String, identifier: String, dateComponents: DateComponents, repeats: Bool) async {
+        
+        let granted :Bool = await areNotificationsEnabled()
         
         //Verifico di avere i permessi
-        checkNotificationPermission { allowed in
-            guard allowed else {
+            guard granted else {
                 print("Permesso negato, non invio notifica")
                 return
             }
@@ -113,22 +101,23 @@ class Notifications {
             
             let request = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: trigger)
             
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Errore nella notifica: \(error.localizedDescription)")
-                } else {
-                    print("Notifica \(identifier) programmata con successo.")
-                }
-            }
+        do {
+            try await UNUserNotificationCenter.current().add(request)
+            print("Notifica \(identifier) programmata con successo.")
+        } catch {
+            print("Errore nella programmazione della notifica \(identifier): \(error.localizedDescription)")
+        }
+
         }
     }
     
     //true se ho i permessi di notifiche, false altrimenti
-    private func checkNotificationPermission(completion: @escaping (Bool) -> Void) {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            completion(settings.authorizationStatus == .authorized)
-        }
+    private func areNotificationsEnabled() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .authorized
     }
     
     
-}
+    
+    
+
