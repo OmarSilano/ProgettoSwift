@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreData
 
 struct SavedWorkoutDetailView: View {
     let workout: Workout
@@ -15,7 +16,7 @@ struct SavedWorkoutDetailView: View {
                 // MARK: – Header
                 HStack {
                     Button {
-                    dismiss()
+                        dismiss()
                     } label: {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.white)
@@ -44,9 +45,9 @@ struct SavedWorkoutDetailView: View {
                 .padding(.top, 20)
 
                 // MARK: – Immagine
-                if (workout.category != nil) {    //allora è un workout di default
+                if workout.category != nil {
                     DefaultWorkoutImageView(imageName: workout.pathToImage)
-                } else {    //...altrimenti è un workout creato dall'utente
+                } else {
                     UserWorkoutImageView(imageName: workout.pathToImage)
                 }
 
@@ -85,15 +86,20 @@ struct SavedWorkoutDetailView: View {
             }
             .padding(.top)
         }
-        
         .background(Color("PrimaryColor").ignoresSafeArea())
-//        .navigationBarHidden(true) // nessuna nav bar nativa
         .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
-            Button("Mark as Done") {
-                if let selectedDay {
-                    let manager = WorkoutDayCompletedManager(context: viewContext)
-                    manager.markAsCompleted(workoutDay: selectedDay, date: Date())
-                    if let id = selectedDay.id {
+            
+            if let selectedDay = selectedDay, let id = selectedDay.id {
+                if completedTodayIDs.contains(id) {
+                    Button("Mark as Not Done", role: .destructive) {
+                        let manager = WorkoutDayCompletedManager(context: viewContext)
+                        manager.removeCompletion(for: selectedDay, on: Date())
+                        completedTodayIDs.remove(id)
+                    }
+                } else {
+                    Button("Mark as Done") {
+                        let manager = WorkoutDayCompletedManager(context: viewContext)
+                        manager.markAsCompleted(workoutDay: selectedDay, date: Date())
                         completedTodayIDs.insert(id)
                     }
                 }
@@ -104,7 +110,6 @@ struct SavedWorkoutDetailView: View {
             Button("Delete", role: .destructive) { /* Da implementare */ }
             Button("Cancel", role: .cancel) {}
         }
-
         .tint(nil)
         .onAppear {
             let manager = WorkoutDayCompletedManager(context: viewContext)
@@ -122,13 +127,13 @@ struct SavedWorkoutDetailView: View {
                     }
                     .compactMap { $0.workoutDay?.id }
             )
-                print("Workout pathToImage: \(workout.pathToImage ?? "nil")")
 
+            print("Workout pathToImage: \(workout.pathToImage ?? "nil")")
         }
         .navigationBarBackButtonHidden(true)
-
     }
 }
+
 
 struct WorkoutDayRowViewWithActionSheet: View {
     let day: WorkoutDay
