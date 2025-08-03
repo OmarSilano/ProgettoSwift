@@ -91,7 +91,7 @@ struct StatsView: View {
                         dateSelected: $selectedDate,
                         markedDates: markedDates
                     )
-                    .id(markedDates.hashValue)
+                    .id(completions.map(\.objectID).hashValue)  // Forza la ricostruzione della CalendarView ogni volta che la lista di workoutDayCompleted cambia.
                     .frame(height: 500)
                     .cornerRadius(8)
                     .padding(.top, 10)
