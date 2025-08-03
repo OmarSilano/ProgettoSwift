@@ -9,6 +9,10 @@ import CoreData
 
 extension Exercise {
 
+    var muscleGroupEnum: MuscleGroup? {
+            guard let raw = self.muscle else { return nil }
+            return MuscleGroup(rawValue: raw)
+        }
 
     
     // Costruttore custom
