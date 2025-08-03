@@ -91,6 +91,7 @@ struct StatsView: View {
                         dateSelected: $selectedDate,
                         markedDates: markedDates
                     )
+                    .id(markedDates.hashValue)
                     .frame(height: 500)
                     .cornerRadius(8)
                     .padding(.top, 10)
