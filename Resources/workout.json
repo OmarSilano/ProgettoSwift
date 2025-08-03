@@ -10,11 +10,11 @@
         "name": "Day 1 - Chest & Triceps",
         "details": [
           {
-            "exerciseName": "Bench Press",
+            "exerciseName": "Close Stance Push Up",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Triceps Dip",
+            "exerciseName": "Dumbbell Single Arm Tricep Extension",
             "typologyName": "4x10"
           }
         ]
@@ -23,11 +23,11 @@
         "name": "Day 2 - Back & Biceps",
         "details": [
           {
-            "exerciseName": "Barbell Row",
+            "exerciseName": "Straight Arm Rope Pulldown",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Bicep Curl",
+            "exerciseName": "Hammer Curl",
             "typologyName": "4x10"
           }
         ]
@@ -36,15 +36,15 @@
         "name": "Day 3 - Legs & Shoulders",
         "details": [
           {
-            "exerciseName": "Squat",
+            "exerciseName": "Jump Squats",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Lateral Raise",
+            "exerciseName": "Barbell Push Press",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Crunch",
+            "exerciseName": "Ab Crunch",
             "typologyName": "4x10"
           }
         ]

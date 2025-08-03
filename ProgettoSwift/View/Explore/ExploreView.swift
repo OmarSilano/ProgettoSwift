@@ -11,12 +11,28 @@ struct ExploreView: View {
     @Environment(\.managedObjectContext) private var context
     @State private var selectedTab = "Workouts"
     @State private var explorePath = NavigationPath()
-    @State private var groupedExercises: [MuscleGroup: [Exercise]] = [:]
     @State private var searchText = ""
+    @State private var refreshTrigger = false
+
     
     
     @EnvironmentObject var tabRouter: TabRouter
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.name, ascending: true)],
+        animation: .default
+    )
+    private var allExercises: FetchedResults<Exercise>
+    private var groupedExercises: [MuscleGroup: [Exercise]] {
+        Dictionary(
+            grouping: allExercises.compactMap { exercise in
+                guard let _ = exercise.muscleGroupEnum else { return nil }
+                return exercise
+            },
+            by: { $0.muscleGroupEnum! }
+        )
+    }
+
     
     private let categories: [CategoryCard] = Category.allCases.map {
         CategoryCard(category: $0, imageName: $0.rawValue, description: "Explore \($0.rawValue) workouts.")
@@ -143,6 +159,9 @@ struct ExploreView: View {
                                         ForEach(exercises, id: \.objectID) { exercise in
                                             NavigationLink {
                                                 ExerciseDetailView(exercise: exercise)
+                                                    .onDisappear {
+                                                        refreshTrigger.toggle()
+                                                    }
                                             } label: {
                                                 HStack {
                                                     // Immagine
@@ -196,13 +215,10 @@ struct ExploreView: View {
                                 }
                             }
                         }
+                        .id(refreshTrigger)
                         .listStyle(.insetGrouped)
                         .scrollContentBackground(.hidden)
                         .background(Color("PrimaryColor").ignoresSafeArea())
-                        .onAppear {
-                            let manager = ExerciseManager(context: context)
-                            groupedExercises = manager.fetchExercisesGroupedByMuscle()
-                        }
                     }
                 }
 
