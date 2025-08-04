@@ -315,7 +315,6 @@ struct EditWorkoutView: View {
     }
 
     private func handleImageSelected(_ image: UIImage) {
-        createImagesDirectoryIfNeeded()
         let imageName = UUID().uuidString + ".jpg"
         if let savedPath = saveImageToDocuments(image, imageName: imageName) {
             print("Immagine aggiornata in: \(savedPath)")

@@ -266,9 +266,17 @@ class WorkoutManager {
             weeks: original.weeks,
             imagePath: original.pathToImage,
             difficulty: nil,
-            category: original.category != nil ? Category(rawValue: original.category!) : nil,
+            category: nil,  //se salvo un workout, avrò una copia personalizzata e non considerato di default
             isSaved: true
         )
+        
+        //sto salvando un workout preso da quelli di default: salvo l'immagine default in documents/images
+        if let originalImageName = original.pathToImage {
+            if let newImagePath = saveDefaultImageToDocuments(imageName: originalImageName) {
+                clonedWorkout.pathToImage = newImagePath
+            }
+        }
+
 
         var totalDays: Int = 0
 
