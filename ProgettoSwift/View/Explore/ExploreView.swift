@@ -13,7 +13,7 @@ struct ExploreView: View {
     @State private var explorePath = NavigationPath()
     @State private var searchText = ""
     @State private var refreshTrigger = false
-
+    
     
     
     @EnvironmentObject var tabRouter: TabRouter
@@ -32,7 +32,7 @@ struct ExploreView: View {
             by: { $0.muscleGroupEnum! }
         )
     }
-
+    
     
     private let categories: [CategoryCard] = Category.allCases.map {
         CategoryCard(category: $0, imageName: $0.rawValue, description: "Explore \($0.rawValue) workouts.")
@@ -110,12 +110,14 @@ struct ExploreView: View {
                                     Text(card.description)
                                         .font(.subheadline)
                                         .foregroundColor(.white)
+                                    
+                                    Spacer().frame(height: 50)
                                 }
                                 .padding(.bottom, 10)
                             }
                         }
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                     .frame(height: 300)
                 } else {
                     VStack(spacing: 0) {
@@ -127,7 +129,7 @@ struct ExploreView: View {
                                         .foregroundColor(Color("SubtitleColor"))
                                         .padding(.horizontal, 14)
                                 }
-
+                                
                                 TextField("", text: $searchText)
                                     .foregroundColor(.white)
                                     .accentColor(Color("SecondaryColor"))
@@ -135,7 +137,7 @@ struct ExploreView: View {
                             }
                             .background(Color("ThirdColor"))
                             .cornerRadius(10)
-
+                            
                             if !searchText.isEmpty {
                                 Button("Cancel") {
                                     searchText = ""
@@ -146,7 +148,7 @@ struct ExploreView: View {
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                         .background(Color("PrimaryColor"))
-
+                        
                         // Lista esercizi
                         List {
                             ForEach(MuscleGroup.allCases, id: \.self) { muscle in
@@ -184,7 +186,7 @@ struct ExploreView: View {
                                                             .frame(width: 40, height: 40)
                                                             .cornerRadius(6)
                                                     }
-
+                                                    
                                                     
                                                     // Nome esercizio
                                                     Text(exercise.name ?? "Unnamed")
@@ -199,16 +201,16 @@ struct ExploreView: View {
                                                 .background(
                                                     RoundedRectangle(cornerRadius: 8)
                                                         .fill(
-                                                                    exercise.isBanned
-                                                                        ? Color(red: 13/255, green: 13/255, blue: 13/255)
-                                                                        : Color(red: 46/255, green: 44/255, blue: 44/255)
-                                                                )                                                )
+                                                            exercise.isBanned
+                                                            ? Color(red: 13/255, green: 13/255, blue: 13/255)
+                                                            : Color(red: 46/255, green: 44/255, blue: 44/255)
+                                                        )                                                )
                                             }
                                             .listRowBackground(
                                                 exercise.isBanned
-                                                    ? Color(red: 13/255, green: 13/255, blue: 13/255)
-                                                    : Color(red: 46/255, green: 44/255, blue: 44/255)
-                                                )
+                                                ? Color(red: 13/255, green: 13/255, blue: 13/255)
+                                                : Color(red: 46/255, green: 44/255, blue: 44/255)
+                                            )
                                         }
                                     }
                                     .listRowBackground(Color("PrimaryColor"))
@@ -221,7 +223,7 @@ struct ExploreView: View {
                         .background(Color("PrimaryColor").ignoresSafeArea())
                     }
                 }
-
+                
                 
                 Spacer()
             }

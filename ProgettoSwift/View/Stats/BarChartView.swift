@@ -1,9 +1,3 @@
-//
-//  ChartView.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 17/07/25.
-//
 import SwiftUI
 import Charts
 
@@ -13,17 +7,11 @@ struct MuscleGroupCount: Identifiable {
     let count: Int
 }
 
-struct ChartView: View {
+struct BarChartView: View {
     let data: [MuscleGroupCount]
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Last 7 Days: Exercises Done by Muscle")
-                .font(.headline)
-                .padding(.bottom, 8)
-                .padding(.leading, 16)
-                .foregroundColor(.white)
-            
+        VStack(alignment: .leading) {            
             Chart(data) { item in
                 BarMark(
                     x: .value("Muscle Group", item.muscleGroup.rawValue),
@@ -55,7 +43,6 @@ struct ChartView: View {
             .padding(.horizontal)
         }
         .padding(.vertical, 24)
-        .frame(maxWidth: .infinity)
         .background(Color("CardBackground"))
         .cornerRadius(16)
     }

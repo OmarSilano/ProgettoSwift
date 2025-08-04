@@ -25,40 +25,46 @@ struct StatsView: View {
         }
     }()
     
+    @State private var selectedPeriod: StatsPeriod = .last7Days
+    
     @State private var selectedDate: DateComponents? = nil
     
     private var completionsForSelectedDate: [WorkoutDayCompleted] {
-            guard let selectedDate else { return [] }
-            
-            let normalizedSelected = selectedDate.normalized()
-            
-            return completions.filter { completion in
-                guard let date = completion.date else { return false }
-                let comp = date.asNormalizedComponents()
-                return comp == normalizedSelected
-            }
+        guard let selectedDate else { return [] }
+        
+        let normalizedSelected = selectedDate.normalized()
+        
+        return completions.filter { completion in
+            guard let date = completion.date else { return false }
+            let comp = date.asNormalizedComponents()
+            return comp == normalizedSelected
         }
+    }
     
     @State private var showSheet = false
     
     @State var expandedDayID: UUID? = nil
     
     private var markedDates: Set<DateComponents> {
-            let calendar = Calendar.current
-            return Set(
-                completions.compactMap { completion in
-                    completion.date?.asNormalizedComponents(calendar: calendar)
-                }
-            )
-        }
+        let calendar = Calendar.current
+        return Set(
+            completions.compactMap { completion in
+                completion.date?.asNormalizedComponents(calendar: calendar)
+            }
+        )
+    }
     
     private var chartData: [MuscleGroupCount] {
         let manager = WorkoutDayCompletedManager(context: context)
-        let countsDict = manager.fetchCountLastNDaysByMuscle(n: 7)
+        let countsDict = manager.fetchCountLastNDaysByMuscle(n: selectedPeriod.days)
         
         return MuscleGroup.allCases.map { group in
             MuscleGroupCount(muscleGroup: group, count: countsDict[group] ?? 0)
         }
+    }
+    
+    private var isChartEmpty: Bool {
+        chartData.allSatisfy { $0.count == 0 }
     }
     
     
@@ -109,23 +115,24 @@ struct StatsView: View {
                                 .bold()
                                 .foregroundColor(Color("FourthColor"))
                                 .padding(.top, 16)
-
-                            List(completionsForSelectedDate, id: \.objectID) { completion in
-                                if let workoutDay = completion.workoutDay {
-                                    let workoutName = workoutDay.workout?.name ?? "Workout"
-                                    let workoutDayName = workoutDay.name ?? "WorkoutDay"
-                                    let formattedName = "\(workoutName) - \(workoutDayName)"
-
-                                    WorkoutDayRowView(
-                                        day: workoutDay,
-                                        expandedDayID: $expandedDayID,
-                                        overrideName: formattedName
-                                    )
-                                    .listRowBackground(Color("PrimaryColor"))
+                            
+                            ScrollView {
+                                LazyVStack(spacing: 4) {
+                                    ForEach(completionsForSelectedDate, id: \.objectID) { completion in
+                                        if let workoutDay = completion.workoutDay {
+                                            let workoutName = workoutDay.workout?.name ?? "Workout"
+                                            let workoutDayName = workoutDay.name ?? "WorkoutDay"
+                                            let formattedName = "\(workoutName) - \(workoutDayName)"
+                                            
+                                            WorkoutDayRowView(
+                                                day: workoutDay,
+                                                expandedDayID: $expandedDayID,
+                                                overrideName: formattedName
+                                            )
+                                        }
+                                    }
                                 }
                             }
-                            .listStyle(.plain)
-                            .listRowSeparator(.hidden)
                         }
                         .presentationDetents([.medium, .large])
                         .background(Color("PrimaryColor"))
@@ -133,13 +140,75 @@ struct StatsView: View {
                     
                     Spacer()
                     
-                    ChartView(data: chartData)
+                    VStack(alignment: .leading, spacing: 16) {
+                        
+                        Text("Period Analysis: Exercises Done by Muscle")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, alignment: .leading) // forza larghezza
+                        
+                        Picker("Period", selection: $selectedPeriod) {
+                            ForEach(StatsPeriod.allCases) { period in
+                                Text(period.rawValue).tag(period)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(maxWidth: .infinity)
+                        
+                        Divider()
+                            .background(Color.white.opacity(0.3))
+                        
+                        Group {
+                            if isChartEmpty {
+                                VStack {
+                                    Spacer()
+                                    Text("Work up to your first workout.\nWe’ll track your progress here!")
+                                        .multilineTextAlignment(.center)
+                                        .font(.body)
+                                        .foregroundColor(.white.opacity(0.7))
+                                        .padding()
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity)
+                            } else {
+                                if selectedPeriod == .last7Days {
+                                    BarChartView(data: chartData)
+                                } else {
+                                    PieChartView(data: chartData)
+                                }
+                            }
+                        }
+                        .frame(height: 340)
+                        .frame(maxWidth: .infinity)
+                        
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color("CardBackground"))
+                    .cornerRadius(12)
+                    
+                    
+                    Spacer()
+                    
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
             .scrollIndicators(.hidden)
         }
         
+    }
+}
+
+enum StatsPeriod: String, CaseIterable, Identifiable {
+    case last7Days = "Last 7 days"
+    case last30Days = "Last 30 days"
+    
+    var id: String { rawValue }
+    var days: Int {
+        switch self {
+        case .last7Days: return 7
+        case .last30Days: return 30
+        }
     }
 }
 
