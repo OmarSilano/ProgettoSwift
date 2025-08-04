@@ -19,34 +19,33 @@ struct WorkoutView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // MARK: – Header
-                HStack {
-                    Button(action: {
-                        // Help action
-                    }) {
-                        Image(systemName: "questionmark.circle")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(Color("FourthColor"))
+                ZStack {
+                    HStack {
+                        Button(action: {
+                        }) {
+                            Image(systemName: "questionmark.circle")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(Color("FourthColor"))
+                        }
+                        Spacer()
+                        NavigationLink(destination: AddWorkoutView()) {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(Color("FourthColor"))
+                        }
                     }
-
-                    Spacer()
+                    .padding(.horizontal)
 
                     Text("WORKOUT")
-                        .font(.title2)
+                        .font(.largeTitle)
                         .bold()
                         .foregroundColor(Color("FourthColor"))
-
-                    Spacer()
-
-                    NavigationLink(destination: AddWorkoutView()) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 22, height: 22)
-                            .foregroundColor(Color("FourthColor"))
-                    }
                 }
-                .padding()
+                .padding(.top, 20)
                 .background(Color("PrimaryColor"))
+
 
                 // MARK: – Lista workout salvati
                 if workouts.isEmpty {

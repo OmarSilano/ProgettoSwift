@@ -6,8 +6,9 @@ struct SettingsView: View {
             VStack {
                 // Titolo
                 Text("SETTINGS")
-                    .font(.titleLarge)
-                    .foregroundColor(.white)
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundColor(Color("FourthColor"))
                     .padding(.top, 20)
                 
                 Spacer().frame(height: 40)

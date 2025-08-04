@@ -135,6 +135,9 @@ struct StatsView: View {
                     Spacer()
                     
                     ChartView(data: chartData)
+                    
+                    Spacer()
+
                 }
             }
             .background(Color("PrimaryColor").ignoresSafeArea())
