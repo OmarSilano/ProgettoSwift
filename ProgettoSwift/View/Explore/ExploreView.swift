@@ -110,12 +110,14 @@ struct ExploreView: View {
                                     Text(card.description)
                                         .font(.subheadline)
                                         .foregroundColor(.white)
+                                    
+                                    Spacer().frame(height: 50)
                                 }
                                 .padding(.bottom, 10)
                             }
                         }
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                     .frame(height: 300)
                 } else {
                     VStack(spacing: 0) {
