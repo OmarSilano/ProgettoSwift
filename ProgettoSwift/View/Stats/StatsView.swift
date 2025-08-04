@@ -110,22 +110,23 @@ struct StatsView: View {
                                 .foregroundColor(Color("FourthColor"))
                                 .padding(.top, 16)
 
-                            List(completionsForSelectedDate, id: \.objectID) { completion in
-                                if let workoutDay = completion.workoutDay {
-                                    let workoutName = workoutDay.workout?.name ?? "Workout"
-                                    let workoutDayName = workoutDay.name ?? "WorkoutDay"
-                                    let formattedName = "\(workoutName) - \(workoutDayName)"
+                            ScrollView {
+                                LazyVStack(spacing: 4) {
+                                    ForEach(completionsForSelectedDate, id: \.objectID) { completion in
+                                        if let workoutDay = completion.workoutDay {
+                                            let workoutName = workoutDay.workout?.name ?? "Workout"
+                                            let workoutDayName = workoutDay.name ?? "WorkoutDay"
+                                            let formattedName = "\(workoutName) - \(workoutDayName)"
 
-                                    WorkoutDayRowView(
-                                        day: workoutDay,
-                                        expandedDayID: $expandedDayID,
-                                        overrideName: formattedName
-                                    )
-                                    .listRowBackground(Color("PrimaryColor"))
+                                            WorkoutDayRowView(
+                                                day: workoutDay,
+                                                expandedDayID: $expandedDayID,
+                                                overrideName: formattedName
+                                            )
+                                        }
+                                    }
                                 }
                             }
-                            .listStyle(.plain)
-                            .listRowSeparator(.hidden)
                         }
                         .presentationDetents([.medium, .large])
                         .background(Color("PrimaryColor"))

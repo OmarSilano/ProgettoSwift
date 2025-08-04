@@ -19,7 +19,7 @@ struct ProgettoSwiftApp: App {
                     let context = persistenceController.container.viewContext
                     
                     /* DEBUG: RESET DATABASE */
-                    resetDatabase()
+                    // resetDatabase()
                     
                     TypologyManager(context: context).preloadDefaultTypologies()
                     ExerciseManager(context: context).preloadDefaultExercises()
