@@ -11,7 +11,6 @@ struct TrainingMetodologyView: View {
         entity: Typology.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Typology.name, ascending: true)],
         predicate: NSPredicate(format: "isDefault == true"),
-        animation: .default
     ) var defaultTypologies: FetchedResults<Typology>
     
     // Fetch metodologie utente (modificabili)
@@ -19,7 +18,6 @@ struct TrainingMetodologyView: View {
         entity: Typology.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Typology.name, ascending: true)],
         predicate: NSPredicate(format: "isDefault == false"),
-        animation: .default
     ) var userTypologies: FetchedResults<Typology>
     
     @State private var expandedTypologyID: UUID? = nil
@@ -193,9 +191,8 @@ struct TypologyRow: View {
     
     private func deleteTypology() {
         let manager = TypologyManager(context: context)
-        withAnimation {
-            manager.deleteTypology(typology)
-        }
+        manager.deleteTypology(typology)
+        
     }
 }
 
