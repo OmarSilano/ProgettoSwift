@@ -73,7 +73,7 @@ struct ExploreView: View {
         NavigationStack(path: $explorePath) {
             VStack(spacing: 20) {
                 Text("EXPLORE")
-                    .font(.largeTitle)
+                    .font(Font.titleLarge)
                     .bold()
                     .foregroundColor(Color("FourthColor"))
                     .padding(.top, 20)
