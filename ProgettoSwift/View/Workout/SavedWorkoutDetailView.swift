@@ -159,6 +159,8 @@ struct SavedWorkoutDetailView: View {
                         }
                         .compactMap { $0.workoutDay?.id }
                 )
+                print("🖼️ Path to workout image: \(workout.pathToImage ?? "Nessun path")")
+
             }
             .navigationBarBackButtonHidden(true)
             

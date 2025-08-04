@@ -27,7 +27,7 @@ struct AddWorkoutView: View {
     
     //salva immagine selezionata del workout in Documents/Images
     private func handleImageSelected(_ image: UIImage) {
-        createImagesDirectoryIfNeeded()
+
         let imageName = UUID().uuidString + ".jpg"  // univoco
         if let savedPath = saveImageToDocuments(image, imageName: imageName) {
             print("Immagine salvata in: \(savedPath)")
@@ -449,6 +449,7 @@ struct WorkoutExercisePreviewRowView: View {
 }
 
 
+/* SPOSTATE IN IMAGEUTILS
 func createImagesDirectoryIfNeeded() {
     let fileManager = FileManager.default
     let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -482,3 +483,4 @@ func saveImageToDocuments(_ image: UIImage, imageName: String) -> String? {
     }
 }
 
+*/
