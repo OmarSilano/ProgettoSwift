@@ -11,13 +11,7 @@ struct BarChartView: View {
     let data: [MuscleGroupCount]
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Last 7 Days: Exercises Done by Muscle")
-                .font(.headline)
-                .padding(.bottom, 8)
-                .padding(.leading, 16)
-                .foregroundColor(.white)
-            
+        VStack(alignment: .leading) {            
             Chart(data) { item in
                 BarMark(
                     x: .value("Muscle Group", item.muscleGroup.rawValue),

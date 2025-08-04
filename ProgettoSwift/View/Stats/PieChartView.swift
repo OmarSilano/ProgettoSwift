@@ -14,16 +14,23 @@ struct PieChartView: View {
         data.filter { $0.count > 0 }
     }
     
-    // Individuo il gruppo dominante
-    private var dominantGroup: MuscleGroupCount? {
-        filteredData.max(by: { $0.count < $1.count })
+    // Calcola il massimo valore tra tutti i gruppi
+    private var maxCount: Int {
+        filteredData.map { $0.count }.max() ?? 0
+    }
+    
+    // Verifica se un gruppo muscolare è dominante
+    private func isDominant(_ group: MuscleGroupCount) -> Bool {
+        group.count == maxCount
     }
     
     var body: some View {
         Chart {
             ForEach(filteredData, id: \.muscleGroup) { entry in
-                let isDominant = entry.muscleGroup == dominantGroup?.muscleGroup
+                let dominant = isDominant(entry)
                 let percentage = (Double(entry.count) / Double(totalCount)) * 100
+                let label = "\(entry.muscleGroup.rawValue)\n\(Int(percentage))%"
+                
                 
                 SectorMark(
                     angle: .value("Count", entry.count),
@@ -32,14 +39,14 @@ struct PieChartView: View {
                 )
                 .foregroundStyle(by: .value("Muscle Group", entry.muscleGroup.rawValue))
                 .annotation(position: .overlay) {
-                    Text("\(Int(percentage))%")
-                        .font(.title3)
-                        .fontWeight(isDominant ? .bold : .regular)
+                    Text(label)
+                        .font(.headline)
+                        .fontWeight(dominant ? .bold : .regular)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                 }
             }
         }
-        .chartLegend(.visible)
-        .chartLegend(position: .bottom)
+        .chartLegend(.hidden)
     }
 }

@@ -63,6 +63,10 @@ struct StatsView: View {
         }
     }
     
+    private var isChartEmpty: Bool {
+        chartData.allSatisfy { $0.count == 0 }
+    }
+    
     
     private func formattedDate(_ comp: DateComponents?) -> String {
         guard let comp = comp,
@@ -138,7 +142,7 @@ struct StatsView: View {
                     
                     VStack(alignment: .leading, spacing: 16) {
                         
-                        Text("Period Analysis")
+                        Text("Period Analysis: Exercises Done by Muscle")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, alignment: .leading) // forza larghezza
@@ -155,10 +159,23 @@ struct StatsView: View {
                             .background(Color.white.opacity(0.3))
                         
                         Group {
-                            if selectedPeriod == .last7Days {
-                                BarChartView(data: chartData)
+                            if isChartEmpty {
+                                VStack {
+                                    Spacer()
+                                    Text("Work up to your first workout.\nWe’ll track your progress here!")
+                                        .multilineTextAlignment(.center)
+                                        .font(.body)
+                                        .foregroundColor(.white.opacity(0.7))
+                                        .padding()
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity)
                             } else {
-                                PieChartView(data: chartData)
+                                if selectedPeriod == .last7Days {
+                                    BarChartView(data: chartData)
+                                } else {
+                                    PieChartView(data: chartData)
+                                }
                             }
                         }
                         .frame(height: 340)
