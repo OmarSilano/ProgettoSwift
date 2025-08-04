@@ -141,6 +141,17 @@ class ExerciseManager {
         return grouped
     }
     
+    func fetchBannedExercises() -> [Exercise] {
+        let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+        request.predicate = NSPredicate(format: "isBanned = true")
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Errore nel recupero degli esercizi bannati: \(error)")
+            return []
+        }
+    }
+    
     // MARK: - Update
     func updateExercise(_ exercise: Exercise,
                         name: String? = nil,
