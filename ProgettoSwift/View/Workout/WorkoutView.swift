@@ -12,6 +12,8 @@ struct WorkoutView: View {
     @State private var showActionSheet = false
     @State private var workoutToEdit: Workout? = nil
     @State private var shareURL: URL?
+    @State private var showInfoSheet = false
+
     
     @Environment(\.managedObjectContext) private var context
 
@@ -22,6 +24,7 @@ struct WorkoutView: View {
                 ZStack {
                     HStack {
                         Button(action: {
+                            showInfoSheet = true
                         }) {
                             Image(systemName: "questionmark.circle")
                                 .resizable()
@@ -98,6 +101,10 @@ struct WorkoutView: View {
                 }
             }
         }
+        .sheet(isPresented: $showInfoSheet) {
+            WorkoutInfoSheetView()
+        }
+
         
     }
     

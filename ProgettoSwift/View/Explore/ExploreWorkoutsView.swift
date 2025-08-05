@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WorkoutCardView: View {
     let workout: Workout
+
     
     var body: some View {
         HStack(spacing: 12) {
@@ -44,6 +45,8 @@ struct ExploreWorkoutsView: View {
 
     @State private var selectedDifficulty: Difficulty = .beginner
     @State private var workouts: [Workout] = []
+    @State private var showInfoSheet = false
+
 
     private let workoutManager: WorkoutManager
 
@@ -80,7 +83,7 @@ struct ExploreWorkoutsView: View {
                 Spacer()
 
                 Button {
-                    // Help
+                    showInfoSheet = true
                 } label: {
                     Image(systemName: "questionmark.circle")
                         .resizable()
@@ -131,6 +134,9 @@ struct ExploreWorkoutsView: View {
         .onChange(of: selectedDifficulty) { _ in loadWorkouts() }
         
         .navigationBarHidden(true)
+        .sheet(isPresented: $showInfoSheet) {
+            ExploreInfoSheetView()
+        }
     }
 
     private func loadWorkouts() {
