@@ -184,7 +184,7 @@ struct EditWorkoutDayView: View {
                             tempDay.exercises.append(contentsOf: newExercises)
                         }
                     },
-                    preselectedExerciseIDs: Set(tempDay.exercises.map { $0.id }) // 🔹 passa gli ID già presenti
+                    preselectedExerciseIDs: Set(tempDay.exercises.map { $0.id }) 
                 )
             }
 
