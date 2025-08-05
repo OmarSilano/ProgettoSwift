@@ -7,6 +7,9 @@ struct WorkoutDetailView: View {
     @Environment(\.managedObjectContext) private var context
     @EnvironmentObject var tabRouter: TabRouter
     @Binding var explorePath: NavigationPath
+    
+    @State private var showInfoSheet = false
+
 
     var body: some View {
         ScrollView {
@@ -31,7 +34,7 @@ struct WorkoutDetailView: View {
                     Spacer()
 
                     Button {
-                        // Help action
+                        showInfoSheet = true
                     } label: {
                         Image(systemName: "questionmark.circle")
                             .resizable()
@@ -98,5 +101,8 @@ struct WorkoutDetailView: View {
                 .padding(.bottom, 12)
             }
         )
+        .sheet(isPresented: $showInfoSheet) {
+            WorkoutDetailInfoSheetView()
+        }
     }
 }
