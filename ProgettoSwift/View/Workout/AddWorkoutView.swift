@@ -41,14 +41,22 @@ struct AddWorkoutView: View {
         var exercises: [ExercisePreview] = []
 
         var muscleGroupsText: String {
-            let uniqueMuscles = Set(exercises.map { $0.muscle })
-            let limited = Array(uniqueMuscles).prefix(2)
+            let allMuscles = exercises.map { $0.muscle }
+
+            let uniqueOrderedMuscles = allMuscles.reduce(into: [String]()) { result, muscle in
+                if !result.contains(muscle) {
+                    result.append(muscle)
+                }
+            }
+
+            let limited = uniqueOrderedMuscles.prefix(2)
             var text = limited.joined(separator: " • ")
-            if uniqueMuscles.count > 2 {
+            if uniqueOrderedMuscles.count > 2 {
                 text += " ..."
             }
             return text
         }
+
     }
 
     struct ExercisePreview: Identifiable {

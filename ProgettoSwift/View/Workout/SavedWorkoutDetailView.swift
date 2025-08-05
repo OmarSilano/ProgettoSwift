@@ -252,12 +252,21 @@ struct WorkoutDayRowViewWithActionSheet: View {
     
     private func muscleGroupsText(from day: WorkoutDay) -> String {
         guard let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] else { return "—" }
+        
         let allGroups = details.compactMap { $0.exercise?.muscle }
-        let uniqueGroups = Array(Set(allGroups)).prefix(2)
+        
+        let uniqueGroups = allGroups.reduce(into: [String]()) { result, group in
+            if !result.contains(group) {
+                result.append(group)
+            }
+        }.prefix(2)
+        
         var text = uniqueGroups.joined(separator: " • ")
-        if allGroups.count > 2 { text += " ..." }
+        if Set(allGroups).count > 2 { text += " ..." }
+        
         return text
     }
+
     
 }
 
