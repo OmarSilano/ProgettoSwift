@@ -34,9 +34,23 @@ struct ExploreView: View {
     }
     
     
-    private let categories: [CategoryCard] = Category.allCases.map {
-        CategoryCard(category: $0, imageName: $0.rawValue, description: "Explore \($0.rawValue) workouts.")
+    private let categories: [CategoryCard] = Category.allCases.map { category in
+        let description: String
+        
+        switch category {
+        case .hypertrophy:
+            description = "This section is dedicated to those who wish to increase their muscle mass in an aesthetic and structured way. Workouts focus on multi-joint and isolation exercises, with medium to high volumes, repetitions between 6 and 12, and controlled recovery times."
+        case .cardioCore:
+            description = "This section is designed for those who want to improve abdominal tone, posture, and overall body stability. The exercises involve not only the visible abdominals, but also deep muscles such as the transverse, obliques, and lumbar muscles."
+        case .functionalFitness:
+            description = "This section offers dynamic and comprehensive workouts that simulate real movements from everyday life. The exercises involve multiple muscle groups simultaneously and are designed to develop a strong, agile and responsive body."
+        case .hit:
+            description = "The HIIT section offers short but intense workouts based on high-intensity work intervals alternating with short breaks. This approach maximizes caloric expenditure in a short time, accelerates metabolism and improves overall fitness."
+        }
+
+        return CategoryCard(category: category, imageName: category.rawValue, description: description)
     }
+
     
     init() {
         let segmentedAppearance = UISegmentedControl.appearance()
@@ -89,36 +103,41 @@ struct ExploreView: View {
                 if selectedTab == "Workouts" {
                     
                     Spacer()
-                    
+                
                     TabView {
                         ForEach(categories) { card in
                             Button {
                                 explorePath.append(card.category)
                             } label: {
-                                VStack(spacing: 10) {
-                                    Image(card.imageName)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 300, height: 200)
-                                        .clipped()
-                                        .cornerRadius(20)
-                                    
-                                    Text(card.category.rawValue)
-                                        .font(.title2)
-                                        .foregroundColor(Color("SecondaryColor"))
-                                    
-                                    Text(card.description)
-                                        .font(.subheadline)
-                                        .foregroundColor(.white)
-                                    
-                                    Spacer().frame(height: 50)
+                                GeometryReader { geo in
+                                    VStack(spacing: 20) {
+                                        Image(card.imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: geo.size.width * 0.85)
+                                            .cornerRadius(20)
+
+                                        Text(card.category.rawValue)
+                                            .font(.title2)
+                                            .foregroundColor(Color("SecondaryColor"))
+
+                                        Text(card.description)
+                                            .font(.subheadline)
+                                            .foregroundColor(.white)
+                                            .multilineTextAlignment(.leading)
+                                            .padding(.horizontal, 30)
+
+                                        Spacer()
+                                    }
+                                    .frame(width: geo.size.width, height: geo.size.height)
                                 }
-                                .padding(.bottom, 10)
                             }
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                    .frame(height: 300)
+                    .padding(.bottom, -40) // <-- Sposta i pallini più in basso
+                    .frame(height: 400)
+
                 } else {
                     VStack(spacing: 0) {
                         // Search bar in stile ExercisePickerView
