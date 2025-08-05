@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1F370C702E4265D40066525D /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F370C6F2E4265D40066525D /* Secrets.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1F32BEF32E1801AC0004040D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		1F32BEE52E1801AB0004040D /* ProgettoSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProgettoSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F32BEF22E1801AC0004040D /* ProgettoSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgettoSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F32BEFC2E1801AC0004040D /* ProgettoSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgettoSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F370C6F2E4265D40066525D /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -93,6 +98,7 @@
 		1F32BEDC2E1801AB0004040D = {
 			isa = PBXGroup;
 			children = (
+				1F370C6F2E4265D40066525D /* Secrets.plist */,
 				1F194FEA2E28E6D8004C2238 /* Resources */,
 				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
 				1F32BEF52E1801AC0004040D /* ProgettoSwiftTests */,
@@ -232,6 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F370C702E4265D40066525D /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,7 +35,7 @@ struct ChatBotView: View {
     Ricorda sempre di essere socievole, incoraggiante e chiaro: stai parlando con persone che potrebbero essere alle prime armi nel mondo del fitness.
     """),
         
-        Message(role: "assistant", content: "Ciao! Sono Atlas, il tuo assistente fitness. Sono qui per aiutarti a capire come allenarti meglio, scoprire nuove metodologie di training e darti consigli utili per restare motivato. Dimmi pure come posso aiutarti oggi!")
+        Message(role: "assistant", content: "Hi! I'm Atlas, your fitness assistant. I'm here to help you understand how to train better, discover new training methodologies, and give you helpful tips to stay motivated. Please tell me how I can help you today!")
     ]
 
     @State private var isLoading = false
