@@ -79,6 +79,7 @@ struct WorkoutView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
+                    .id(UUID())
                 }
             }
             .sheet(item: $shareURL) { url in
@@ -129,8 +130,10 @@ private struct WorkoutRow: View {
     var body: some View {
         HStack(spacing: 16) {
             // Immagine
-            if let imgPath = workout.pathToImage, !imgPath.isEmpty {
-                if let uiImage = UIImage(contentsOfFile: imgPath) {
+            if let imgPath = workout.pathToImage,
+                !imgPath.isEmpty,
+               FileManager.default.fileExists(atPath: imgPath),
+                let uiImage = UIImage(contentsOfFile: imgPath) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFill()
@@ -138,14 +141,6 @@ private struct WorkoutRow: View {
                         .cornerRadius(10)
                         .clipped()
                 } else {
-                    Image(imgPath)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 60, height: 60)
-                        .cornerRadius(10)
-                        .clipped()
-                }
-            } else {
                 Image(systemName: "photo")
                     .resizable()
                     .scaledToFit()
