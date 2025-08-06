@@ -95,6 +95,18 @@ class WorkoutDayManager {
         saveContext()
     }
     
+    func updateOrder(for workoutDay: WorkoutDay, orderedDetails: [WorkoutDayDetail]? = nil) {
+        // Se viene passato l'array ordinato, usalo; altrimenti usa sortedDetails esistente
+        let detailsToOrder = orderedDetails ?? workoutDay.sortedDetails
+        
+        for (index, detail) in detailsToOrder.enumerated() {
+            detail.orderIndex = Int16(index)
+        }
+        
+        saveContext()
+    }
+
+    
     // MARK: - Delete
     func deleteWorkoutDay(_ workoutDay: WorkoutDay) {
         context.delete(workoutDay)

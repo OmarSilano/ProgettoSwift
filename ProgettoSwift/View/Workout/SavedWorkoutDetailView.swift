@@ -230,11 +230,9 @@ struct WorkoutDayRowViewWithActionSheet: View {
             
             
             if expandedDayID == day.id {
-                if let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] {
-                    ForEach(details, id: \.id) { detail in
-                        WorkoutExerciseDetailView(detail: detail, isCompletedToday: isCompletedToday)
-                    }
-                    
+                let details = day.sortedDetails
+                ForEach(details, id: \.id) { detail in
+                    WorkoutExerciseDetailView(detail: detail, isCompletedToday: isCompletedToday)
                 }
             }
             

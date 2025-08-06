@@ -9,6 +9,12 @@ import CoreData
 
 extension WorkoutDay {
     
+    // details ordinati in base all'orderIndex
+    var sortedDetails: [WorkoutDayDetail] {
+        let detailsArray = (workoutDayDetail as? Set<WorkoutDayDetail>) ?? []
+        return detailsArray.sorted { $0.orderIndex < $1.orderIndex }
+    }
+    
     // muscles come array di stringhe, con default empty array se nil
     var musclesList: [MuscleGroup] {
         get {
