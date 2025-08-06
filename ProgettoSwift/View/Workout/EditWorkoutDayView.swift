@@ -37,7 +37,7 @@ struct EditWorkoutDayView: View {
             VStack(spacing: 12) {
                 
                 HStack {
-                    Button("Annulla") {
+                    Button("Cancel") {
                         dismiss()
                     }
                     .foregroundColor(.white)
@@ -50,7 +50,7 @@ struct EditWorkoutDayView: View {
                     
                     Spacer()
                     
-                    Button("Salva") {
+                    Button("Save") {
                         saveWorkoutDayChanges()
                     }
                     
