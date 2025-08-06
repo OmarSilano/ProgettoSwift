@@ -1,9 +1,3 @@
-//
-//  WorkoutDayDetail+Extensions.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 10/07/25.
-//
 import Foundation
 import CoreData
 
@@ -14,12 +8,13 @@ extension WorkoutDayDetail {
                      id: UUID = UUID(),
                      workoutDay: WorkoutDay,
                      exercise: Exercise,
-                     typology: Typology) {
+                     typology: Typology,
+                     orderIndex: Int16) {
         self.init(context: context)
         self.id = id
         self.workoutDay = workoutDay
         self.exercise = exercise
         self.typology = typology
+        self.orderIndex = orderIndex
     }
 }
-

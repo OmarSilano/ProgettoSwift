@@ -297,6 +297,7 @@ class WorkoutManager {
                         clonedDetail.exercise = originalDetail.exercise
                         clonedDetail.typology = originalDetail.typology
                         clonedDetail.workoutDay = clonedDay
+                        clonedDetail.orderIndex = originalDetail.orderIndex
                     }
                 }
                 

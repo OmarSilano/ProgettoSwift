@@ -52,6 +52,7 @@
     </entity>
     <entity name="WorkoutDayDetail" representedClassName="WorkoutDayDetail" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="orderIndex" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="workoutDayDetail" inverseEntity="Exercise"/>
         <relationship name="typology" maxCount="1" deletionRule="Nullify" destinationEntity="Typology" inverseName="workoutDayDetail" inverseEntity="Typology"/>
         <relationship name="workoutDay" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutDay" inverseName="workoutDayDetail" inverseEntity="WorkoutDay"/>

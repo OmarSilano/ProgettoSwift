@@ -1,9 +1,3 @@
-//
-//  WorkoutDayDetailManager.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 10/07/25.
-//
 import Foundation
 import CoreData
 
@@ -15,38 +9,55 @@ class WorkoutDayDetailManager {
         self.context = context
     }
     
-    func createTempWorkoutDayDetail(
-        workoutDay: WorkoutDay,
-        exercise: Exercise,
-        typology: Typology
-    ) -> WorkoutDayDetail {
-        let detail = WorkoutDayDetail(
-            context: context,
-            workoutDay: workoutDay,
-            exercise: exercise,
-            typology: typology
-        )
+    func createTempWorkoutDayDetail(workoutDay: WorkoutDay,
+                                    exercise: Exercise,
+                                    typology: Typology,
+                                    orderIndex: Int16? = nil) -> WorkoutDayDetail {
+        
+        let finalOrderIndex: Int16
+        if let index = orderIndex {
+            finalOrderIndex = index
+        } else {
+            finalOrderIndex = Int16(workoutDay.workoutDayDetail?.count ?? 0)
+        }
+        
+        let detail = WorkoutDayDetail(context: context,
+                                      workoutDay: workoutDay,
+                                      exercise: exercise,
+                                      typology: typology,
+                                      orderIndex: finalOrderIndex)
+        
         workoutDay.updateMusclesFromDetails()
         return detail
     }
+    
     
     // MARK: - Create
     @discardableResult
     func createWorkoutDayDetail(workoutDay: WorkoutDay,
                                 exercise: Exercise,
-                                typology: Typology) -> WorkoutDayDetail {
+                                typology: Typology,
+                                orderIndex: Int16? = nil) -> WorkoutDayDetail {
+        
+        // Calcolo l'ordine prima di creare l'oggetto
+        let finalOrderIndex: Int16
+        if let index = orderIndex {
+            finalOrderIndex = index
+        } else {
+            finalOrderIndex = Int16(workoutDay.workoutDayDetail?.count ?? 0)
+        }
         
         let detail = WorkoutDayDetail(context: context,
-                                     workoutDay: workoutDay,
-                                     exercise: exercise,
-                                     typology: typology)
+                                      workoutDay: workoutDay,
+                                      exercise: exercise,
+                                      typology: typology,
+                                      orderIndex: finalOrderIndex)
         
         workoutDay.updateMusclesFromDetails()
-        
         saveContext()
-                
         return detail
     }
+    
     
     // MARK: - Read
     func fetchAllWorkoutDayDetails() -> [WorkoutDayDetail] {

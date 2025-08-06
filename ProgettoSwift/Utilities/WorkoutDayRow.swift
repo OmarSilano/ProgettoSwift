@@ -36,10 +36,9 @@ struct WorkoutDayRowView: View {
             .buttonStyle(PlainButtonStyle())
 
             if expandedDayID == day.id {
-                if let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] {
-                    ForEach(details, id: \.id) { detail in
-                        WorkoutExerciseDetailView(detail: detail, isCompletedToday: nil)
-                    }
+                let details = day.sortedDetails
+                ForEach(details, id: \.id) { detail in
+                    WorkoutExerciseDetailView(detail: detail, isCompletedToday: nil)
                 }
             }
 
