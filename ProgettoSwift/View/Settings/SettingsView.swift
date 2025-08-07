@@ -1,7 +1,11 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @Environment(\.managedObjectContext) private var context
+    
     var body: some View {
+        
         NavigationStack {
             VStack {
                 // Titolo
@@ -33,7 +37,21 @@ struct SettingsView: View {
                     }
                     
                     // Banned Exercises List
-                    NavigationLink(destination: BannedExercisesView()) {
+                    NavigationLink(destination: BannedExercisesView(
+                        
+                        onSelect: { previews in
+                            let manager = ExerciseManager(context: context)
+
+                            for preview in previews {
+                                if let exercise = manager.fetchExercise(byID: preview.id), exercise.isBanned {
+                                    manager.toggleBan(for: exercise)
+                                }
+                            }
+                        }
+
+                        
+                        
+                    )) {
                         HStack {
                             Text("Banned Exercises List")
                                 .foregroundColor(.white)
@@ -76,11 +94,4 @@ struct SettingsView: View {
     }
 }
 
-struct BannedExercisesView: View {
-    var body: some View {
-        Text("Banned Exercises List details here.")
-            .foregroundColor(.white)
-            .background(Color("PrimaryColor"))
-    }
-}
 
