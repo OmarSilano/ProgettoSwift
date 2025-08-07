@@ -1,5 +1,6 @@
 import SwiftUI
 
+/*
 struct WorkoutCardView: View {
     let workout: Workout
 
@@ -35,6 +36,7 @@ struct WorkoutCardView: View {
 
     }
 }
+*/
 
 struct ExploreWorkoutsView: View {
     @Environment(\.managedObjectContext) private var context
@@ -115,7 +117,7 @@ struct ExploreWorkoutsView: View {
                         Button {
                             explorePath.append(workout)
                         } label: {
-                            WorkoutCardView(workout: workout)
+                            WorkoutRow(workout: workout)
                         }
                         .listRowBackground(Color("PrimaryColor"))
                     }

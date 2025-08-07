@@ -210,11 +210,15 @@ struct AddWorkoutView: View {
 
                     // Add day button
                     Button {
-                        let newDay = TempWorkoutDay(
-                            name: "\(workoutDays.count + 1)° Day",
-                            exercises: [] // oppure mock temporaneo per test
-                        )
-                        workoutDays.append(newDay)
+                        
+                        if (workoutDays.count < 7 ) {   //posso aggiungere max. 7 giorni
+                            
+                            let newDay = TempWorkoutDay(
+                                name: "\(workoutDays.count + 1)° Day",
+                                exercises: [] // oppure mock temporaneo per test
+                            )
+                            workoutDays.append(newDay)
+                        }
                     } label: {
                         HStack {
                             Image(systemName: "plus")
