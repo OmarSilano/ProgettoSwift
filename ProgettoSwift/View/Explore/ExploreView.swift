@@ -105,11 +105,16 @@ struct ExploreView: View {
                     Spacer()
                 
                     TabView {
-                        ForEach(categories) { card in
-                            Button {
-                                explorePath.append(card.category)
-                            } label: {
-                                GeometryReader { geo in
+                        ForEach(Array(categories.enumerated()), id: \.1.id) { index, card in
+                            GeometryReader { geo in
+                                let midX = geo.frame(in: .global).midX
+                                let screenMidX = UIScreen.main.bounds.width / 2
+                                let diff = abs(screenMidX - midX)
+                                let scale = max(0.8, 1 - diff / 500)
+                                
+                                Button {
+                                    explorePath.append(card.category)
+                                } label: {
                                     VStack(spacing: 20) {
                                         Image(card.imageName)
                                             .resizable()
@@ -130,13 +135,17 @@ struct ExploreView: View {
                                         Spacer()
                                     }
                                     .frame(width: geo.size.width, height: geo.size.height)
+                                    .scaleEffect(scale)
+                                    .animation(.easeOut(duration: 0.3), value: scale)
                                 }
                             }
+                            .padding(.horizontal, 20) // per vedere i lati
                         }
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                    .padding(.bottom, -40) // <-- Sposta i pallini più in basso
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .frame(height: 400)
+                    .padding(.horizontal, 40) // sposta il tabView per far vedere meglio i lati
+
 
                 } else {
                     VStack(spacing: 0) {
