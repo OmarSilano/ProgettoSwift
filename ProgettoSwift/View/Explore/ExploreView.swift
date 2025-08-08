@@ -179,7 +179,7 @@ struct ExploreView: View {
                                     ) {
                                         ForEach(exercises, id: \.objectID) { exercise in
                                             NavigationLink {
-                                                ExerciseDetailView(exercise: exercise)
+                                                ExerciseDetailView(objectID: exercise.objectID)
                                                     .onDisappear {
                                                         refreshTrigger.toggle()
                                                     }
