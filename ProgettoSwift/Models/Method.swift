@@ -4,7 +4,7 @@ enum Method: String, CaseIterable, Codable {
     
     // Chest
     case pushChest = "Push"
-    case pullChest = "Pull"
+    case closeChest = "Close" 
     
     // Back
     case pullUpBack = "Pull-up"
