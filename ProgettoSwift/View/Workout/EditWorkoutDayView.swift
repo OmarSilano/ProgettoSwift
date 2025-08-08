@@ -3,62 +3,60 @@ import CoreData
 
 struct EditWorkoutDayView: View {
     @Environment(\.dismiss) var dismiss
-    
+
     @State var tempDay: AddWorkoutView.TempWorkoutDay
     var onSave: (AddWorkoutView.TempWorkoutDay) -> Void
-    
+
     @State private var typologies: [Typology] = []
     @State private var selectedTypologies: [UUID: Typology] = [:]
     @State private var isShowingExercisePicker = false
-    
-    private let workoutDayManager: WorkoutDayManager
-    private let workoutDayDetailManager: WorkoutDayDetailManager
+
     private let typologyManager: TypologyManager
-    private var workoutDay: WorkoutDay?
-    
+
     init(tempDay: AddWorkoutView.TempWorkoutDay,
          onSave: @escaping (AddWorkoutView.TempWorkoutDay) -> Void,
          context: NSManagedObjectContext) {
         self._tempDay = State(initialValue: tempDay)
         self.onSave = onSave
-        self.workoutDayManager = WorkoutDayManager(context: context)
-        self.workoutDayDetailManager = WorkoutDayDetailManager(context: context)
         self.typologyManager = TypologyManager(context: context)
-        
-        // Recupera il WorkoutDay reale
-        if let realDay = workoutDayManager.fetchWorkoutDay(byID: tempDay.id) {
-            self.workoutDay = realDay
-        }
     }
-    
-    
+
+
     var body: some View {
         NavigationView {
             VStack(spacing: 12) {
-                
+
                 HStack {
                     Button("Cancel") {
                         dismiss()
                     }
                     .foregroundColor(.white)
-                    
+
                     Spacer()
-                    
+
                     Text("EDIT DAY")
                         .font(.system(size: 22, weight: .bold))
                         .foregroundColor(.white)
-                    
+
                     Spacer()
-                    
+
                     Button("Save") {
-                        saveWorkoutDayChanges()
+                        for index in tempDay.exercises.indices {
+                            let ex = tempDay.exercises[index]
+                            if let selected = selectedTypologies[ex.id] {
+                                tempDay.exercises[index].typology = selected
+                            }
+                        }
+
+                        onSave(tempDay)
+                        dismiss()
                     }
-                    
+
                     .foregroundColor(.white)
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
-                
+
                 // Nome giorno
                 TextField("Day name", text: $tempDay.name)
                     .padding(.vertical, 12)
@@ -67,7 +65,7 @@ struct EditWorkoutDayView: View {
                     .foregroundColor(.white)
                     .cornerRadius(8)
                     .padding(.horizontal, 16)
-                
+
                 // Lista esercizi
                 if tempDay.exercises.isEmpty {
                     Text("No exercises yet")
@@ -86,15 +84,15 @@ struct EditWorkoutDayView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .contentShape(Circle())
-                                
+
                                 VStack(alignment: .leading, spacing: 6) {
                                     HStack {
                                         Text(exercise.name)
                                             .foregroundColor(.white)
                                             .font(.headline)
-                                        
+
                                         Spacer()
-                                        
+
                                         Menu {
                                             ForEach(typologies, id: \.self) { typ in
                                                 Button(action: {
@@ -108,7 +106,7 @@ struct EditWorkoutDayView: View {
                                                 Text(selectedTypologies[exercise.id]?.name ?? typologies.first?.name ?? "")
                                                     .foregroundColor(Color("SubtitleColor"))
                                                     .font(.subheadline)
-                                                
+
                                                 Image(systemName: "chevron.down")
                                                     .resizable()
                                                     .frame(width: 10, height: 6)
@@ -118,24 +116,24 @@ struct EditWorkoutDayView: View {
                                         }
                                     }
                                 }
-                                
+
                                 Image(systemName: "line.3.horizontal")
                                     .foregroundColor(.gray)
                             }
                             .padding(.vertical, 10)
                             .listRowBackground(Color("ThirdColor"))
                         }
-                        
-                        
-                        
-                        
+
+
+
+
                         .onMove(perform: moveExercise)
                     }
                     .listStyle(PlainListStyle())
                     .scrollContentBackground(.hidden)
                     .background(Color("PrimaryColor"))
                 }
-                
+
                 // Bottone add exercise
                 Button {
                     isShowingExercisePicker = true
@@ -150,39 +148,19 @@ struct EditWorkoutDayView: View {
                     .cornerRadius(20)
                 }
                 .padding()
-                
+
                 Spacer()
             }
             .background(Color.black.ignoresSafeArea())
             .onAppear {
                 typologies = typologyManager.fetchAllTypologies()
-                
-                if let workoutDay = workoutDayManager.fetchWorkoutDay(byID: tempDay.id) {
-                    let orderedDetails = workoutDay.sortedDetails // già ordinati per orderIndex
-                    tempDay.exercises = orderedDetails.compactMap { detail in
-                        if let ex = detail.exercise,
-                           let id = ex.id,
-                           let name = ex.name,
-                           let muscle = ex.muscle {
-                            return AddWorkoutView.ExercisePreview(
-                                id: id,
-                                name: name,
-                                muscle: muscle,
-                                typology: detail.typology
-                            )
-                        }
-                        return nil
-                    }
-                }
-                
+
                 for ex in tempDay.exercises {
                     if let typ = ex.typology {
                         selectedTypologies[ex.id] = typ
                     }
                 }
             }
-            
-            
             .sheet(isPresented: $isShowingExercisePicker) {
                 ExercisePickerView(
                     onSelect: { newExercises in
@@ -196,11 +174,10 @@ struct EditWorkoutDayView: View {
                                     typology: defaultTypology
                                 )
                             }
-                            
                             let newOnly = previewsWithTypology.filter { new in
                                 !tempDay.exercises.contains(where: { $0.id == new.id })
                             }
-                            
+
                             tempDay.exercises.append(contentsOf: newOnly)
                         } else {
                             tempDay.exercises.append(contentsOf: newExercises)
@@ -209,44 +186,40 @@ struct EditWorkoutDayView: View {
                     preselectedExerciseIDs: Set(tempDay.exercises.map { $0.id })
                 )
             }
-            
-            
-            
         }
     }
-    
+
     private func removeExercise(_ exercise: AddWorkoutView.ExercisePreview) {
         tempDay.exercises.removeAll { $0.id == exercise.id }
     }
-    
+
     private func moveExercise(from source: IndexSet, to destination: Int) {
         tempDay.exercises.move(fromOffsets: source, toOffset: destination)
     }
-    
-    private func saveWorkoutDayChanges() {
-        guard let workoutDay = workoutDayManager.fetchWorkoutDay(byID: tempDay.id) else { return }
-        
-        workoutDayManager.updateWorkoutDay(workoutDay, name: tempDay.name)
-        
-        for exPreview in tempDay.exercises {
-            if let detail = workoutDay.sortedDetails.first(where: { $0.exercise?.id == exPreview.id }) {
-                workoutDayDetailManager.updateWorkoutDayDetail(detail, typology: selectedTypologies[exPreview.id])
-            }
-        }
-        
-        // Creo l’array di dettagli nell’ordine scelto dall’utente
-        let orderedDetails = tempDay.exercises.compactMap { preview in
-            workoutDay.sortedDetails.first(where: { $0.exercise?.id == preview.id })
-        }
-        
-        // Aggiorno l’ordine dei dettagli usando il nuovo ordine
-        workoutDayManager.updateOrder(for: workoutDay, orderedDetails: orderedDetails)
-        
-        onSave(tempDay)
-        dismiss()
-    }
-    
-    
-    
-}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
