@@ -210,9 +210,7 @@ struct AddWorkoutView: View {
 
                     // Add day button
                     Button {
-                        
                         if (workoutDays.count < 7 ) {   //posso aggiungere max. 7 giorni
-                            
                             let newDay = TempWorkoutDay(
                                 name: "\(workoutDays.count + 1)° Day",
                                 exercises: [] // oppure mock temporaneo per test
@@ -460,39 +458,3 @@ struct WorkoutExercisePreviewRowView: View {
     }
 }
 
-
-/* SPOSTATE IN IMAGEUTILS
-func createImagesDirectoryIfNeeded() {
-    let fileManager = FileManager.default
-    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let imagesURL = documentsURL.appendingPathComponent("images")
-
-    if !fileManager.fileExists(atPath: imagesURL.path) {
-        do {
-            try fileManager.createDirectory(at: imagesURL, withIntermediateDirectories: true, attributes: nil)
-            print("Cartella images creata")
-        } catch {
-            print("Errore creando la cartella images: \(error)")
-        }
-    }
-}
-
-
-func saveImageToDocuments(_ image: UIImage, imageName: String) -> String? {
-    let fileManager = FileManager.default
-    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let imagesURL = documentsURL.appendingPathComponent("images")
-    let fileURL = imagesURL.appendingPathComponent(imageName)
-
-    guard let data = image.jpegData(compressionQuality: 0.8) else { return nil }
-
-    do {
-        try data.write(to: fileURL)
-        return fileURL.path // questo è il percorso assoluto da salvare
-    } catch {
-        print("Errore salvando l'immagine: \(error)")
-        return nil
-    }
-}
-
-*/
