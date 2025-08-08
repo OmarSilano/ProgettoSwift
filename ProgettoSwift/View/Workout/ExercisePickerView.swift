@@ -186,7 +186,7 @@ struct ExercisePickerView: View {
             }
         }
         .sheet(item: $selectedExerciseForDetail) { exercise in
-            ExerciseDetailView(exercise: exercise)
+            ExerciseDetailView(objectID: exercise.objectID)
         }
     }
 

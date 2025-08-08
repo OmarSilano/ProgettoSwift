@@ -4,7 +4,7 @@ struct ExerciseRow: View {
     let exercise: Exercise
     
     var body: some View {
-        NavigationLink(destination: ExerciseDetailView(exercise: exercise)) {
+        NavigationLink(destination: ExerciseDetailView(objectID: exercise.objectID)) {
             HStack(spacing: 12) {
                 
                 // Immagine se disponibile, altrimenti placeholder

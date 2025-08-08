@@ -7,7 +7,7 @@ struct WorkoutExerciseDetailView: View {
     var body: some View {
         let completed = isCompletedToday ?? false // fallback a false se nil
 
-        NavigationLink(destination: ExerciseDetailView(exercise: detail.exercise!)) {
+        NavigationLink(destination: ExerciseDetailView(objectID: detail.exercise!.objectID)) {  //objectID: exercise.objectID
             HStack(spacing: 12) {
                 if let path = detail.exercise?.pathToImage, !path.isEmpty {
                     Image(path)
