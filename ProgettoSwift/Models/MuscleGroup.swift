@@ -14,7 +14,7 @@ extension MuscleGroup {
         switch self {
             
         case .chest:
-            return [.pushChest, .pullChest]
+            return [.pushChest, .closeChest]
             
         case .back:
             return [.pullUpBack, .rowBack]
