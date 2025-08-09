@@ -59,10 +59,187 @@
   
   {
     "category": "Hypertrophy",
+    "difficulty": "Advanced",
+    "name": "Big Gymrat Lifting",
+    "weeks": 6,
+    "pathToImage": "UomoConBarba",
+    "days": [
+      {
+        "name": "Day 1 - Back",
+        "details": [
+          {
+            "exerciseName": "Pull up",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Barbell Deadlift",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Barbell Bent Over Row",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Seated Cable Row (Triangle Grip)",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Lat Pulldown",
+            "typologyName": "8x4x4"
+          }
+        ]
+      },
+      {
+        "name": "Day 2 - Chest",
+        "details": [
+          {
+            "exerciseName": "Incline Machine Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Incline Dumbbell Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Dumbbell Hammer Curl",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Cable Flys",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Barbell Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Pec Fly",
+            "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 3 - Legs",
+        "details": [
+          {
+            "exerciseName": "Barbell Back Squat",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Dumbbell Romanian Deadlift",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Machine Prone Hamstring Curl",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Seated Calf Raise",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Leg Extensions",
+            "typologyName": "4x12"
+          },
+          {
+              "exerciseName": "45 Degree Leg Press",
+              "typologyName": "4x12"
+          },
+          {
+              "exerciseName": "Dumbbell Front Lunge",
+              "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 4 - Shoulders & Triceps",
+        "details": [
+          {
+            "exerciseName": "Seated Shoulder Press",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Barbell Overhead Press",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Rear Delt Pec Fly",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Dumbbell Lateral Raise",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Cable Face Pull",
+            "typologyName": "8x4x4"
+          },
+          {
+              "exerciseName": "Barbell Skullcrusher",
+              "typologyName": "4x12"
+          },
+          {
+              "exerciseName": "Tricep Rope Pushdown",
+              "typologyName": "8x4x4"
+          },
+          {
+              "exerciseName": "Seated Overhead Dumbbell Extension",
+              "typologyName": "8x4x4"
+          }
+        ]
+      },
+      {
+        "name": "Day 5 - Arms",
+        "details": [
+          {
+            "exerciseName": "Close Grip Incline Bench Press",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Dumbbell Skullcrusher",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Tricep Pushdown (Triangle Handle)",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Barbell Bicep Curl",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Seated Dumbbell Bicep Curl",
+            "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Single Arm Cable Curls",
+              "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Overhead Rope Tricep Extension",
+              "typologyName": "8x4x4"
+          },
+          {
+              "exerciseName": "Bodyweight Tricep Dip",
+              "typologyName": "4x10"
+          }
+        ]
+      }
+    ]
+  },
+  
+  
+  
+  
+  
+  
+  
+  {
+    "category": "Hypertrophy",
     "difficulty": "Intermediate",
     "name": "Full Body Confidence",
     "weeks": 6,
-    "pathToImage": "Hypertrophy",
+    "pathToImage": "BiondaConBilanciere",
     "days": [
       {
         "name": "Day 1 - Lower Body Compounds",
@@ -127,19 +304,60 @@
         ]
       },
       {
-        "name": "Day 3 - Legs & Shoulders",
+        "name": "Day 3 - Lower Body Posterior",
         "details": [
           {
-            "exerciseName": "Jump Squats",
+            "exerciseName": "Barbell Romanian Deadlift",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Barbell Split Squat",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Barbell Push Press",
+            "exerciseName": "Barbell Hip Thrust",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Ab Crunch",
+            "exerciseName": "Barbell Split Squat",
             "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Machine Prone Hamstring Curl",
+            "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Dumbbell Front Lunge",
+              "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 4 - Upper Body Pushing",
+        "details": [
+          {
+            "exerciseName": "Barbell Bench Press",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Lower Cable Chest Fly",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Seated Shoulder Press",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Dumbbell Lateral Raise",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Tricep Pushdown (Triangle Handle)",
+            "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Single Arm Dumbbell Bent Over Row",
+              "typologyName": "Piramidale"
           }
         ]
       }
