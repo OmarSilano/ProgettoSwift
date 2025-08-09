@@ -53,9 +53,13 @@ struct WorkoutDetailView: View {
 
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("\(workout.weeks) Weeks • \(workout.days ?? 0) Days")
+                        let relCount = workout.workoutDay?.count ?? 0
+                        let daysCount = relCount > 0 ? relCount : Int(workout.days)
+
+                        Text("\(workout.weeks) Weeks • \(daysCount) Days")
                             .font(.headline)
                             .foregroundColor(.white)
+
                     }
 
                     Spacer()

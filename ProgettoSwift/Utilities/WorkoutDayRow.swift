@@ -54,15 +54,26 @@ struct WorkoutDayRowView: View {
     }
 
     private func muscleGroupsText(from day: WorkoutDay) -> String {
-        guard let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] else { return "—" }
+        guard let ns = day.workoutDayDetail else { return "—" }
 
-        // Ricava i nomi univoci dei gruppi muscolari
-        let allGroups = details.compactMap { $0.exercise?.muscle}
-        let uniqueGroups = Array(Set(allGroups)).prefix(2) // massimo 2
-        var text = uniqueGroups.joined(separator: " • ")
-        if allGroups.count > 2 {
-            text += " ..."
+        let details: [WorkoutDayDetail] = (ns as? Set<WorkoutDayDetail> ?? [])
+            .sorted { ($0.exercise?.muscle ?? "") < ($1.exercise?.muscle ?? "") }
+
+        var seen = Set<String>()
+        var orderedUnique: [String] = []
+        for d in details {
+            if let m = d.exercise?.muscle, !m.isEmpty, !seen.contains(m) {
+                seen.insert(m)
+                orderedUnique.append(m)
+            }
         }
+
+        let shown = orderedUnique.prefix(2)
+        if shown.isEmpty { return "—" }
+
+        var text = shown.joined(separator: " • ")
+        if orderedUnique.count > 2 { text += " ..." }
         return text
     }
+
 }
