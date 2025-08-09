@@ -50,5 +50,107 @@
         ]
       }
     ]
+  },
+  
+  
+  
+  
+  
+  
+  {
+    "category": "Hypertrophy",
+    "difficulty": "Intermediate",
+    "name": "Full Body Confidence",
+    "weeks": 6,
+    "pathToImage": "Hypertrophy",
+    "days": [
+      {
+        "name": "Day 1 - Lower Body Compounds",
+        "details": [
+          {
+            "exerciseName": "Barbell Back Squat",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Reverse Dumbbell Lunge",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Dumbbell Romanian Deadlift",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "45 Degree Leg Press",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Dumbbell Squat",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Machine Standing Calf Raise",
+            "typologyName": "Piramidale inverso"
+          },
+          {
+            "exerciseName": "Monster Walk (Lateral)",
+            "typologyName": "8x4x4"
+          }
+        ]
+      },
+      {
+        "name": "Day 2 - Upper Body Pulling",
+        "details": [
+          {
+            "exerciseName": "Barbell Bent Over Row",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Lat Pulldown",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Cable Face Pull",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Seated Cable Row (Triangle Grip)",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Dumbbell Hammer Curl",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Ab Crunch",
+            "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 3 - Legs & Shoulders",
+        "details": [
+          {
+            "exerciseName": "Jump Squats",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Barbell Push Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Ab Crunch",
+            "typologyName": "4x10"
+          }
+        ]
+      }
+    ]
   }
+  
+  
+  
+  
+  
+  
+  
+  
 ]
