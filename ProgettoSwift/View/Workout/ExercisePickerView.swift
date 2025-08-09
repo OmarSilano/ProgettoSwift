@@ -2,18 +2,18 @@ import SwiftUI
 import CoreData
 
 struct ExercisePickerView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var context
-
-    var onSelect: ([AddWorkoutView.ExercisePreview]) -> Void
-    var preselectedExerciseIDs: Set<UUID>
-
+    
+    // Output robusto: objectID degli Exercise selezionati
+    var onSelect: ([NSManagedObjectID]) -> Void
+    var preselectedIDs: Set<NSManagedObjectID>
+    
     @State private var groupedExercises: [MuscleGroup: [Exercise]] = [:]
-    @State private var selectedExercises: Set<UUID> = []
+    @State private var selectedIDs: Set<NSManagedObjectID> = []
     @State private var searchText = ""
     @State private var selectedExerciseForDetail: Exercise? = nil
-
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(spacing: 0) {
@@ -24,24 +24,22 @@ struct ExercisePickerView: View {
                             .foregroundColor(.white)
                             .font(.title2)
                     }
-
+                    
                     Spacer()
-
+                    
                     Text("EXERCISES")
                         .font(.system(size: 22, weight: .bold))
                         .foregroundColor(.white)
-
+                    
                     Spacer()
-
-                    // Slot vuoto per simmetria con bottone sinistro così da rendere il titolo centrato
+                    
                     Image(systemName: "xmark")
-                        .opacity(0) // invisibile ma occupa spazio
+                        .opacity(0)
                         .font(.title2)
                 }
                 .padding()
                 .background(Color("PrimaryColor"))
-
-
+                
                 // Search bar
                 HStack {
                     ZStack(alignment: .leading) {
@@ -50,7 +48,6 @@ struct ExercisePickerView: View {
                                 .foregroundColor(Color("SubtitleColor"))
                                 .padding(.horizontal, 14)
                         }
-
                         TextField("", text: $searchText)
                             .foregroundColor(.white)
                             .accentColor(Color("SecondaryColor"))
@@ -58,7 +55,7 @@ struct ExercisePickerView: View {
                     }
                     .background(Color("ThirdColor"))
                     .cornerRadius(10)
-
+                    
                     if !searchText.isEmpty {
                         Button("Cancel") {
                             searchText = ""
@@ -69,14 +66,14 @@ struct ExercisePickerView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
                 .background(Color("PrimaryColor"))
-
+                
                 // Lista esercizi
                 List {
                     ForEach(MuscleGroup.allCases, id: \.self) { muscle in
                         if let exercises = groupedExercises[muscle]?
-                            .filter({ searchText.isEmpty || $0.name?.localizedCaseInsensitiveContains(searchText) == true }),
+                            .filter({ searchText.isEmpty || ($0.name ?? "").localizedCaseInsensitiveContains(searchText) }),
                            !exercises.isEmpty {
-
+                            
                             Section(
                                 header: Text(muscle.rawValue)
                                     .font(.system(size: 16, weight: .bold))
@@ -87,45 +84,40 @@ struct ExercisePickerView: View {
                                         toggleSelection(for: exercise)
                                     } label: {
                                         HStack {
-                                            // Immagine
-                                            if let imageName = exercise.pathToImage,
-                                               let uiImage = UIImage(named: imageName) {
+                                            // Immagine (supporta sia asset name che file path)
+                                            if let uiImage = exerciseImage(for: exercise) {
                                                 Image(uiImage: uiImage)
                                                     .resizable()
                                                     .frame(width: 40, height: 40)
                                                     .cornerRadius(6)
-                                                    .onTapGesture {
-                                                        selectedExerciseForDetail = exercise
-                                                    }
+                                                    .onTapGesture { selectedExerciseForDetail = exercise }
                                             } else {
                                                 Rectangle()
                                                     .fill(Color.gray)
                                                     .frame(width: 40, height: 40)
                                                     .cornerRadius(6)
-                                                    .onTapGesture {
-                                                        selectedExerciseForDetail = exercise
-                                                    }
+                                                    .onTapGesture { selectedExerciseForDetail = exercise }
                                             }
-
+                                            
                                             // Nome esercizio
                                             Text(exercise.name ?? "Unnamed")
                                                 .foregroundColor(.white)
                                                 .font(.body)
                                                 .padding(.leading, 8)
-
+                                            
                                             Spacer()
-
+                                            
                                             // Check
-                                            if selectedExercises.contains(exercise.id!) {
+                                            if selectedIDs.contains(exercise.objectID) {
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(.green)
                                             }
                                         }
                                         .padding(8)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 8)
-                                                    .fill(Color(red: 46/255, green: 44/255, blue: 44/255))
-                                            )
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(Color(red: 46/255, green: 44/255, blue: 44/255))
+                                        )
                                     }
                                     .listRowBackground(Color(red: 46/255, green: 44/255, blue: 44/255))
                                 }
@@ -139,38 +131,22 @@ struct ExercisePickerView: View {
                 .background(Color("PrimaryColor").ignoresSafeArea())
                 .onAppear {
                     let manager = ExerciseManager(context: context)
+                    // Raggruppo per muscolo e filtro i bannati
                     groupedExercises = manager.fetchExercisesGroupedByMuscle()
                         .mapValues { $0.filter { !$0.isBanned } }
-                    
-                    selectedExercises = preselectedExerciseIDs
-
+                    selectedIDs = preselectedIDs
                 }
             }
-
+            
             // Pulsante overlay in basso
-            if !selectedExercises.isEmpty {
+            if !selectedIDs.isEmpty {
                 VStack(spacing: 0) {
-                    Divider()
-                        .background(Color.gray.opacity(0.5))
+                    Divider().background(Color.gray.opacity(0.5))
                     Button(action: {
-                        let allExercises: [Exercise] = groupedExercises
-                            .flatMap { $0.value }
-
-                        let filtered: [Exercise] = allExercises
-                            .filter { selectedExercises.contains($0.id!) }
-
-                        let selected: [AddWorkoutView.ExercisePreview] = filtered.map { ex in
-                            AddWorkoutView.ExercisePreview(
-                                id: ex.id ?? UUID(),
-                                name: ex.name ?? "Unnamed",
-                                muscle: ex.muscle ?? "Unknown",
-                                typology: nil
-                            )
-                        }
-                        onSelect(selected)
+                        onSelect(Array(selectedIDs))
                         dismiss()
                     }) {
-                        Text("ADD EXERCISES (\(selectedExercises.count))")
+                        Text("ADD EXERCISES (\(selectedIDs.count))")
                             .foregroundColor(.black)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity)
@@ -189,19 +165,27 @@ struct ExercisePickerView: View {
             ExerciseDetailView(exercise: exercise)
         }
     }
-
-
+    
+    // MARK: - Helpers
     private func toggleSelection(for exercise: Exercise) {
-        guard let id = exercise.id else { return }
-        if selectedExercises.contains(id) {
-            selectedExercises.remove(id)
+        let id = exercise.objectID
+        if selectedIDs.contains(id) {
+            selectedIDs.remove(id)
         } else {
-            selectedExercises.insert(id)
+            selectedIDs.insert(id)
         }
     }
-
-    private func openDetail(for exercise: Exercise) {
-        // TODO: Naviga a una schermata di dettaglio
-        print("🧾 Apri dettaglio per \(exercise.name ?? "Unnamed")")
+    
+    private func exerciseImage(for exercise: Exercise) -> UIImage? {
+        guard let path = exercise.pathToImage, !path.isEmpty else { return nil }
+        // Prova come file path
+        if path.contains("/") {
+            if let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+               let img = UIImage(data: data) {
+                return img
+            }
+        }
+        // Fallback come nome asset
+        return UIImage(named: path)
     }
 }

@@ -1,3 +1,7 @@
+/*
+ 
+ COMMENTATO PERCHE' "AddWorkoutView.ExercisePreview" DA' PROBLEMI VISTO CHE NON ESISTE PIU'
+ 
 import SwiftUI
 import CoreData
 
@@ -212,3 +216,4 @@ struct BannedExercisesView: View {
     }
     
 }
+*/
