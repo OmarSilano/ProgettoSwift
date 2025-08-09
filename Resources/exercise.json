@@ -127,6 +127,15 @@
     "videoName": null
   },
   {
+    "name": "Reverse Dumbbell Lunge",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright holding a dumbbell in each hand at your sides, palms facing your body. Keep your feet hip-width apart and engage your core. First Position.\n\n2. Step one leg backward in a controlled motion, lowering your hips until both knees are bent at about 90 degrees. Your front knee should be directly above your ankle, and your back knee should hover just above the ground. Second Position.\n\n3. Push through the heel of your front foot to return to the starting position.\n\n4. Alternate legs for the desired number of repetitions, maintaining balance and posture throughout.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
     "name": "Barbell Deadlift",
     "muscle": "Legs",
     "method": "Hamstring Curl",
@@ -294,6 +303,15 @@
     "method": "Biceps",
     "difficulty": "Beginner",
     "instructions": "1. Standing upright, hold two dumbbells by your side with a neutral grip and your elbows tucked close to your side. First Position.\n\n2. Curl one dumbbell upwards, towards your shoulders, keeping your grip neutral. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position.\n\n5. Repeat for your other arm.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Dumbbell Hammer Curl",
+    "muscle": "Arms",
+    "method": "Biceps",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright holding a dumbbell in each hand with a neutral grip, palms facing each other, and elbows tucked close to your sides. First Position.\n\n2. Curl both dumbbells upward simultaneously towards your shoulders, keeping your grip neutral and your upper arms stationary.\n\n3. Continue curling until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower both dumbbells back to First Position in a controlled motion.\n\n5. Repeat for the desired number of repetitions.",
     "imageName": null,
     "videoName": null
   },
@@ -609,6 +627,15 @@
       "method": "Biceps",
       "difficulty": "Beginner",
       "instructions": "1. Standing upright, grip the rope attached to a cable. Your grip should be neutral, with your palms facing inwards and your elbows tucked by your side. First Position.\n\n2. Curl the weight upwards, towards your shoulders, keeping your hands in a neutral position. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position, just short of where the weight touches the rack.\n\n5. Finish your reps.",
+      "imageName": null,
+      "videoName": null
+    },
+    {
+      "name": "Monster Walk (Lateral)",
+      "muscle": "Legs",
+      "method": "Horizontal Push",
+      "difficulty": "Intermediate",
+      "instructions": "1. Place a resistance band around your thighs or ankles. Stand with feet shoulder-width apart and slightly bend your knees into an athletic stance.\n\n2. Engage your core and keep your chest upright. First Position.\n\n3. Step sideways with your lead leg, maintaining tension in the band, then follow with your trailing leg without letting the band slack. Second Position.\n\n4. Continue stepping laterally for the desired number of steps, then reverse the direction.\n\n5. Keep movements controlled and avoid excessive hip or torso rotation.",
       "imageName": null,
       "videoName": null
     },

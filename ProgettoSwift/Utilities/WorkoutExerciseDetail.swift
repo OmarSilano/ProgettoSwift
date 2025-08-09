@@ -9,8 +9,12 @@ struct WorkoutExerciseDetailView: View {
 
         NavigationLink(destination: ExerciseDetailView(objectID: detail.exercise!.objectID)) {  //objectID: exercise.objectID
             HStack(spacing: 12) {
-                if let path = detail.exercise?.pathToImage, !path.isEmpty {
-                    Image(path)
+                if let s = detail.exercise?.pathToImage, !s.isEmpty,
+                   let ui = (FileManager.default.fileExists(atPath: s)
+                             ? UIImage(contentsOfFile: s)      
+                             : UIImage(named: s))
+                {
+                    Image(uiImage: ui)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 60, height: 60)
