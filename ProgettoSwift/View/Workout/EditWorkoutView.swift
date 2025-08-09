@@ -175,11 +175,15 @@ struct EditWorkoutView: View {
 
                 // Bottone aggiunta giorno
                 Button {
-                    let newDay = AddWorkoutView.TempWorkoutDay(
-                        name: "\(workoutDays.count + 1)° Day",
-                        exercises: []
-                    )
-                    workoutDays.append(newDay)
+                    
+                    if (workoutDays.count < 7 ) {   //posso aggiungere max. 7 giorni
+                        
+                        let newDay = AddWorkoutView.TempWorkoutDay(
+                            name: "\(workoutDays.count + 1)° Day",
+                            exercises: []
+                        )
+                        workoutDays.append(newDay)
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "plus")

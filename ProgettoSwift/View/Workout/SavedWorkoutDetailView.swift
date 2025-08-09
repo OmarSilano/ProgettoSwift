@@ -97,19 +97,21 @@ struct SavedWorkoutDetailView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: EditWorkoutView(workout: workout), isActive: $navigateToEdit) {
-                            Button {
-                                navigateToEdit = true
-                            } label: {
-                                Image(systemName: "pencil")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(Color("FourthColor"))
-                            }
+                        Button {
+                            navigateToEdit = true
+                        } label: {
+                            Image(systemName: "pencil")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(Color("FourthColor"))
+                        }
+                        .navigationDestination(isPresented: $navigateToEdit) {
+                            EditWorkoutView(workout: workout)
                         }
                     }
                     .padding(.horizontal)
                     .padding(.top, 20)
+                    .background(Color.black.opacity(0.001))
                 }
             .sheet(item: $shareURL) { url in
                 ShareSheet(items: [url]) {
