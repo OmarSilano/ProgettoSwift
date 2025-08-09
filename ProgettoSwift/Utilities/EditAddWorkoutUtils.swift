@@ -3,15 +3,30 @@ import CoreData
 
 // MARK: - Row Giorno
 struct WorkoutDayRow_CoreData: View {
-    let day: WorkoutDay
+    @ObservedObject var day: WorkoutDay
     @Binding var expandedDayID: NSManagedObjectID?
     var onDelete: () -> Void
     var onEdit: () -> Void
 
+    private var musclesSubtitle: String {
+        // prendi i muscoli dagli esercizi dei dettagli già collegati al day
+        let groups = day.sortedDetails
+            .compactMap { $0.exercise?.muscle }
+            .compactMap { MuscleGroup(rawValue: $0) }
+
+        var seen = Set<MuscleGroup>()
+        let orderedUnique = groups.filter { seen.insert($0).inserted }
+
+        let names = orderedUnique.map { $0.rawValue }
+        guard !names.isEmpty else { return "" }
+        let head = names.prefix(3).joined(separator: " • ")
+        
+        return names.count > 3 ? head + " ..." : head
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                // Delete button
                 Button(action: onDelete) {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -21,15 +36,13 @@ struct WorkoutDayRow_CoreData: View {
                 .buttonStyle(PlainButtonStyle())
                 .contentShape(Circle())
 
-                // Area centrale tappabile
                 VStack(spacing: 2) {
                     Text(day.name ?? "Unnamed Day")
                         .font(.headline)
                         .foregroundColor(.white)
 
-                    let subtitle = day.musclesList.map { $0.rawValue }
-                    if !subtitle.isEmpty {
-                        Text(subtitle.joined(separator: " • "))
+                    if !musclesSubtitle.isEmpty {
+                        Text(musclesSubtitle)   // <— ora arriva dai dettagli
                             .font(.subheadline)
                             .foregroundColor(Color("SubtitleColor"))
                     }
@@ -38,7 +51,6 @@ struct WorkoutDayRow_CoreData: View {
                 .contentShape(Rectangle())
                 .onTapGesture { withAnimation { toggleExpansion() } }
 
-                // Edit button
                 Button(action: onEdit) {
                     Image(systemName: "pencil")
                         .resizable()
@@ -51,7 +63,6 @@ struct WorkoutDayRow_CoreData: View {
             .padding()
             .background(Color("ThirdColor"))
 
-            // Espansione: mostra i dettagli (exercises)
             if expandedDayID == day.objectID {
                 if day.sortedDetails.isEmpty {
                     Text("No exercises yet...")
@@ -81,9 +92,10 @@ struct WorkoutDayRow_CoreData: View {
     }
 }
 
+
 // MARK: - Row Esercizio
 struct WorkoutExercisePreviewRow_CoreData: View {
-    let detail: WorkoutDayDetail
+    @ObservedObject var detail: WorkoutDayDetail
 
     var body: some View {
         HStack(spacing: 12) {

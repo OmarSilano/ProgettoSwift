@@ -14,6 +14,9 @@ struct EditWorkoutDayView: View {
     @State private var details: [WorkoutDayDetail] = []
     @State private var isShowingExercisePicker = false
     @State private var typologies: [Typology] = []
+    @State private var didHandleClose = false
+    
+
     
     // Manager
     private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: context) }
@@ -44,6 +47,12 @@ struct EditWorkoutDayView: View {
                 onSelect: { ids in addExercises(with: ids) },
                 preselectedIDs: Set(details.compactMap { $0.exercise?.objectID })
             )
+        }
+        .onDisappear {
+            if !didHandleClose {
+                context.rollback()   // stesso effetto del Cancel
+                onClose()
+            }
         }
     }
     
@@ -155,32 +164,31 @@ struct EditWorkoutDayView: View {
         
         for id in ids where !existing.contains(id) {
             if let ex = try? context.existingObject(with: id) as? Exercise {
-                let d = detailMgr.createTempWorkoutDayDetail(
-                    workoutDay: day,
-                    exercise: ex,
-                    typology: defaultTyp,
-                    orderIndex: Int16(details.count)
-                )
+                let d = WorkoutDayDetail(context: context)
+                d.id = UUID()
+                d.exercise = ex
+                d.typology = defaultTyp
+                d.orderIndex = Int16(details.count)
                 details.append(d)
             }
         }
-        day.updateMusclesFromDetails()
         isShowingExercisePicker = false
     }
     
     private func deleteDetails(_ offsets: IndexSet) {
         for i in offsets {
-            context.delete(details[i])
+            let det = details[i]
+            if det.workoutDay == nil {
+                context.delete(det)
+            }
         }
         details.remove(atOffsets: offsets)
-        renumberOrder()
-        day.updateMusclesFromDetails()
     }
+
     
     private func moveDetails(from source: IndexSet, to destination: Int) {
         details.move(fromOffsets: source, toOffset: destination)
         renumberOrder()
-        day.updateMusclesFromDetails()
     }
     
     private func renumberOrder() {
@@ -188,13 +196,42 @@ struct EditWorkoutDayView: View {
     }
     
     private func save() {
-        day.name = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
-        day.updateMusclesFromDetails()
-        do { try context.save(); onClose(); dismiss() }
-        catch { print("❌ Save day error:", error) }
-    }
+            let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+            day.name = trimmed
+
+            // 1) Collega al day i nuovi dettagli orfani (aggiunte)
+            for det in details where det.workoutDay == nil {
+                det.workoutDay = day
+            }
+
+            // 2) Cancella ORA i dettagli esistenti rimossi dalla UI
+            let keptExistingIDs: Set<NSManagedObjectID> = Set(
+                details.compactMap { $0.workoutDay != nil ? $0.objectID : nil }
+            )
+            for det in day.sortedDetails where !keptExistingIDs.contains(det.objectID) {
+                context.delete(det)
+            }
+
+            // 3) Aggiorna l'ordine definitivo (su tutti quelli tenuti e nuovi)
+            for (i, det) in details.enumerated() {
+                det.orderIndex = Int16(i)
+            }
+
+            // 4) Calcola i muscoli SOLO ora
+            day.updateMusclesFromDetails()
+
+            do {
+                try context.save()
+                didHandleClose = true
+                onClose()
+                dismiss()
+            } catch {
+                print("❌ Save day error:", error)
+            }
+        }
     
     private func cancel() {
+        didHandleClose = true
         context.rollback()
         onClose()
         dismiss()
@@ -215,6 +252,8 @@ struct CreateWorkoutDayView: View {
     @State private var details: [WorkoutDayDetail] = []
     @State private var isShowingExercisePicker = false
     @State private var typologies: [Typology] = []
+    @State private var didHandleClose = false
+
     
     private var dayMgr: WorkoutDayManager { WorkoutDayManager(context: context) }
     private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: context) }
@@ -236,8 +275,13 @@ struct CreateWorkoutDayView: View {
             .background(Color("PrimaryColor").ignoresSafeArea())
         }
         .onAppear {
-            let suggested = "\(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)° Day"
-            let newDay = dayMgr.createTempWorkoutDay(isCompleted: false, name: suggested, muscles: [], workout: workout)
+            let suggested = "Day \(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)"
+
+            let newDay = WorkoutDay(context: context)
+            newDay.id = UUID()
+            newDay.name = suggested
+            newDay.isCompleted = false
+
             day = newDay
             dayName = suggested
             typologies = typologyMgr.fetchAllTypologies()
@@ -247,6 +291,12 @@ struct CreateWorkoutDayView: View {
                 onSelect: { ids in addExercises(with: ids) },
                 preselectedIDs: Set(details.compactMap { $0.exercise?.objectID })
             )
+        }
+        .onDisappear {
+            if !didHandleClose {
+                context.rollback()   // stesso effetto del Cancel
+                onClose()
+            }
         }
     }
     
@@ -363,7 +413,6 @@ struct CreateWorkoutDayView: View {
                 details.append(d)
             }
         }
-        day.updateMusclesFromDetails()
         isShowingExercisePicker = false
     }
     
@@ -371,13 +420,11 @@ struct CreateWorkoutDayView: View {
         for i in offsets { context.delete(details[i]) }
         details.remove(atOffsets: offsets)
         renumberOrder()
-        day?.updateMusclesFromDetails()
     }
     
     private func moveDetails(from source: IndexSet, to destination: Int) {
         details.move(fromOffsets: source, toOffset: destination)
         renumberOrder()
-        day?.updateMusclesFromDetails()
     }
     
     private func renumberOrder() {
@@ -386,13 +433,25 @@ struct CreateWorkoutDayView: View {
     
     private func save() {
         guard let day else { return }
-        day.name = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        day.name = trimmed
+
+        day.workout = workout
         day.updateMusclesFromDetails()
-        do { try context.save(); onClose(); dismiss() }
-        catch { print("❌ Save new day error:", error) }
+
+        do {
+            didHandleClose = true
+            try context.save()
+            onClose()
+            dismiss()
+        } catch {
+            print("❌ Save new day error:", error)
+        }
     }
     
     private func cancel() {
+        didHandleClose = true
         context.rollback()
         onClose()
         dismiss()

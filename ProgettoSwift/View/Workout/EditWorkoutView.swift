@@ -4,31 +4,31 @@ import CoreData
 struct EditWorkoutView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
-
+    
     @ObservedObject var workout: Workout
-
+    
     // UI state
     @State private var workoutName: String = ""
     @State private var selectedImage: UIImage? = nil
     @State private var isShowingImagePicker = false
     @State private var numberWeeks: String = ""
     @State private var expandedDayID: NSManagedObjectID? = nil
-
+    
     // Editor Day (sheet con Bool + selezione)
     @State private var isEditingDay = false
     @State private var selectedDay: WorkoutDay? = nil
-
+    
     @State private var pathToImage: String? = nil
     @State private var persistedImage: UIImage? = nil
     @State private var showPermissionAlert = false
-
+    
     @State private var stagedDeletedDayIDs = Set<NSManagedObjectID>()
     @State private var isPresentingNewDayEditor = false
-
+    
     // Manager
     private var workoutManager: WorkoutManager { WorkoutManager(context: context) }
     private var workoutDayManager: WorkoutDayManager { WorkoutDayManager(context: context) }
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -48,16 +48,27 @@ struct EditWorkoutView: View {
             ImagePicker(selectedImage: $selectedImage)
         }
         // EDIT Day esistente
-        .sheet(isPresented: $isEditingDay) {
-            if let day = selectedDay {
-                EditWorkoutDayView(
-                    day: day,
-                    onClose: {
+        .sheet(
+            isPresented: Binding(
+                get: { isEditingDay && selectedDay != nil },
+                set: { newValue in
+                    if !newValue {
                         isEditingDay = false
                         selectedDay = nil
+                    } else {
+                        isEditingDay = true
                     }
-                )
-            }
+                }
+            )
+        ) {
+            // a questo punto selectedDay è sicuramente non-nil
+            EditWorkoutDayView(
+                day: selectedDay!,
+                onClose: {
+                    isEditingDay = false
+                    selectedDay = nil
+                }
+            )
         }
         // ADD Day (creazione nell’editor)
         .sheet(isPresented: $isPresentingNewDayEditor) {
@@ -90,9 +101,9 @@ struct EditWorkoutView: View {
             refreshPersistedImage()
         }
     }
-
+    
     // MARK: - Extracted sections
-
+    
     private var headerBar: some View {
         HStack {
             Button { dismiss() } label: {
@@ -100,15 +111,15 @@ struct EditWorkoutView: View {
                     .foregroundColor(.white)
                     .font(.title3)
             }
-
+            
             Spacer()
-
+            
             Text("EDIT WORKOUT")
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(.white)
-
+            
             Spacer()
-
+            
             Button("Save") {
                 saveWorkoutChanges()
             }
@@ -117,13 +128,13 @@ struct EditWorkoutView: View {
         .padding(.horizontal)
         .padding(.top, 20)
     }
-
+    
     private var nameField: some View {
         HStack {
             TextField("Insert Workout Name", text: $workoutName)
                 .foregroundColor(Color("FourthColor"))
                 .font(.headline)
-
+            
             if !workoutName.isEmpty {
                 Button(action: { workoutName = "" }) {
                     Image(systemName: "xmark.circle.fill")
@@ -136,7 +147,7 @@ struct EditWorkoutView: View {
         .background(Color("ThirdColor"))
         .cornerRadius(8)
     }
-
+    
     @ViewBuilder
     private var workoutImageSection: some View {
         ZStack {
@@ -152,7 +163,7 @@ struct EditWorkoutView: View {
                     .frame(height: 200)
                     .cornerRadius(10)
             }
-
+            
             Button {
                 Task {
                     let granted = await Permissions().requestGalleryPermission()
@@ -171,20 +182,20 @@ struct EditWorkoutView: View {
         }
         .padding(.horizontal)
     }
-
+    
     private var weeksCounterRow: some View {
         HStack {
             Text("\(daysForUI.count) Days")
                 .foregroundColor(Color("FourthColor"))
                 .font(.headline)
-
+            
             Spacer()
-
+            
             HStack(spacing: 4) {
                 Text("∞")
                     .foregroundColor(Color("FourthColor"))
                     .font(.headline)
-
+                
                 TextField("0", text: $numberWeeks)
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.center)
@@ -196,7 +207,7 @@ struct EditWorkoutView: View {
                     .onChange(of: numberWeeks) { (newValue: String) in
                         numberWeeks = newValue.filter { "0123456789".contains($0) }
                     }
-
+                
                 Text("Weeks")
                     .foregroundColor(Color("FourthColor"))
                     .font(.headline)
@@ -204,7 +215,7 @@ struct EditWorkoutView: View {
         }
         .padding(.horizontal, 30)
     }
-
+    
     private var daysList: some View {
         let days: [WorkoutDay] = daysForUI
         return Group {
@@ -231,7 +242,7 @@ struct EditWorkoutView: View {
             }
         }
     }
-
+    
     private var addDayButton: some View {
         Button {
             isPresentingNewDayEditor = true
@@ -247,22 +258,22 @@ struct EditWorkoutView: View {
         }
         .padding(.top)
     }
-
+    
     // MARK: - Helpers
-
+    
     private var daysForUI: [WorkoutDay] {
         let set = (workout.workoutDay as? Set<WorkoutDay>) ?? []
         return set
             .filter { !stagedDeletedDayIDs.contains($0.objectID) }
             .sorted { ($0.name ?? "") < ($1.name ?? "") }
     }
-
+    
     private func initializeFromWorkout() {
         workoutName = workout.name ?? ""
         numberWeeks = "\(workout.weeks)"
         pathToImage = workout.pathToImage
     }
-
+    
     private func refreshPersistedImage() {
         guard let path = pathToImage, !path.isEmpty else {
             persistedImage = nil
@@ -275,23 +286,23 @@ struct EditWorkoutView: View {
             persistedImage = nil
         }
     }
-
+    
     // Save finale: applica nome/settimane/immagine + esegue davvero le delete
     private func saveWorkoutChanges() {
         let trimmed = workoutName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-
+        
         // 1) Cancella i giorni marcati (manager salva)
         for id in stagedDeletedDayIDs {
             if let day = try? context.existingObject(with: id) as? WorkoutDay {
                 workoutDayManager.deleteWorkoutDay(day)
             }
         }
-
+        
         // 2) Ricalcola il conteggio dei giorni rimasti
         let remaining = ((workout.workoutDay as? Set<WorkoutDay>) ?? []).count
         workout.days = Int16(remaining)
-
+        
         // 3) Aggiorna i campi del workout (manager salva)
         workoutManager.updateWorkout(
             workout,
@@ -299,10 +310,10 @@ struct EditWorkoutView: View {
             weeks: Int16(numberWeeks) ?? workout.weeks,
             pathToImage: pathToImage
         )
-
+        
         dismiss()
     }
-
+    
     // Salvataggio locale dell’immagine (non scrive sul workout finché non premi Save)
     private func handleImageSelected(_ image: UIImage) {
         let imageName = UUID().uuidString + ".jpg"
