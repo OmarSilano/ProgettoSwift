@@ -30,6 +30,21 @@ extension Workout {
         self.days = Int16(self.workoutDay?.count ?? 0)
     }
     
+    public override func willSave() {
+            super.willSave()
+
+            // Conta i giorni
+            let currentCount: Int16 = {
+                let set = (workoutDay as? Set<WorkoutDay>) ?? []
+                return Int16(set.filter { !$0.isDeleted }.count)
+            }()
+
+            // Aggiorna solo se cambia, per evitare dirtying inutile
+            if days != currentCount {
+                self.days = currentCount
+            }
+        }
+    
     
     func toPlainText() -> String {
         var txt = "🏋️ WORKOUT: \(name ?? "Unnamed")\n"
