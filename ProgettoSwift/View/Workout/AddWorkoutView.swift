@@ -2,13 +2,17 @@ import SwiftUI
 import CoreData
 
 struct AddWorkoutView: View {
-    // Il parent (store reale)
-    @ObservedObject var workoutDraft: Workout
-    let childContext: NSManagedObjectContext
-    @Environment(\.dismiss) private var dismiss
+    // Parent (store reale)
     private let parentContext: NSManagedObjectContext
+    // Child 
+    let childContext: NSManagedObjectContext
 
-    // UI state invariati (per mantenere la stessa UI)
+    // Draft nel child
+    @ObservedObject var workoutDraft: Workout
+
+    @Environment(\.dismiss) private var dismiss
+
+    // UI state (invariata)
     @State private var workoutName = "New Workout"
     @State private var selectedImage: UIImage? = nil
     @State private var isShowingImagePicker = false
@@ -18,52 +22,60 @@ struct AddWorkoutView: View {
     @State private var pathToImage: String? = nil
     @State private var showPermissionAlert = false
 
-    // Manager che usano SEMPRE il child
+    // Presentazioni sheet
+    @State private var isPresentingNewDayEditor = false
+    @State private var isEditingDay = false
+
+    // Manager (sul child)
     private var workoutManager: WorkoutManager { WorkoutManager(context: childContext) }
-    private var workoutDayManager: WorkoutDayManager { WorkoutDayManager(context: childContext) }
-    private var workoutDayDetailManager: WorkoutDayDetailManager { WorkoutDayDetailManager(context: childContext) }
-    private var exerciseManager: ExerciseManager { ExerciseManager(context: childContext) }
-    
+
+    // Fetch reattivo dei giorni nel child, filtrati per il draft
+    @FetchRequest private var fetchedDays: FetchedResults<WorkoutDay>
+
+    // MARK: - Init
     init(parentContext: NSManagedObjectContext) {
         self.parentContext = parentContext
-        
+
         // 1) child context
         let child = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         child.parent = parentContext
         child.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         child.automaticallyMergesChangesFromParent = true
         self.childContext = child
-        
-        // 2) draft nel child
-        let draft = Workout(context: child)
-        draft.name = "New Workout"
-        draft.isSaved = false
+
+        // 2) crea il draft nel child
+        let draft = Workout(context: child,
+                            name: "New Workout",
+                            weeks: 0,
+                            imagePath: nil,
+                            difficulty: .beginner,
+                            category: nil,
+                            isSaved: false)
         _workoutDraft = ObservedObject(initialValue: draft)
+
+        // 3) fetch giorni del draft
+        _fetchedDays = FetchRequest(
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)],
+            predicate: NSPredicate(format: "workout == %@", draft)
+        )
     }
 
-    // MARK: - Body (UI invariata)
+    // MARK: - Body
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // Top bar (identica)
+                // Header
                 HStack {
-                    Button {
-                        // Chiudiamo: il child non salvato viene scartato
-                        dismiss()
-                    } label: {
+                    Button { dismiss() } label: {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.white)
                             .font(.title3)
                     }
-
                     Spacer()
-
                     Text("CREATE WORKOUT")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
-
                     Spacer()
-
                     Button("Save") {
                         saveAll()
                         dismiss()
@@ -73,7 +85,7 @@ struct AddWorkoutView: View {
                 .padding(.horizontal)
                 .padding(.top, 20)
 
-                // TextField WorkoutName + X
+                // Nome workout
                 HStack {
                     TextField("Workout Name", text: $workoutName)
                         .onChange(of: workoutName) { _, newValue in
@@ -97,7 +109,7 @@ struct AddWorkoutView: View {
                 .background(Color("ThirdColor"))
                 .cornerRadius(8)
 
-                // Image picker
+                // Immagine
                 ZStack {
                     if let image = selectedImage {
                         Image(uiImage: image)
@@ -115,11 +127,8 @@ struct AddWorkoutView: View {
                     Button {
                         Task {
                             let granted = await Permissions().requestGalleryPermission()
-                            if granted {
-                                isShowingImagePicker = true
-                            } else {
-                                showPermissionAlert = true
-                            }
+                            if granted { isShowingImagePicker = true }
+                            else { showPermissionAlert = true }
                         }
                     } label: {
                         Image(systemName: "photo.badge.plus")
@@ -133,9 +142,9 @@ struct AddWorkoutView: View {
                 }
                 .padding(.horizontal)
 
-                // Weeks input + Days count
+                // Weeks + Days
                 HStack {
-                    Text("\(daysArray.count) Days")
+                    Text("\(daysForUI.count) Days")
                         .foregroundColor(Color("FourthColor"))
                         .font(.headline)
 
@@ -168,17 +177,19 @@ struct AddWorkoutView: View {
                 Divider().background(Color("ThirdColor"))
 
                 // Lista giorni
-                if !daysArray.isEmpty {
+                if !daysForUI.isEmpty {
                     VStack(spacing: 10) {
-                        ForEach(daysArray, id: \.objectID) { day in
+                        ForEach(daysForUI, id: \.objectID) { day in
                             WorkoutDayRow_CoreData(
                                 day: day,
                                 expandedDayID: $expandedDayID,
                                 onDelete: {
+                                    // Delete staged in child (non tocca lo store finché non salviamo il parent)
                                     childContext.delete(day)
                                 },
                                 onEdit: {
                                     dayBeingEdited = day
+                                    isEditingDay = true
                                 }
                             )
                         }
@@ -186,25 +197,14 @@ struct AddWorkoutView: View {
                     .padding(.horizontal)
                 }
 
-                // Add day button
                 Button {
-                    if daysArray.count < 7 {
-                        _ = workoutDayManager.createWorkoutDay(
-                            isCompleted: false,
-                            name: "\(daysArray.count + 1)° Day",
-                            muscles: [],
-                            workout: workoutDraft
-                        )
-                    }
+                    isPresentingNewDayEditor = true
                 } label: {
-                    HStack {
-                        Image(systemName: "plus")
-                        Text("Add Day")
-                    }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .padding()
-                    .background(Color("SecondaryColor"))
-                    .cornerRadius(25)
+                    HStack { Image(systemName: "plus"); Text("Add Day") }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .padding()
+                        .background(Color("SecondaryColor"))
+                        .cornerRadius(25)
                 }
                 .padding(.top)
 
@@ -216,20 +216,31 @@ struct AddWorkoutView: View {
         .sheet(isPresented: $isShowingImagePicker) {
             ImagePicker(selectedImage: $selectedImage)
         }
-        .onChange(of: selectedImage) { newImage in
-            if let img = newImage {
-                handleImageSelected(img)
+        .onChange(of: selectedImage) { img in
+            if let image = img { handleImageSelected(image) }
+        }
+        // EDIT Day esistente (sul child)
+        .sheet(isPresented: $isEditingDay) {
+            if let day = dayBeingEdited {
+                EditWorkoutDayView(
+                    day: day,
+                    onClose: {
+                        isEditingDay = false
+                        dayBeingEdited = nil
+                    }
+                )
+                .environment(\.managedObjectContext, childContext)
             }
         }
-        .sheet(item: $dayBeingEdited) { day in
-            AddWorkoutDayView(
-                day: day,
-                context: childContext,
-                onSave: { updated in
-                    updated.updateMusclesFromDetails()
-                    dayBeingEdited = nil
+        // CREATE Day (sul child)
+        .sheet(isPresented: $isPresentingNewDayEditor) {
+            CreateWorkoutDayView(
+                workout: workoutDraft,
+                onClose: {
+                    isPresentingNewDayEditor = false
                 }
             )
+            .environment(\.managedObjectContext, childContext)
         }
         .navigationBarBackButtonHidden(true)
         .alert("Accesso alla galleria negato", isPresented: $showPermissionAlert) {
@@ -242,16 +253,13 @@ struct AddWorkoutView: View {
         } message: {
             Text("Abilita l’accesso alla galleria dalle impostazioni per selezionare un'immagine.")
         }
-        
     }
 
     // MARK: - Helpers
 
-    // Giorni del workout ordinati
-    private var daysArray: [WorkoutDay] {
-        let set = (workoutDraft.workoutDay as? Set<WorkoutDay>) ?? []
-        // Mantieni ordinamento alfabetico sul nome
-        return set.sorted { ($0.name ?? "") < ($1.name ?? "") }
+    // Giorni filtrati/ordinati (usa @FetchRequest reattivo)
+    private var daysForUI: [WorkoutDay] {
+        fetchedDays.sorted { ($0.name ?? "") < ($1.name ?? "") }
     }
 
     // Salva immagine in Documents/Images e collega il path al draft
@@ -259,135 +267,23 @@ struct AddWorkoutView: View {
         let imageName = UUID().uuidString + ".jpg"
         if let savedPath = saveImageToDocuments(image, imageName: imageName) {
             pathToImage = savedPath
-            print("Immagine in salvata in \(savedPath)")
             workoutDraft.pathToImage = savedPath
         }
     }
 
-    // Salvataggio atómico: Workout + Days + Details
+    // Commit finale: child -> parent -> store
     private func saveAll() {
         // Valori finali dal form
         let finalName = workoutName.trimmingCharacters(in: .whitespacesAndNewlines)
         workoutDraft.name = finalName.isEmpty ? "New Workout" : finalName
-        
         workoutDraft.weeks = Int16(numberWeeks) ?? 0
-        workoutDraft.days = Int16(daysArray.count)
         workoutDraft.isSaved = true
-        // aggiorna i muscoli per ogni day
-        daysArray.forEach { $0.updateMusclesFromDetails() }
 
         do {
-            try childContext.save()     // child -> parent
-            try parentContext.save()    // parent -> store
+            try childContext.save()     // child -> parent (bozza → parent)
+            try parentContext.save()    // parent -> store (commit)
         } catch {
-            print("Errore salvataggio workout:", error)
+            print("❌ Errore salvataggio workout:", error)
         }
     }
 }
-
-
-// MARK: - Editor WorkoutDay
-private struct AddWorkoutDayView: View {
-    @Environment(\.dismiss) private var dismiss
-
-    @ObservedObject var day: WorkoutDay
-    let context: NSManagedObjectContext
-    var onSave: (WorkoutDay) -> Void
-
-    @State private var newName: String = ""
-
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 12) {
-
-                // Top bar custom
-                HStack {
-                    Button("Cancel") {
-                        onSave(day)
-                    }
-                    .foregroundColor(.white)
-
-                    Spacer()
-
-                    Text("EDIT DAY")
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(.white)
-
-                    Spacer()
-
-                    Button("Save") {
-                        day.name = newName
-                        day.updateMusclesFromDetails()
-                        onSave(day)
-                    }
-                    .foregroundColor(.white)
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 12)
-
-                TextField("Day name", text: $newName)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                    .background(Color("ThirdColor"))
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .padding(.horizontal, 16)
-                    .onAppear { newName = day.name ?? "" }
-
-                if day.sortedDetails.isEmpty {
-                    Text("No exercises yet")
-                        .foregroundColor(.gray)
-                } else {
-                    List {
-                        ForEach(day.sortedDetails, id: \.objectID) { d in
-                            HStack(spacing: 12) {
-                                VStack(alignment: .leading, spacing: 6) {
-                                    HStack {
-                                        Text(d.exercise?.name ?? "Exercise")
-                                            .foregroundColor(.white)
-                                            .font(.headline)
-
-                                        Spacer()
-
-                                        Text(d.typology?.name ?? "Method")
-                                            .foregroundColor(Color("SubtitleColor"))
-                                            .font(.subheadline)
-                                    }
-                                }
-
-                                Image(systemName: "line.3.horizontal")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.vertical, 10)
-                            .listRowBackground(Color("ThirdColor"))
-                        }
-                        .onDelete { idx in
-                            idx.map { day.sortedDetails[$0] }.forEach(context.delete)
-                            day.updateMusclesFromDetails()
-                        }
-                    }
-                    .listStyle(PlainListStyle())
-                    .scrollContentBackground(.hidden)
-                    .background(Color("PrimaryColor"))
-                }
-                
-                Button {
-                } label: {
-                    HStack {
-                        Image(systemName: "plus")
-                        Text("Add Exercise")
-                    }
-                    .foregroundColor(.black)
-                    .padding()
-                    .background(Color.green)
-                    .cornerRadius(20)
-                }
-                .padding()
-
-                Spacer()
-            }
-            .background(Color.black.ignoresSafeArea())
-        }
-    }
-}
-
