@@ -25,6 +25,11 @@ struct EditWorkoutView: View {
     @State private var stagedDeletedDayIDs = Set<NSManagedObjectID>()
     @State private var isPresentingNewDayEditor = false
     
+    private let maxDays = 7
+    @State private var showMaxDaysAlert = false
+    @State private var nextDayNameForCreate: String? = nil
+    private var canAddDay: Bool { daysForUI.count < maxDays }
+    
     // Manager
     private var workoutManager: WorkoutManager { WorkoutManager(context: context) }
     private var workoutDayManager: WorkoutDayManager { WorkoutDayManager(context: context) }
@@ -74,8 +79,10 @@ struct EditWorkoutView: View {
         .sheet(isPresented: $isPresentingNewDayEditor) {
             CreateWorkoutDayView(
                 workout: workout,
+                presetName: nextDayNameForCreate,
                 onClose: {
                     isPresentingNewDayEditor = false
+                    nextDayNameForCreate = nil
                 }
             )
         }
@@ -89,6 +96,11 @@ struct EditWorkoutView: View {
             Button("Annulla", role: .cancel) {}
         } message: {
             Text("Abilita l’accesso alla galleria dalle impostazioni per selezionare un'immagine.")
+        }
+        .alert("Limit reached", isPresented: $showMaxDaysAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("You can create up to 7 training days per workout.")
         }
         .onAppear {
             initializeFromWorkout()
@@ -245,6 +257,12 @@ struct EditWorkoutView: View {
     
     private var addDayButton: some View {
         Button {
+            guard canAddDay else {
+                showMaxDaysAlert = true
+                UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+                return
+            }
+            nextDayNameForCreate = "Day \(daysForUI.count + 1)"  // <- n+1, basato su giorni visibili
             isPresentingNewDayEditor = true
         } label: {
             HStack {
