@@ -32,7 +32,7 @@ struct WorkoutView: View {
                                 .foregroundColor(Color("FourthColor"))
                         }
                         Spacer()
-                        NavigationLink(destination: AddWorkoutView()) {
+                        NavigationLink(destination: AddWorkoutView(parentContext: context)) {
                             Image(systemName: "plus")
                                 .resizable()
                                 .frame(width: 24, height: 24)

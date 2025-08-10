@@ -1,225 +1,459 @@
 import SwiftUI
 import CoreData
 
+// MARK: - EDIT esistente (commit su Save)
 struct EditWorkoutDayView: View {
-    @Environment(\.dismiss) var dismiss
-
-    @State var tempDay: AddWorkoutView.TempWorkoutDay
-    var onSave: (AddWorkoutView.TempWorkoutDay) -> Void
-
-    @State private var typologies: [Typology] = []
-    @State private var selectedTypologies: [UUID: Typology] = [:]
+    @Environment(\.managedObjectContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    
+    @ObservedObject var day: WorkoutDay
+    var onClose: () -> Void = {}
+    
+    // UI state
+    @State private var dayName: String = ""
+    @State private var details: [WorkoutDayDetail] = []
     @State private var isShowingExercisePicker = false
+    @State private var typologies: [Typology] = []
+    @State private var didHandleClose = false
+    
 
-    private let typologyManager: TypologyManager
-
-    init(tempDay: AddWorkoutView.TempWorkoutDay,
-         onSave: @escaping (AddWorkoutView.TempWorkoutDay) -> Void,
-         context: NSManagedObjectContext) {
-        self._tempDay = State(initialValue: tempDay)
-        self.onSave = onSave
-        self.typologyManager = TypologyManager(context: context)
-    }
-
-
+    
+    // Manager
+    private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: context) }
+    private var typologyMgr: TypologyManager { TypologyManager(context: context) }
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 12) {
-
-                HStack {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                    .foregroundColor(.white)
-
-                    Spacer()
-
-                    Text("EDIT DAY")
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(.white)
-
-                    Spacer()
-
-                    Button("Save") {
-                        for index in tempDay.exercises.indices {
-                            let ex = tempDay.exercises[index]
-                            if let selected = selectedTypologies[ex.id] {
-                                tempDay.exercises[index].typology = selected
-                            }
-                        }
-
-                        onSave(tempDay)
-                        dismiss()
-                    }
-
-                    .foregroundColor(.white)
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 12)
-
-                // Nome giorno
-                TextField("Day name", text: $tempDay.name)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                    .background(Color("ThirdColor"))
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .padding(.horizontal, 16)
-
-                // Lista esercizi
-                if tempDay.exercises.isEmpty {
-                    Text("No exercises yet")
-                        .foregroundColor(.gray)
-                } else {
-                    List {
-                        ForEach(tempDay.exercises) { exercise in
-                            HStack(spacing: 12) {
-                                Button(action: {
-                                    removeExercise(exercise)
-                                }) {
-                                    Image(systemName: "minus.circle")
-                                        .resizable()
-                                        .frame(width: 26, height: 26)
-                                        .foregroundColor(.white)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .contentShape(Circle())
-
-                                VStack(alignment: .leading, spacing: 6) {
-                                    HStack {
-                                        Text(exercise.name)
-                                            .foregroundColor(.white)
-                                            .font(.headline)
-
-                                        Spacer()
-
-                                        Menu {
-                                            ForEach(typologies, id: \.self) { typ in
-                                                Button(action: {
-                                                    selectedTypologies[exercise.id] = typ
-                                                }) {
-                                                    Text(typ.name ?? "")
-                                                }
-                                            }
-                                        } label: {
-                                            HStack(spacing: 4) {
-                                                Text(selectedTypologies[exercise.id]?.name ?? typologies.first?.name ?? "")
-                                                    .foregroundColor(Color("SubtitleColor"))
-                                                    .font(.subheadline)
-
-                                                Image(systemName: "chevron.down")
-                                                    .resizable()
-                                                    .frame(width: 10, height: 6)
-                                                    .foregroundColor(Color("SubtitleColor"))
-                                                    .padding(.top, 2)
-                                            }
-                                        }
-                                    }
-                                }
-
-                                Image(systemName: "line.3.horizontal")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.vertical, 10)
-                            .listRowBackground(Color("ThirdColor"))
-                        }
-
-
-
-
-                        .onMove(perform: moveExercise)
-                    }
-                    .listStyle(PlainListStyle())
-                    .scrollContentBackground(.hidden)
-                    .background(Color("PrimaryColor"))
-                }
-
-                // Bottone add exercise
-                Button {
-                    isShowingExercisePicker = true
-                } label: {
-                    HStack {
-                        Image(systemName: "plus")
-                        Text("Add Exercise")
-                    }
-                    .foregroundColor(.black)
-                    .padding()
-                    .background(Color.green)
-                    .cornerRadius(20)
-                }
-                .padding()
-
+                header(title: "EDIT DAY", onCancel: cancel, onSave: save)
+                
+                nameField
+                
+                detailsList
+                
+                addExerciseButton
+                
                 Spacer()
             }
-            .background(Color.black.ignoresSafeArea())
-            .onAppear {
-                typologies = typologyManager.fetchAllTypologies()
-
-                for ex in tempDay.exercises {
-                    if let typ = ex.typology {
-                        selectedTypologies[ex.id] = typ
-                    }
-                }
-            }
-            .sheet(isPresented: $isShowingExercisePicker) {
-                ExercisePickerView(
-                    onSelect: { newExercises in
-                        if let defaultTypology = typologies.first(where: { $0.name == "4x10" }) {
-                            let previewsWithTypology = newExercises.map { exercise in
-                                selectedTypologies[exercise.id] = defaultTypology
-                                return AddWorkoutView.ExercisePreview(
-                                    id: exercise.id,
-                                    name: exercise.name,
-                                    muscle: exercise.muscle,
-                                    typology: defaultTypology
-                                )
-                            }
-                            let newOnly = previewsWithTypology.filter { new in
-                                !tempDay.exercises.contains(where: { $0.id == new.id })
-                            }
-
-                            tempDay.exercises.append(contentsOf: newOnly)
-                        } else {
-                            tempDay.exercises.append(contentsOf: newExercises)
-                        }
-                    },
-                    preselectedExerciseIDs: Set(tempDay.exercises.map { $0.id })
-                )
+            .background(Color("PrimaryColor").ignoresSafeArea())
+        }
+        .onAppear {
+            dayName = day.name ?? ""
+            details = day.sortedDetails
+            typologies = typologyMgr.fetchAllTypologies()
+        }
+        .sheet(isPresented: $isShowingExercisePicker) {
+            ExercisePickerView(
+                onSelect: { ids in addExercises(with: ids) },
+                preselectedIDs: Set(details.compactMap { $0.exercise?.objectID })
+            )
+        }
+        .onDisappear {
+            if !didHandleClose {
+                context.rollback()   // stesso effetto del Cancel
+                onClose()
             }
         }
     }
-
-    private func removeExercise(_ exercise: AddWorkoutView.ExercisePreview) {
-        tempDay.exercises.removeAll { $0.id == exercise.id }
+    
+    // MARK: - UI chunks (per alleggerire il compilatore)
+    private func header(title: String, onCancel: @escaping () -> Void, onSave: @escaping () -> Void) -> some View {
+        HStack {
+            Button("Cancel", action: onCancel).foregroundColor(.white)
+            Spacer()
+            Text(title).font(.system(size: 22, weight: .bold)).foregroundColor(.white)
+            Spacer()
+            Button("Save", action: onSave).foregroundColor(.white)
+        }
+        .padding(.horizontal, 16).padding(.top, 12)
+    }
+    
+    private var nameField: some View {
+        TextField("Day name", text: $dayName)
+            .padding(.vertical, 12).padding(.horizontal, 16)
+            .background(Color("ThirdColor"))
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .padding(.horizontal, 16)
+    }
+    
+    private var detailsList: some View {
+        Group {
+            if details.isEmpty {
+                Text("No exercises yet").foregroundColor(.gray)
+            } else {
+                List {
+                    ForEach(details, id: \.objectID) { d in
+                        detailRow(detail: d)
+                    }
+                    .onDelete(perform: deleteDetails)
+                    .onMove(perform: moveDetails)
+                }
+                .environment(\.editMode, .constant(.active))
+                .listStyle(PlainListStyle())
+                .scrollContentBackground(.hidden)
+                .background(Color("PrimaryColor"))
+            }
+        }
+    }
+    
+    private func detailRow(detail d: WorkoutDayDetail) -> some View {
+        HStack(spacing: 12) {
+            Button {
+                // delete singolo (stesso effetto dello swipe)
+                if let idx = details.firstIndex(where: { $0.objectID == d.objectID }) {
+                    deleteDetails(IndexSet(integer: idx))
+                }
+            } label: {
+                Image(systemName: "minus.circle").resizable().frame(width: 26, height: 26).foregroundColor(.white)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Circle())
+            
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text(d.exercise?.name ?? "Exercise")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    Menu {
+                        ForEach(typologies, id: \.objectID) { t in
+                            Button(t.name ?? "Typology") {
+                                d.typology = t
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text(d.typology?.name ?? "Method")
+                                .foregroundColor(Color("SubtitleColor"))
+                                .font(.subheadline)
+                            Image(systemName: "chevron.down")
+                                .resizable().frame(width: 10, height: 6)
+                                .foregroundColor(Color("SubtitleColor"))
+                                .padding(.top, 2)
+                        }
+                    }
+                }
+            }
+            
+            Image(systemName: "line.3.horizontal").foregroundColor(.gray)
+        }
+        .padding(.vertical, 10)
+        .listRowBackground(Color("ThirdColor"))
+    }
+    
+    private var addExerciseButton: some View {
+        Button {
+            isShowingExercisePicker = true
+        } label: {
+            HStack { Image(systemName: "plus"); Text("Add Exercise") }
+                .foregroundColor(.black)
+                .padding()
+                .background(Color.green)
+                .cornerRadius(20)
+        }
+        .padding()
+    }
+    
+    // MARK: - Actions
+    private func addExercises(with ids: [NSManagedObjectID]) {
+        let defaultTyp = (typologies.first { $0.isDefault } ?? typologies.first)!
+        let existing = Set(details.compactMap { $0.exercise?.objectID })
+        
+        for id in ids where !existing.contains(id) {
+            if let ex = try? context.existingObject(with: id) as? Exercise {
+                let d = WorkoutDayDetail(context: context)
+                d.id = UUID()
+                d.exercise = ex
+                d.typology = defaultTyp
+                d.orderIndex = Int16(details.count)
+                details.append(d)
+            }
+        }
+        isShowingExercisePicker = false
+    }
+    
+    private func deleteDetails(_ offsets: IndexSet) {
+        for i in offsets {
+            let det = details[i]
+            if det.workoutDay == nil {
+                context.delete(det)
+            }
+        }
+        details.remove(atOffsets: offsets)
     }
 
-    private func moveExercise(from source: IndexSet, to destination: Int) {
-        tempDay.exercises.move(fromOffsets: source, toOffset: destination)
+    
+    private func moveDetails(from source: IndexSet, to destination: Int) {
+        details.move(fromOffsets: source, toOffset: destination)
+        renumberOrder()
     }
+    
+    private func renumberOrder() {
+        for (i, d) in details.enumerated() { d.orderIndex = Int16(i) }
+    }
+    
+    private func save() {
+            let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+            day.name = trimmed
 
+            // 1) Collega al day i nuovi dettagli orfani (aggiunte)
+            for det in details where det.workoutDay == nil {
+                det.workoutDay = day
+            }
 
+            // 2) Cancella ORA i dettagli esistenti rimossi dalla UI
+            let keptExistingIDs: Set<NSManagedObjectID> = Set(
+                details.compactMap { $0.workoutDay != nil ? $0.objectID : nil }
+            )
+            for det in day.sortedDetails where !keptExistingIDs.contains(det.objectID) {
+                context.delete(det)
+            }
 
+            // 3) Aggiorna l'ordine definitivo (su tutti quelli tenuti e nuovi)
+            for (i, det) in details.enumerated() {
+                det.orderIndex = Int16(i)
+            }
 
+            // 4) Calcola i muscoli SOLO ora
+            day.updateMusclesFromDetails()
 
+            do {
+                try context.save()
+                didHandleClose = true
+                onClose()
+                dismiss()
+            } catch {
+                print("❌ Save day error:", error)
+            }
+        }
+    
+    private func cancel() {
+        didHandleClose = true
+        context.rollback()
+        onClose()
+        dismiss()
+    }
+}
 
+// MARK: - CREATE nuovo giorno (commit su Save)
+struct CreateWorkoutDayView: View {
+    @Environment(\.managedObjectContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    
+    @ObservedObject var workout: Workout
+    var onClose: () -> Void = {}
+    
+    // UI state
+    @State private var dayName: String = ""
+    @State private var day: WorkoutDay? = nil
+    @State private var details: [WorkoutDayDetail] = []
+    @State private var isShowingExercisePicker = false
+    @State private var typologies: [Typology] = []
+    @State private var didHandleClose = false
 
+    
+    private var dayMgr: WorkoutDayManager { WorkoutDayManager(context: context) }
+    private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: context) }
+    private var typologyMgr: TypologyManager { TypologyManager(context: context) }
+    
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 12) {
+                header(title: "NEW DAY", onCancel: cancel, onSave: save)
+                
+                nameField
+                
+                detailsList
+                
+                addExerciseButton
+                
+                Spacer()
+            }
+            .background(Color("PrimaryColor").ignoresSafeArea())
+        }
+        .onAppear {
+            let suggested = "Day \(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)"
 
+            let newDay = WorkoutDay(context: context)
+            newDay.id = UUID()
+            newDay.name = suggested
+            newDay.isCompleted = false
 
+            day = newDay
+            dayName = suggested
+            typologies = typologyMgr.fetchAllTypologies()
+        }
+        .sheet(isPresented: $isShowingExercisePicker) {
+            ExercisePickerView(
+                onSelect: { ids in addExercises(with: ids) },
+                preselectedIDs: Set(details.compactMap { $0.exercise?.objectID })
+            )
+        }
+        .onDisappear {
+            if !didHandleClose {
+                context.rollback()   // stesso effetto del Cancel
+                onClose()
+            }
+        }
+    }
+    
+    // UI chunks (riuso quelli sopra)
+    private func header(title: String, onCancel: @escaping () -> Void, onSave: @escaping () -> Void) -> some View {
+        HStack {
+            Button("Cancel", action: onCancel).foregroundColor(.white)
+            Spacer()
+            Text(title).font(.system(size: 22, weight: .bold)).foregroundColor(.white)
+            Spacer()
+            Button("Save", action: onSave).foregroundColor(.white)
+        }
+        .padding(.horizontal, 16).padding(.top, 12)
+    }
+    
+    private var nameField: some View {
+        TextField("Day name", text: $dayName)
+            .padding(.vertical, 12).padding(.horizontal, 16)
+            .background(Color("ThirdColor"))
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .padding(.horizontal, 16)
+    }
+    
+    private var detailsList: some View {
+        Group {
+            if details.isEmpty {
+                Text("No exercises yet").foregroundColor(.gray)
+            } else {
+                List {
+                    ForEach(details, id: \.objectID) { d in
+                        HStack(spacing: 12) {
+                            Button {
+                                if let idx = details.firstIndex(where: { $0.objectID == d.objectID }) {
+                                    deleteDetails(IndexSet(integer: idx))
+                                }
+                            } label: {
+                                Image(systemName: "minus.circle").resizable().frame(width: 26, height: 26).foregroundColor(.white)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .contentShape(Circle())
+                            
+                            VStack(alignment: .leading, spacing: 6) {
+                                HStack {
+                                    Text(d.exercise?.name ?? "Exercise")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                    
+                                    Spacer()
+                                    
+                                    Menu {
+                                        ForEach(typologies, id: \.objectID) { t in
+                                            Button(t.name ?? "Typology") {
+                                                d.typology = t
+                                            }
+                                        }
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Text(d.typology?.name ?? "Method")
+                                                .foregroundColor(Color("SubtitleColor"))
+                                                .font(.subheadline)
+                                            Image(systemName: "chevron.down")
+                                                .resizable().frame(width: 10, height: 6)
+                                                .foregroundColor(Color("SubtitleColor"))
+                                                .padding(.top, 2)
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            Image(systemName: "line.3.horizontal").foregroundColor(.gray)
+                        }
+                        .padding(.vertical, 10)
+                        .listRowBackground(Color("ThirdColor"))
+                    }
+                    .onDelete(perform: deleteDetails)
+                    .onMove(perform: moveDetails)
+                }
+                .environment(\.editMode, .constant(.active))
+                .listStyle(PlainListStyle())
+                .scrollContentBackground(.hidden)
+                .background(Color("PrimaryColor"))
+            }
+        }
+    }
+    
+    private var addExerciseButton: some View {
+        Button {
+            isShowingExercisePicker = true
+        } label: {
+            HStack { Image(systemName: "plus"); Text("Add Exercise") }
+                .foregroundColor(.black)
+                .padding()
+                .background(Color.green)
+                .cornerRadius(20)
+        }
+        .padding()
+    }
+    
+    // Actions
+    private func addExercises(with ids: [NSManagedObjectID]) {
+        guard let day else { return }
+        let defaultTyp = (typologies.first { $0.isDefault } ?? typologies.first)!
+        
+        let existing = Set(details.compactMap { $0.exercise?.objectID })
+        for id in ids where !existing.contains(id) {
+            if let ex = try? context.existingObject(with: id) as? Exercise {
+                let d = detailMgr.createTempWorkoutDayDetail(
+                    workoutDay: day,
+                    exercise: ex,
+                    typology: defaultTyp,
+                    orderIndex: Int16(details.count)
+                )
+                details.append(d)
+            }
+        }
+        isShowingExercisePicker = false
+    }
+    
+    private func deleteDetails(_ offsets: IndexSet) {
+        for i in offsets { context.delete(details[i]) }
+        details.remove(atOffsets: offsets)
+        renumberOrder()
+    }
+    
+    private func moveDetails(from source: IndexSet, to destination: Int) {
+        details.move(fromOffsets: source, toOffset: destination)
+        renumberOrder()
+    }
+    
+    private func renumberOrder() {
+        for (i, d) in details.enumerated() { d.orderIndex = Int16(i) }
+    }
+    
+    private func save() {
+        guard let day else { return }
 
+        let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        day.name = trimmed
 
+        day.workout = workout
+        day.updateMusclesFromDetails()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        do {
+            didHandleClose = true
+            try context.save()
+            onClose()
+            dismiss()
+        } catch {
+            print("❌ Save new day error:", error)
+        }
+    }
+    
+    private func cancel() {
+        didHandleClose = true
+        context.rollback()
+        onClose()
+        dismiss()
+    }
 }

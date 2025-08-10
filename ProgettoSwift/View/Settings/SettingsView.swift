@@ -37,7 +37,7 @@ struct SettingsView: View {
                     }
                     
                     // Banned Exercises List
-                    NavigationLink(destination: BannedExercisesView(
+                     /*NavigationLink(destination: BannedExercisesView(
                         
                         onSelect: { previews in
                             let manager = ExerciseManager(context: context)
@@ -65,7 +65,7 @@ struct SettingsView: View {
                         .frame(height: 80)
                         .background(Color.black)
                         .cornerRadius(10)
-                    }
+                    }*/
                     
                     //ChatBotView
                     NavigationLink(destination: ChatBotView()) {
