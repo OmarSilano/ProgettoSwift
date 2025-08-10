@@ -80,8 +80,12 @@ struct ExercisePickerView: View {
                                     .foregroundColor(.white)
                             ) {
                                 ForEach(exercises, id: \.objectID) { exercise in
+                                    let id = exercise.objectID
+                                    let isPreselected = preselectedIDs.contains(id)
+                                    let isSelected = selectedIDs.contains(id)
+                                    
                                     Button {
-                                        toggleSelection(for: exercise)
+                                        if !isPreselected { toggleSelection(for: exercise) }
                                     } label: {
                                         HStack {
                                             // Immagine (supporta sia asset name che file path)
@@ -108,7 +112,7 @@ struct ExercisePickerView: View {
                                             Spacer()
                                             
                                             // Check
-                                            if selectedIDs.contains(exercise.objectID) {
+                                            if selectedIDs.contains(exercise.objectID) || preselectedIDs.contains(exercise.objectID) {
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(.green)
                                             }
@@ -118,7 +122,9 @@ struct ExercisePickerView: View {
                                             RoundedRectangle(cornerRadius: 8)
                                                 .fill(Color(red: 46/255, green: 44/255, blue: 44/255))
                                         )
+                                        .opacity(isPreselected ? 0.5 : 1.0)
                                     }
+                                    .disabled(isPreselected)
                                     .listRowBackground(Color(red: 46/255, green: 44/255, blue: 44/255))
                                 }
                             }
@@ -131,10 +137,9 @@ struct ExercisePickerView: View {
                 .background(Color("PrimaryColor").ignoresSafeArea())
                 .onAppear {
                     let manager = ExerciseManager(context: context)
-                    // Raggruppo per muscolo e filtro i bannati
                     groupedExercises = manager.fetchExercisesGroupedByMuscle()
                         .mapValues { $0.filter { !$0.isBanned } }
-                    selectedIDs = preselectedIDs
+                    selectedIDs = []
                 }
             }
             
