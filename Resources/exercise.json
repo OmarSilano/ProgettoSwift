@@ -55,6 +55,258 @@
    "videoName": null
   },
   {
+    "name": "45 Degree Leg Press",
+    "muscle": "Legs",
+    "method": "Horizontal Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Sitting down on the Leg Press, place your feet flat on the platform at roughly shoulder width and grab the side handles. Your legs should be roughly at a right angle. First Position.\n\n2. Take a deep breath and push away from the platform. Press through your heels, until your legs are just short of full extension. Avoid locking your knees out. Second Position.\n\n3. Slow and controlled, begin to slide back down into First Position.\n\n4. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Machine Prone Hamstring Curl",
+    "muscle": "Legs",
+    "method": "Hamstring Curl",
+    "difficulty": "Beginner",
+    "instructions": "1. Lie face down on the hamstring curl machine with your ankles positioned under the padded lever. Grip the machine handles for stability. First Position.\n\n2. Contract your hamstrings to curl your legs upward toward your glutes. Keep your hips pressed against the bench and avoid lifting them during the movement.\n\n3. Continue curling until you reach Second Position, where your hamstrings are fully contracted.\n\n4. Slowly lower the weight back into First Position in a controlled motion.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Leg Extensions",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the Leg Extension machine with your ankles under the pad.\n\n2. Adjust the pad so that your legs are pushed into roughly a right angle. Grab the side handles. First Position.\n\n3. Tip: Use the side handles to pull your body down into the seat to prevent any swaying movement.\n\n4. Keep your upper body fixed, extend your legs and drive the weight upwards into full extension. Second Position.\n\n5. Hold Second Position and squeeze your quadriceps for a second.\n\n6. Lower the weight back into First Position slowly, just short of where the weight touches the rack.\n\n7. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Seated Calf Raise",
+    "muscle": "Legs",
+    "method": "Calf Raise",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the seated calf raise machine and place the balls of your feet on the foot platform with your heels hanging off. Position your knees under the padded lever and adjust it to rest comfortably on your thighs. First Position.\n\n2. Release the safety lever if present, and lower your heels slowly towards the floor to feel a stretch in your calves.\n\n3. Press through the balls of your feet to raise your heels as high as possible, contracting your calves. Second Position.\n\n4. Hold briefly at the top, then slowly lower your heels back into First Position.\n\n5. Finish your reps.",
+    "imageName": "seatedCalfRaise.jpeg",
+    "videoName": "seatedCalfRaise.mp4"
+  },
+  {
+    "name": "Machine Standing Calf Raise",
+    "muscle": "Legs",
+    "method": "Calf Raise",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand on the calf raise machine with the balls of your feet on the foot platform and your heels hanging off the edge. Position your shoulders under the padded lever and keep your legs straight but not locked. First Position.\n\n2. Lower your heels slowly toward the floor to feel a stretch in your calves.\n\n3. Press through the balls of your feet to raise your heels as high as possible, contracting your calves. Second Position.\n\n4. Hold briefly at the top, then slowly lower your heels back into First Position.\n\n5. Finish your reps.",
+    "imageName": "machineStandingCalfRaise.jpeg",
+    "videoName": "machineStandingCalfRaise.mp4"
+  },
+  {
+    "name": "Dumbbell Lateral Raise",
+    "muscle": "Shoulders",
+    "method": "Lateral Raise",
+    "difficulty": "Beginner",
+    "instructions": "1. Standing neutral, hold a pair of dumbbells by your side. First Position.\n\n2. Keep a slight elbow bend and raise the dumbbells out to your side, up to shoulder height. Keep steady; swinging is cheating. Second Position.\n\n3. Hold and contract Second Position for a second.\n\n4. Slowly lower the dumbbells back down to your side. First Position again.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Seated Rear Delt Fly",
+    "muscle": "Shoulders",
+    "method": "Shoulder Pull",
+    "difficulty": "Beginner",
+    "instructions": "1. Sitting on a bench, hold a pair of dumbbells by your side.\n\n2. Bend at your hips to lean forward so your torso is almost parallel to the ground. Hold the dumbbells straight down below you at arm's length, palms facing inwards. First Position.\n\n3. Keep a very slight elbow bend throughout and raise the dumbbells out to your side, in the path of a semi-circle. Find Second Position where your arms are pinned back and roughly parallel to the floor.\n\n4. Slowly lower the dumbbells back down below you. First Position again.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Back Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set the squat rack to shoulder height. Load the bar with your chosen weight.\n\n2. Grip the bar just outside shoulder width. Step under and place the bar across the back of your shoulders.\n\n3. Lift the bar out of the rack and take a few steps back. Plant your feet at hip-width. Point your toes slightly outwards. First Position.\n\n4. Take a deep breath, brace your core and begin to drop into a squat, slowly sitting your hips back and bending your knees. Drop until – at minimum – your upper legs are parallel to the floor or – at maximum – your hamstrings touch your calves. Second Position.\n\n5. Push through the floor with your heel, straighten your legs and extend your hips to get back to First Position.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Dumbbell Front Lunge",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright, feet together, with a dumbbell in each hand. First Position.\n\n2. Take a big step forward with one leg and slowly fall into a lunge position, knee almost touching the floor, torso upright. Second Position.\n\n3. Hold Second Position for a second.\n\n4. Pressing through your heel, push back up into First Position.\n\n5. Repeat this for the other leg.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Reverse Dumbbell Lunge",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright holding a dumbbell in each hand at your sides, palms facing your body. Keep your feet hip-width apart and engage your core. First Position.\n\n2. Step one leg backward in a controlled motion, lowering your hips until both knees are bent at about 90 degrees. Your front knee should be directly above your ankle, and your back knee should hover just above the ground. Second Position.\n\n3. Push through the heel of your front foot to return to the starting position.\n\n4. Alternate legs for the desired number of repetitions, maintaining balance and posture throughout.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Deadlift",
+    "muscle": "Legs",
+    "method": "Hamstring Curl",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand over the bar, centred over your feet, in a neutral stance. Let your arms rest by your side.\n\n2. Bend at the hip to grip the bar, either double overhand or alternating grip. First Position.\n\n3. Taking a deep breath, retract your shoulder blades, brace your core and bend your knees until your shins make contact with the bar. Second Position.\n\n4. Drive through your heels, pushing the floor away, to lift the bar.\n\n5. As you reach the top, pull the bar back, retracting your shoulder blades and driving your hips forward. Third Position.\n\n6. Guide the bar to the floor by bending at your hips and controlling a fall back to First Position.\n\n7. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Seated Arnold Press",
+    "muscle": "Shoulders",
+    "method": "Shoulder Press",
+    "difficulty": "Intermediate",
+    "instructions": "1. Sit on an upright bench, grab a dumbbell in each hand and rest them on the ends of your legs. Raise the dumbbells above your head, arms fully extended. It may help to lift the dumbbells partway by kicking your knees up. First Position.\n\n2. Slowly lower the dumbbells down and twist them out in front of you, so your palms are facing towards you, just in front of your shoulders. Second Position.\n\n3. Mirroring the twist on the negative part of the movement, press the dumbbells back up into First Position.\n\n4. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Machine Shoulder Press",
+    "muscle": "Shoulders",
+    "method": "Shoulder Press",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit down on the shoulder press machine and adjust the seat so that the handles are at shoulder height. Grasp the handles with a firm grip. First Position.\n\n2. Press the handles upward until your arms are fully extended but not locked. Second Position.\n\n3. Slowly lower the handles back down to the starting position.\n\n4. Finish your reps.",
+    "imageName": "machineShoulderPress.jpeg",
+    "videoName": "machineShoulderPress.mp4"
+  },
+  {
+    "name": "Pull Up",
+    "muscle": "Back",
+    "method": "Pull-up",
+    "difficulty": "Advanced",
+    "instructions": "1. Grab the pull up bar, hands facing forwards. Retract your shoulder blades and tilt your torso back. First Position.\n\n2. Bringing your lats up to your elbows, pull your torso up until your shoulders reach the height of your hands at Second Position. Ensure you contract your back muscles throughout every rep.\n\n3. Slow and controlled, fall back into First Position.\n\n4. Finish your reps.",
+    "imageName": "pullUp.jpeg",
+    "videoName": "pullUp.mp4"
+  },
+  {
+    "name": "Assisted Pull Up",
+    "muscle": "Back",
+    "method": "Pull-up",
+    "difficulty": "Beginner",
+    "instructions": "1. Adjust the weight on the assisted pull-up machine according to your strength level. The higher the weight, the more assistance you'll get.\n\n2. Step onto the machine and grip the handles with your hands facing forward. Retract your shoulder blades and tilt your torso slightly back. First Position.\n\n3. Using your back and arms, pull yourself up until your shoulders are in line with your hands. Pause briefly. Second Position.\n\n4. Slowly lower yourself back down into First Position in a controlled motion.\n\n5. Finish your reps.",
+    "imageName": "assistedPullUp.jpeg",
+    "videoName": "assistedPullUp.mp4"
+  },
+  {
+    "name": "Single Arm Cable Pulldown",
+    "muscle": "Back",
+    "method": "Pull-up",
+    "difficulty": "Intermediate",
+    "instructions": "1. Adjust a cable machine so the pulley is at the highest setting and attach a single handle.\n\n2. Kneel or stand facing the machine. Grab the handle with one hand using a neutral grip (palm facing inward). Brace your core and slightly lean forward. First Position.\n\n3. Pull the handle down toward your shoulder while squeezing your lat and keeping your elbow close to your body. Second Position.\n\n4. Pause briefly, then return the handle to the starting position in a slow, controlled motion.\n\n5. Complete your reps, then switch arms.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Pec Fly",
+    "muscle": "Chest",
+    "method": "Close",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the pec fly machine with your back flat against the pad. Adjust the seat height so the handles are at chest level and your elbows are slightly bent. Grasp the handles firmly. First Position.\n\n2. Bring the handles together in front of your chest by squeezing your pecs. Avoid locking your elbows. Second Position.\n\n3. Pause briefly at the peak contraction.\n\n4. Slowly return to the starting position in a controlled manner.\n\n5. Finish your reps.",
+    "imageName": "pecFly.jpeg",
+    "videoName": "pecFly.mp4"
+  },
+  {
+    "name": "Dumbbell Romanian Deadlift",
+    "muscle": "Legs",
+    "method": "Hamstring Curl",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand upright, holding a dumbbell in each hand in front of your thighs, arms fully extended.\n\n2. With a slight bend in your knees, hinge at your hips to lower the dumbbells slowly down the front of your legs. Keep your back flat and shoulders pulled back. First Position.\n\n3. Lower until you feel a stretch in your hamstrings or until your back is nearly parallel to the floor. Second Position.\n\n4. Drive through your heels and push your hips forward to return to the upright position. Maintain a straight spine throughout the movement.\n\n5. Repeat for the desired number of reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Romanian Deadlift",
+    "muscle": "Legs",
+    "method": "Hamstring Curl",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand upright holding a barbell in front of your thighs with both hands, using a pronated (overhand) grip, arms fully extended.\n\n2. With a slight bend in your knees, hinge at your hips to lower the barbell slowly down the front of your legs. Keep your back flat, chest up, and shoulders pulled back. First Position.\n\n3. Lower the barbell until you feel a stretch in your hamstrings or until your torso is nearly parallel to the floor. Second Position.\n\n4. Drive through your heels and push your hips forward to return to the upright position. Keep the barbell close to your legs and maintain a straight spine throughout the movement.\n\n5. Repeat for the desired number of repetitions.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Bulgarian Split Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Hold a dumbbell in each hand and stand upright, facing away from the side of a flat bench.\n\n2. Lift one foot up and put the top of it flat down on the bench behind you. First Position.\n\n3. Tip: Keep your planted foot relatively close to the bench to maximise your glute engagement.\n\n4. Squat down on your planted leg, lowering your hips and bending your knee, until your upper leg is at a 90 degree angle with your lower leg. Second Position.\n\n5. Briefly pause in Second Position.\n\n6. Push through your heel and glute to extend your hips and straighten your leg back up into First Position. Keep your hip, knee and ankle in line throughout.\n\n7. Finish your reps.\n\n8. Repeat for your other leg.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Split Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand upright with a barbell resting across your upper back and shoulders, gripping it slightly wider than shoulder-width. First Position.\n\n2. Step one foot forward and the other foot back into a split stance, keeping your torso upright and core engaged.\n\n3. Lower your body by bending both knees until your back knee nearly touches the floor and your front thigh is parallel to the ground. Second Position.\n\n4. Push through the heel of your front foot to straighten your leg and return to First Position.\n\n5. Complete all reps on one leg before switching to the other.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Bodyweight Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright with your feet shoulder-width apart and toes slightly pointed outward. First Position.\n\n2. Take a deep breath, brace your core and begin to drop into a squat, sitting your hips back and bending your knees.\n\n3. Lower yourself until, at minimum, your thighs are parallel to the floor, or until your hamstrings touch your calves. Second Position.\n\n4. Push through your heels to straighten your legs and return to First Position.\n\n5. Repeat for the desired number of repetitions.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Dumbbell Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright with your feet shoulder-width apart, holding a dumbbell in each hand at your sides or resting them on your shoulders. First Position.\n\n2. Brace your core and begin to drop into a squat by bending your knees and pushing your hips back.\n\n3. Lower yourself until your thighs are at least parallel to the floor. Second Position.\n\n4. Push through your heels to straighten your legs and return to First Position.\n\n5. Repeat for the desired number of repetitions.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Bent Over Row",
+    "muscle": "Back",
+    "method": "Row",
+    "difficulty": "Intermediate",
+    "instructions": "1. Bend your knees slightly and bend at your hips so your torso is over the barbell at a 45 degree angle minimum. Grip the bar with either an overhand or underhand grip.\n\n2. Pushing from the floor and extending your back, lift the bar slightly from the floor. First Position.\n\n3. Pull the barbell up towards your mid-section. Pull through your elbows and keep them tucked close to your side. Second Position. Contract your back muscles throughout the movement.\n\n4. Slow and controlled, lower the bar back into First Position.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Cable Face Pull",
+    "muscle": "Shoulders",
+    "method": "Shoulder Pull",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set a cable machine to roughly head height and use a rope attachment.\n\n2. Standing upright, grip the ropes with an overhand grip, palms facing down. Lightly pull the weight so it releases from the rack. First Position.\n\n3. Pull the rope directly towards your face, pulling your hands and shoulders apart as you do so, until the middle of the rope reaches your nose. Second Position.\n\n4. Hold Second Position briefly, contracting your rear deltoid.\n\n5. Slowly guide the ropes back into First Position.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Hip Thrust",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Sit on the floor with your back to the side of a bench and rest a loaded barbell over your hips. It may make the exercise more comfortable to use a barbell pad.\n\n2. Lean the top of your back against the bench and bend your knees. Your upper legs and torso should make a V shape. First Position.\n\n3. Push through your feet to extend your hips, and the bar, straight up until your upper legs and torso are parallel. Second Position.\n\n4. Hold and contract Second Position for a second.\n\n5. Slowly lower the weight back into First Position.\n\n6. Finish your reps.",
+    "imageName": "barbellHipThrust.jpeg",
+    "videoName": "barbellHipThrust.mp4"
+  },
+  {
+    "name": "Barbell Bench Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Back slightly arched, shoulders pinned back, lie down on a flat bench.\n\n2. Grip the bar a few inches outside shoulder width and lift it from the rack. Hold it straight up, arms locked, above your chest. First Position.\n\n3. Take a deep breath and slowly lower the bar. Touch your chest and pause briefly. Second Position.\n\n4. Maintain your back arch and shoulder position. Contract your chest and press the bar. Lock your arms back into First Position.\n\n5. Finish your reps.",
+    "imageName": "barbellBenchPress.jpeg",
+    "videoName": "barbellBenchPress.mp4"
+  },
+  {
+    "name": "Lower Cable Chest Fly",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set two ends of the cable machine to a low height. Standing upright, grip the handles attached to the cable with your palms facing forwards. Step and lean forward to release the weight from the stack. The weight should be pulling your arms back, stretching your chest. First Position.\n\n2. Maintaining a slight bend in your elbows, bring the two handles up and together out in front of you, contracting your chest throughout.\n\n3. Find Second Position where the handles meet in the middle, at chest height, and hold this for a second.\n\n4. Slowly guide the weight back into First Position and pause briefly.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
    "name": "Lying Leg Raise",
    "muscle": "Abs",
    "method": "Lower Abs",
@@ -91,11 +343,11 @@
     "videoName": null
   },
   {
-    "name": "Bodyweight Tricep Dip",
+    "name": "Dumbbell Hammer Curl",
     "muscle": "Arms",
-    "method": "Triceps",
-    "difficulty": "Intermediate",
-    "instructions": "1. Stand in between two dip bars and grip them with your palms facing downwards. Hold yourself up on the bars with your arms fully extended. Your entire body should be off the floor. First Position.\n\n2. Tip: the more bent over your torso is the more chest you will engage and the more upright your torso is the more tricep you will engage. To get the best balance of the two, bend your torso somewhere in the middle.\n\n3. Slow and controlled, lower yourself down into Second Position where your elbow is at a right angle minimum.\n\n4. Contracting your chest and triceps, forcefully push yourself back up into First Position.\n\n5. Finish your reps.\n\n6. If bodyweight is too easy, wear a weight belt and attach plates to do weighted dips.",
+    "method": "Biceps",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright holding a dumbbell in each hand with a neutral grip, palms facing each other, and elbows tucked close to your sides. First Position.\n\n2. Curl both dumbbells upward simultaneously towards your shoulders, keeping your grip neutral and your upper arms stationary.\n\n3. Continue curling until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower both dumbbells back to First Position in a controlled motion.\n\n5. Repeat for the desired number of repetitions.",
     "imageName": null,
     "videoName": null
   },
@@ -109,13 +361,31 @@
     "videoName": null
   },
   {
-    "name": "Barbell Push Press",
+    "name": "Barbell Overhead Press",
     "muscle": "Shoulders",
     "method": "Shoulder Press",
     "difficulty": "Intermediate",
-    "instructions": "1. Stand upright with a neutral stance. Grab a barbell just outside shoulder-width and lift it up so it rests on the top of your chest and shoulders. First Position.\n\n2. Bend your knees slightly. Second Position.\n\n3. Extend your knees and simultaneously press the weight above your head until your arms are fully extended and let your head move under the bar. Make sure you keep your back straight throughout the movement. Third Position.\n\n4. Slowly lower the weight back to your shoulders and pause in First Position briefly.\n\n5. Finish your reps.",
+    "instructions": "1. Stand with your feet shoulder-width apart and grip a barbell with your hands slightly wider than shoulder-width.\n\n2. Lift the barbell to shoulder height with your palms facing forward and elbows slightly in front of the bar. First Position.\n\n3. Engage your core, squeeze your glutes, and keep your chest up.\n\n4. Press the barbell overhead in a straight line until your arms are fully extended. Second Position.\n\n5. Hold for a brief moment at the top, then slowly lower the barbell back to shoulder height under control.\n\n6. Repeat for the desired number of reps.",
     "imageName": null,
     "videoName": null
+  },
+  {
+    "name": "Seated Shoulder Press",
+    "muscle": "Shoulders",
+    "method": "Shoulder Press",
+    "difficulty": "Intermediate",
+    "instructions": "1. Sit on an upright bench, grab a dumbbell in each hand and rest them on the ends of your legs. Raise the dumbbells to head height, just above your shoulders. It may help to lift the dumbbells partway by kicking your knees up. First Position.\n\n2. Press the dumbbells above your head until your arms are fully extended. Second Position.\n\n3. Slowly lower the dumbbells back to your shoulders and pause in First Position briefly.\n\n4. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Single Arm Dumbbell Bent Over Row",
+    "muscle": "Back",
+    "method": "Row",
+    "difficulty": "Beginner",
+    "instructions": "1. Place your right knee and right hand on a flat bench for support. Hold a dumbbell in your left hand with your arm fully extended toward the floor. Keep your back straight and torso slightly above parallel to the floor. First Position.\n\n2. Pull the dumbbell upward toward your waist, keeping your elbow close to your body. Squeeze your back muscles at the top. Second Position.\n\n3. Slowly lower the dumbbell back to First Position in a controlled motion.\n\n4. Complete the desired number of reps, then switch sides and repeat.",
+    "imageName": "singleArmDumbbellBentOverRow.jpeg",
+    "videoName": "singleArmDumbbellBentOverRow.mp4"
   },
   {
     "name": "Barbell Skullcrusher",
@@ -145,29 +415,11 @@
     "videoName": null
   },
   {
-    "name": "Cable Hammer Curl",
-    "muscle": "Arms",
-    "method": "Biceps",
-    "difficulty": "Intermediate",
-    "instructions": "1. Standing upright, grip the rope attached to a cable. Your grip should be neutral, with your palms facing inwards and your elbows tucked by your side. First Position.\n\n2. Curl the weight upwards, towards your shoulders, keeping your hands in a neutral position. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position, just short of where the weight touches the rack.\n\n5. Finish your reps.",
-    "imageName": null,
-    "videoName": null
-  },
-  {
     "name": "Close Stance Push Up",
     "muscle": "Chest",
     "method": "Triceps",
     "difficulty": "Intermediate",
     "instructions": "1. Get into a press up position – arms fully extended – and put your hands together in the middle making a triangle between your thumbs and first fingers. First Position.\n\n2. Slowly lower yourself down until your chest is just above the floor. Keep your elbows as tucked as possible to maximise tricep engagement. Second Position.\n\n3. Contract your triceps and press your upper body back into First Position, locking your arms back into full extension.\n\n4. Finish your reps.",
-    "imageName": null,
-    "videoName": null
-  },
-  {
-    "name": "Concentration Curl",
-    "muscle": "Arms",
-    "method": "Biceps",
-    "difficulty": "Beginner",
-    "instructions": "1. Sitting on the end of a bench, rest your upper arm against the inside of your leg and hold a dumbbell in your hand with your palm facing upwards. First Position.\n\n2. Curl the weight upwards, towards your shoulders, contracting your bicep and keeping your palm facing upwards. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position.\n\n5. Finish your reps.\n\n6. Repeat for your other arm.",
     "imageName": null,
     "videoName": null
   },
@@ -217,15 +469,6 @@
     "videoName": null
   },
   {
-    "name": "Hammer Curl",
-    "muscle": "Arms",
-    "method": "Biceps",
-    "difficulty": "Beginner",
-    "instructions": "1. Stand upright while holding a dumbbell in each hand by your sides with a neutral grip (palms facing each other) and your elbows tucked close to your torso. First Position.\n\n2. Curl both dumbbells upward simultaneously toward your shoulders, keeping your hands in the neutral position and your upper arms locked in place.\n\n3. Continue curling until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower both dumbbells back to First Position in a controlled motion.\n\n5. Finish your reps.",
-    "imageName": null,
-    "videoName": null
-  },
-  {
     "name": "Narrow Grip Tricep Pulldown",
     "muscle": "Arms",
     "method": "Triceps",
@@ -240,8 +483,8 @@
     "method": "Triceps",
     "difficulty": "Intermediate",
     "instructions": "1. Stand upright and face away from the cable machine. Grip the ropes, attached at the top of the cable, from behind your head with your palms facing inwards. Step and lean forwards so the weight releases from the stack and your triceps are fully stretched. First Position.\n\n2. Contract your triceps and push the ropes out in front of you until your arms are fully extended. Pull the ropes apart at the end of the movement. Your upper arm should stay in a fixed position and try to keep your hands apart throughout. Second Position.\n\n3. Briefly hold and contract Second Position before slowly guiding the ropes back into First Position.\n\n4. Finish your reps.",
-    "imageName": null,
-    "videoName": null
+    "imageName": "overheadRopeTricepExtension.jpeg",
+    "videoName": "overheadRopeTricepExtension.mp4"
   },
   {
     "name": "Overhead Dumbbell Extension",
@@ -249,6 +492,15 @@
     "method": "Triceps",
     "difficulty": "Beginner",
     "instructions": "1. Standing upright, grab one dumbbell and hold it straight above your head with one arm fully extended. Hold your core with your other arm to stabilise yourself. First Position.\n\n2. Slowly lower the dumbbell to behind your head into Second Position. Hold this for a second.\n\n3. Contracting your tricep, press the dumbbell from Second Position back into First Position.\n\n4. Finish your reps.\n\n5. Repeat for your other arm.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Machine Bench Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit down on the bench press machine and adjust the seat so that the handles are at chest level. Grip the handles with both hands, elbows bent at about 90 degrees. First Position.\n\n2. Contract your chest and triceps to press the handles forward until your arms are fully extended. Second Position.\n\n3. Briefly hold Second Position, squeezing your chest.\n\n4. Slowly return the handles to First Position with control.\n\n5. Finish your reps.",
     "imageName": null,
     "videoName": null
   },
@@ -262,13 +514,211 @@
     "videoName": null
   },
   {
-    "name": "Cable Face Pull",
+    "name": "Incline Dumbbell Bench Press",
+    "muscle": "Chest",
+    "method": "Close",
+    "difficulty": "Beginner",
+    "instructions": "1. Set a bench to an incline position. Sit on the bench and grab a dumbbell in each hand and rest them on the ends of your legs.\n\n2. Fall back to lie on the bench, raising the dumbbells upright above you with your arms extended. It may help to lift the dumbbells partway by kicking your knees up. First Position.\n\n3. Slowly lower the dumbbells until they touch the outside of your chest and your pectorals are stretched. Second Position.\n\n4. Pause in Second Position briefly.\n\n5. Contracting your chest, press the dumbbells back up into First Position with your arms fully extended again.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Cable Flys",
+    "muscle": "Chest",
+    "method": "Fly",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set two ends of a cable machine to a high height and attach a handle to each end.\n\n2. Stand upright between the two cables and grip the handles with your palms facing forwards.\n\n3. Step both feet forwards and lean your body forwards slightly to release the weight from the rack. The cables should be pulling your arms back, stretching your chest. First Position.\n\n4. Maintaining a slight bend in your elbows and contracting your chest, bring the two handles out in front of you in a semi-circle motion.\n\n5. Find Second Position where the handles touch in the middle.\n\n6. Tip: Think about bringing your elbows out together in front of you – rather than your hands – to get a better contraction on your chest.\n\n7. Hold Second Position and squeeze your chest muscles for a second.\n\n8. Slowly guide the handles back into First Position.\n\n9. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Incline Machine Bench Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the incline bench press machine and adjust the seat so the handles are in line with your upper chest. Grasp the handles with a firm overhand grip. First Position.\n\n2. Press the handles forward and upward until your arms are fully extended but not locked. Second Position.\n\n3. Slowly return the handles to the starting position, controlling the weight throughout the movement.\n\n4. Finish your reps.",
+    "imageName": "inclineMachineBenchPress.jpeg",
+    "videoName": "inclineMachineBenchPress.mp4"
+  },
+  {
+    "name": "Rear Delt Pec Fly",
     "muscle": "Shoulders",
     "method": "Shoulder Pull",
     "difficulty": "Beginner",
-    "instructions": "1. Set a cable machine to roughly head height and use a rope attachment.\n\n2. Standing upright, grip the ropes with an overhand grip, palms facing down. Lightly pull the weight so it releases from the rack. First Position.\n\n3. Pull the rope directly towards your face, pulling your hands and shoulders apart as you do so, until the middle of the rope reaches your nose. Second Position.\n\n4. Hold Second Position briefly, contracting your rear deltoid.\n\n5. Slowly guide the ropes back into First Position.\n\n6. Finish your reps.",
+    "instructions": "1. Sit facing the rear pec fly machine, chest against the pad, and adjust the handles to shoulder height.\n\n2. Grab the handles with a neutral grip (palms facing inward), keeping your arms slightly bent. First Position.\n\n3. Pull the handles outward and backward in an arc until your arms are extended to your sides. Squeeze your shoulder blades together. Second Position.\n\n4. Slowly return to the starting position under control.\n\n5. Finish your reps.",
+    "imageName": "rearDeltPecFly.jpeg",
+    "videoName": "rearDeltPecFly.mp4"
+  },
+  {
+    "name": "Machine Chest Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Adjust the seat and handles of the chest press machine so that the handles are level with the middle of your chest.\n\n2. Sit down, place your feet flat on the floor, and grip the handles with a firm overhand grip. Keep your back flat against the pad and your chest up. First Position.\n\n3. Press the handles forward by extending your arms until they are fully extended but not locked. Focus on contracting your chest muscles. Second Position.\n\n4. Pause briefly in Second Position.\n\n5. Slowly return the handles to the First Position, allowing your elbows to bend and the weight to lower in a controlled manner.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": "chestPressVideo.mp4"
+  },
+  {
+    "name": "Bodyweight Tricep Dip",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Advanced",
+    "instructions": "1. Stand in between two dip bars and grip them with your palms facing downwards. Hold yourself up on the bars with your arms fully extended. Your entire body should be off the floor. First Position.\n\n2. Tip: the more bent over your torso is the more chest you will engage, and the more upright your torso is the more triceps you will engage. To get the best balance, bend your torso somewhere in the middle.\n\n3. Slow and controlled, lower yourself down into Second Position where your elbow is at a right angle minimum.\n\n4. Contracting your chest and triceps, forcefully push yourself back up into First Position.\n\n5. Finish your reps.\n\n6. If bodyweight is too easy, wear a weight belt and attach plates to do weighted dips.",
     "imageName": null,
     "videoName": null
-  }
+  },
+  {
+    "name": "Assisted Tricep Dip",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Beginner",
+    "instructions": "1. Set yourself up on a dip assist machine or use resistance bands for support. Grip the handles with your palms facing downwards and place your knees or feet on the support pad (or bands). Fully extend your arms to lift yourself up. First Position.\n\n2. Keep your torso slightly bent forward to activate the chest more, or more upright to focus on the triceps.\n\n3. Lower yourself in a slow and controlled manner until your elbows reach a 90-degree angle. Second Position.\n\n4. Contract your triceps and chest to push yourself back up into First Position.\n\n5. Finish your reps.",
+    "imageName": "assistedTricepDipImg.jpeg",
+    "videoName": "assistedTricepDipVideo.mp4"
+  },
+  {
+    "name": "Tricep Pushdown (Triangle Handle)",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright and grip the triangle handle attached to a cable machine at shoulder width, with your palms facing each other (neutral grip). Retract your shoulder blades and keep your elbows tucked in by your sides. Lightly push down to release the weight from the stack. First Position.\n\n2. Contract your triceps and push the triangle handle down until your arms are fully extended. Your upper arms should remain still in a fixed position. Second Position.\n\n3. Briefly hold and contract Second Position before slowly guiding the handle back up into First Position.\n\n4. Finish your reps.",
+    "imageName": "trianglePulldown.jpeg",
+    "videoName": "trianglePulldown.mp4"
+  },
+  {
+    "name": "Tricep Rope Pushdown",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Beginner",
+    "instructions": "1. Stand upright and grip the rope attached to a high pulley with a neutral grip – palms facing each other. Retract your shoulder blades and tuck your elbows in close to your sides. Slightly bend your knees and engage your core. First Position.\n\n2. Contract your triceps and push the rope down until your arms are fully extended. At the bottom of the movement, pull the rope ends apart slightly to increase the contraction. Second Position.\n\n3. Hold Second Position briefly while maintaining control.\n\n4. Slowly return the rope back up into First Position, resisting the weight.\n\n5. Finish your reps.",
+    "imageName": "ropePushdown.jpeg",
+    "videoName": "ropePushdown.mp4"
+  },
+  {
+    "name": "Seated Overhead Dumbbell Extension",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the end of a flat bench and hold one end of a dumbbell, creating a triangle with your first fingers and thumbs around the handle.\n\n2. Lift the dumbbell straight above your head until your arms are fully extended. Your palms should be facing upwards. First Position.\n\n3. Slow and controlled, lower the dumbbell behind your head until your triceps are fully stretched. Try to keep your elbows tucked close to the side of your head. Second Position.\n\n4. Contract your triceps and press the dumbbell back up into First Position.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Close Grip Incline Bench Press",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Intermediate",
+    "instructions": "1. Lie down on an incline bench press with your shoulders pinned back and feet planted on the floor.\n\n2. Grip a barbell just inside shoulder-width and lift it from the rack. Hold it straight up - arms extended - above your chest. First Position.\n\n3. Take a deep breath and slowly lower the bar until it’s a few inches above your chest. Second Position.\n\n4. Tip: Lower the bar down so it’s just underneath the bottom of your chest with your elbows tucked in by your sides.\n\n5. Pause in Second Position.\n\n6. Contract your triceps and press the bar back up into First Position.\n\n7. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Set a bench to a flat position. Sit on the bench and grab a dumbbell in either hand and rest them on the ends of your legs.\n\n2. Fall back to lie on the bench, raising the dumbbells upright above you with your arms extended. It may help to lift the dumbbells partway by kicking your knees up. First Position.\n\n3. Slowly lower the dumbbells until they touch the outside of your chest and your pectorals are stretched. Second Position.\n\n4. Pause in Second Position briefly.\n\n5. Contracting your pectorals, press the dumbbells back up into First Position with your arms fully extended again.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Incline Machine Chest Press",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Adjust the seat and handles of the incline chest press machine so that the handles are at chest level when seated.\n\n2. Sit back against the pad with your feet flat on the floor and grip the handles firmly. Your elbows should be bent at roughly 90 degrees. First Position.\n\n3. Press the handles forward and upward in a controlled motion, extending your arms fully while contracting your chest. Second Position.\n\n4. Briefly pause in Second Position, focusing on the contraction of your upper chest.\n\n5. Slowly return to First Position, controlling the movement and keeping tension on the chest muscles.\n\n6. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Tricep Extension",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Intermediate",
+    "instructions": "1. Lie down on a flat bench and hold a barbell straight above you, with your palms facing upwards, just inside shoulder width. First Position.\n\n2. Bend your arms backwards until the bar is just above your forehead. Second Position.\n\n3. Hold Second Position for a second.\n\n4. Focusing on your triceps, lift the bar back up into First Position.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Lat Pulldown",
+    "muscle": "Back",
+    "method": "Pull-up",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on a Lat Pulldown machine and grip a wide bar just outside shoulder width with your palms facing forwards. Tilt your torso slightly back and retract your shoulder blades. First Position.\n\n2. Pulling your elbows towards your lats, begin to pull the bar down until it reaches your upper chest. Second Position. Make sure you contract your back muscles throughout the movement.\n\n3. Slow and controlled, release the bar back up into First Position.\n\n4. Finish your reps.",
+    "imageName": "latPulldown.jpeg",
+    "videoName": "latPulldown.mp4"
+  },
+  {
+    "name": "Close Grip Lat Pulldown",
+    "muscle": "Back",
+    "method": "Pull-up",
+    "difficulty": "Intermediate",
+    "instructions": "1. Sit on a Lat Pulldown machine with a close grip attachment and grip it so that your palms face inwards. Tilt your torso slightly back and retract your shoulder blades. First Position.\n\n2. Pulling your elbows towards your lats, begin to pull the bar down until it reaches your upper chest. Make sure you contract your back muscles throughout the movement. Second Position.\n\n3. Slow and controlled, release the cable back up into First Position.\n\n4. Finish your reps.",
+    "imageName": "closeGripLatPulldown.jpeg",
+    "videoName": "closeGripLatPulldown.mp4"
+  },
+  {
+    "name": "Seated Cable Row (Triangle Grip)",
+    "muscle": "Back",
+    "method": "Row",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the Cable Row machine and grip a V-Bar (triangle handle) with your palms facing each other.\n\n2. Straighten your legs slightly and retract your shoulder blades. Lean back just enough to lift the weight off the stack. First Position.\n\n3. Pull the handle toward your torso, bringing your elbows close to your sides and squeezing your shoulder blades together. The handle should touch your abdomen. Second Position.\n\n4. Slowly extend your arms forward, returning to First Position with control.\n\n5. Finish your reps.",
+    "imageName": "triangleRow.jpeg",
+    "videoName": "triangleRow.mp4"
+  },
+  {
+    "name": "Seated Cable Row (Straight Bar)",
+    "muscle": "Back",
+    "method": "Row",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the Cable Row machine and attach a straight bar to the low pulley. Grip the bar with a pronated grip (palms facing down), hands about shoulder-width apart.\n\n2. Extend your legs slightly and keep your torso upright. Retract your shoulder blades and lean back slightly. First Position.\n\n3. Pull the bar toward your upper abdomen by driving your elbows backward. Keep your torso stable and squeeze your shoulder blades together. Second Position.\n\n4. Slowly extend your arms and return to First Position with control.\n\n5. Finish your reps.",
+    "imageName": "straightBarRow.jpeg",
+    "videoName": "straightBarRow.mp4"
+  },
+    {
+      "name": "Cable Hammer Curl",
+      "muscle": "Arms",
+      "method": "Biceps",
+      "difficulty": "Beginner",
+      "instructions": "1. Standing upright, grip the rope attached to a cable. Your grip should be neutral, with your palms facing inwards and your elbows tucked by your side. First Position.\n\n2. Curl the weight upwards, towards your shoulders, keeping your hands in a neutral position. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position, just short of where the weight touches the rack.\n\n5. Finish your reps.",
+      "imageName": null,
+      "videoName": null
+    },
+    {
+      "name": "Monster Walk (Lateral)",
+      "muscle": "Legs",
+      "method": "Horizontal Push",
+      "difficulty": "Intermediate",
+      "instructions": "1. Place a resistance band around your thighs or ankles. Stand with feet shoulder-width apart and slightly bend your knees into an athletic stance.\n\n2. Engage your core and keep your chest upright. First Position.\n\n3. Step sideways with your lead leg, maintaining tension in the band, then follow with your trailing leg without letting the band slack. Second Position.\n\n4. Continue stepping laterally for the desired number of steps, then reverse the direction.\n\n5. Keep movements controlled and avoid excessive hip or torso rotation.",
+      "imageName": null,
+      "videoName": null
+    },
+    {
+      "name": "Seated Dumbbell Bicep Curl",
+      "muscle": "Arms",
+      "method": "Biceps",
+      "difficulty": "Beginner",
+      "instructions": "1. Sit on the end of a bench with your feet flat on the floor and hold a dumbbell in each hand at your sides with your palms facing forwards. Keep your elbows tucked close to your torso. First Position.\n\n2. Curl both dumbbells upwards towards your shoulders, contracting your biceps. Try to keep your upper arms in a locked position.\n\n3. Continue curling until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the dumbbells back into First Position in a controlled manner.\n\n5. Finish your reps.",
+      "imageName": "cableHammerCurl.jpeg",
+      "videoName": "cableHammerCurl.mp4"
+    },
+    {
+        "name": "Single Arm Cable Curls",
+        "muscle": "Arms",
+        "method": "Biceps",
+        "difficulty": "Beginner",
+        "instructions": "1. Set one end of a cable machine to a high height and attach a straight handle.\n\n2. Stand upright adjacent to the cable machine and grip the handle with your palm facing upwards.\n\n3. With your spare hand, hold onto the cable machine for support.\n\n4. Release the weight from the rack and extend your arm out to your side so your bicep is fully stretched and your arm is parallel to the floor. First Position.\n\n5. Curl the handle inwards to just behind your ear, keeping your upper arm in a fixed position.\n\n6. Continue curling until you reach Second Position, where your bicep is fully contracted and the handle reaches the side of your head.\n\n7. Squeeze your biceps in Second Position for a second before slowly returning to First Position, just short of the weight touching the rack.\n\n8. Finish your reps and repeat for the other arm.",
+        "imageName": null,
+        "videoName": null
+    },
+    {
+      "name": "Straight Bar Cable Bicep Curl",
+      "muscle": "Arms",
+      "method": "Biceps",
+      "difficulty": "Beginner",
+      "instructions": "1. Standing upright, grip the straight bar attached to a cable at shoulder width with your palms facing upwards and elbows tucked close to your side. The weight should be released from the rack. First Position.\n\n2. Curl the weight upwards, towards your shoulders, contracting your biceps. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position, just short of where the weight touches the rack.\n\n5. Finish your reps.",
+      "imageName": null,
+      "videoName": null
+    }
 ]
 
