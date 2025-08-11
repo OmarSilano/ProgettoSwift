@@ -3,13 +3,15 @@ import CoreData
 
 // MARK: - CREATE nuovo giorno (commit su Save)
 struct CreateWorkoutDayView: View {
-    @Environment(\.managedObjectContext) private var context
+    @Environment(\.managedObjectContext) private var envContext
     @Environment(\.dismiss) private var dismiss
     
     @ObservedObject var workout: Workout
     var presetName: String? = nil
     var onClose: () -> Void = {}
-
+    
+    private var ctx: NSManagedObjectContext { workout.managedObjectContext ?? envContext }
+    
     // UI state
     @State private var dayName: String = ""
     @State private var day: WorkoutDay? = nil
@@ -17,11 +19,11 @@ struct CreateWorkoutDayView: View {
     @State private var isShowingExercisePicker = false
     @State private var typologies: [Typology] = []
     @State private var didHandleClose = false
-
     
-    private var dayMgr: WorkoutDayManager { WorkoutDayManager(context: context) }
-    private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: context) }
-    private var typologyMgr: TypologyManager { TypologyManager(context: context) }
+    
+    private var dayMgr: WorkoutDayManager { WorkoutDayManager(context: ctx) }
+    private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: ctx) }
+    private var typologyMgr: TypologyManager { TypologyManager(context: ctx) }
     
     var body: some View {
         NavigationStack {
@@ -41,11 +43,11 @@ struct CreateWorkoutDayView: View {
         .onAppear {
             let suggested = presetName ?? "Day \(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)"
             
-            let newDay = WorkoutDay(context: context)
+            let newDay = WorkoutDay(context: ctx)
             newDay.id = UUID()
             newDay.name = suggested
             newDay.isCompleted = false
-
+            
             day = newDay
             dayName = suggested
             typologies = typologyMgr.fetchAllTypologies()
@@ -58,7 +60,7 @@ struct CreateWorkoutDayView: View {
         }
         .onDisappear {
             if !didHandleClose {
-                context.rollback()   // stesso effetto del Cancel
+                ctx.rollback()   // stesso effetto del Cancel
                 onClose()
             }
         }
@@ -167,7 +169,7 @@ struct CreateWorkoutDayView: View {
         
         let existing = Set(details.compactMap { $0.exercise?.objectID })
         for id in ids where !existing.contains(id) {
-            if let ex = try? context.existingObject(with: id) as? Exercise {
+            if let ex = try? ctx.existingObject(with: id) as? Exercise {
                 let d = detailMgr.createTempWorkoutDayDetail(
                     workoutDay: day,
                     exercise: ex,
@@ -181,7 +183,7 @@ struct CreateWorkoutDayView: View {
     }
     
     private func deleteDetails(_ offsets: IndexSet) {
-        for i in offsets { context.delete(details[i]) }
+        for i in offsets { ctx.delete(details[i]) }
         details.remove(atOffsets: offsets)
         renumberOrder()
     }
@@ -197,16 +199,22 @@ struct CreateWorkoutDayView: View {
     
     private func save() {
         guard let day else { return }
-
+        
         let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
         day.name = trimmed
-
+        
+        // 🔒 anti-crash: stesso context
+        guard day.managedObjectContext === workout.managedObjectContext else {
+            print("⚠️ Context mismatch: skip link to avoid crash")
+            return
+        }
+        
         day.workout = workout
         day.updateMusclesFromDetails()
-
+        
         do {
             didHandleClose = true
-            try context.save()
+            try ctx.save()
             onClose()
             dismiss()
         } catch {
@@ -216,7 +224,7 @@ struct CreateWorkoutDayView: View {
     
     private func cancel() {
         didHandleClose = true
-        context.rollback()
+        ctx.rollback()
         onClose()
         dismiss()
     }

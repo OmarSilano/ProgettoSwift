@@ -207,6 +207,7 @@ struct AddWorkoutView: View {
                 }
                 
                 Button {
+                    ensurePermanentID(workoutDraft, in: childContext)
                     isPresentingNewDayEditor = true
                 } label: {
                     HStack { Image(systemName: "plus"); Text("Add Day") }
@@ -261,6 +262,12 @@ struct AddWorkoutView: View {
         } message: {
             Text("Abilita l’accesso alla galleria dalle impostazioni per selezionare un'immagine.")
         }
+    }
+    
+    private func ensurePermanentID(_ obj: NSManagedObject, in ctx: NSManagedObjectContext) {
+        guard obj.objectID.isTemporaryID else { return }
+        do { try ctx.obtainPermanentIDs(for: [obj]) }
+        catch { print("⚠️ obtainPermanentIDs:", error) }
     }
         
     // MARK: - Azioni
