@@ -9,23 +9,35 @@
       {
         "name": "Day 1 - Chest & Triceps",
         "details": [
-          { "exerciseName": "Close Stance Push Up", "typologyName": "4x10" },
-          { "exerciseName": "Dumbbell Single Arm Tricep Extension", "typologyName": "4x10" }
+            { "exerciseName": "Alternating Dumbbell Bicep Curl", "typologyName": "4x10" },
+            { "exerciseName": "Alternating Hammer Curl", "typologyName": "4x10" },
+            { "exerciseName": "Dumbbell Hammer Curl", "typologyName": "4x10" },
+            { "exerciseName": "Machine Bench Press", "typologyName": "4x10" },
+            { "exerciseName": "Incline Machine Bench Press", "typologyName": "4x10" },
+            { "exerciseName": "Pec Fly", "typologyName": "4x10" }
         ]
       },
       {
         "name": "Day 2 - Back & Biceps",
         "details": [
-          { "exerciseName": "Straight Arm Rope Pulldown", "typologyName": "4x10" },
-          { "exerciseName": "Hammer Curl", "typologyName": "4x10" }
+            { "exerciseName": "Assisted Pull Up", "typologyName": "4x10" },
+            { "exerciseName": "Lat Pulldown", "typologyName": "4x10" },
+            { "exerciseName": "Seated Cable Row (Triangle Grip)", "typologyName": "4x10" },
+            { "exerciseName": "Machine Shoulder Press", "typologyName": "4x10" },
+            { "exerciseName": "Dumbbell Lateral Raise", "typologyName": "4x10" },
+            { "exerciseName": "Seated Rear Delt Fly", "typologyName": "4x10" }
         ]
       },
       {
         "name": "Day 3 - Legs & Shoulders",
         "details": [
-          { "exerciseName": "Jump Squats", "typologyName": "4x10" },
-          { "exerciseName": "Barbell Push Press", "typologyName": "4x10" },
-          { "exerciseName": "Ab Crunch", "typologyName": "4x10" }
+            { "exerciseName": "Assisted Tricep Dip", "typologyName": "4x10" },
+            { "exerciseName": "Tricep Rope Pushdown", "typologyName": "4x10" },
+            { "exerciseName": "Narrow Grip Tricep Pulldown", "typologyName": "4x10" },
+            { "exerciseName": "Bodyweight Squat", "typologyName": "4x10" },
+            { "exerciseName": "45 Degree Leg Press", "typologyName": "4x10" },
+            { "exerciseName": "Machine Prone Hamstring Curl", "typologyName": "4x10" },
+            { "exerciseName": "Seated Calf Raise", "typologyName": "4x10" }
         ]
       }
     ]
