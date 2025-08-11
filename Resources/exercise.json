@@ -73,6 +73,15 @@
     "videoName": null
   },
   {
+    "name": "Leg Extensions",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Beginner",
+    "instructions": "1. Sit on the Leg Extension machine with your ankles under the pad.\n\n2. Adjust the pad so that your legs are pushed into roughly a right angle. Grab the side handles. First Position.\n\n3. Tip: Use the side handles to pull your body down into the seat to prevent any swaying movement.\n\n4. Keep your upper body fixed, extend your legs and drive the weight upwards into full extension. Second Position.\n\n5. Hold Second Position and squeeze your quadriceps for a second.\n\n6. Lower the weight back into First Position slowly, just short of where the weight touches the rack.\n\n7. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
     "name": "Seated Calf Raise",
     "muscle": "Legs",
     "method": "Calf Raise",
@@ -208,11 +217,29 @@
     "videoName": null
   },
   {
+    "name": "Barbell Romanian Deadlift",
+    "muscle": "Legs",
+    "method": "Hamstring Curl",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand upright holding a barbell in front of your thighs with both hands, using a pronated (overhand) grip, arms fully extended.\n\n2. With a slight bend in your knees, hinge at your hips to lower the barbell slowly down the front of your legs. Keep your back flat, chest up, and shoulders pulled back. First Position.\n\n3. Lower the barbell until you feel a stretch in your hamstrings or until your torso is nearly parallel to the floor. Second Position.\n\n4. Drive through your heels and push your hips forward to return to the upright position. Keep the barbell close to your legs and maintain a straight spine throughout the movement.\n\n5. Repeat for the desired number of repetitions.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
     "name": "Bulgarian Split Squat",
     "muscle": "Legs",
     "method": "Vertical Push",
     "difficulty": "Intermediate",
     "instructions": "1. Hold a dumbbell in each hand and stand upright, facing away from the side of a flat bench.\n\n2. Lift one foot up and put the top of it flat down on the bench behind you. First Position.\n\n3. Tip: Keep your planted foot relatively close to the bench to maximise your glute engagement.\n\n4. Squat down on your planted leg, lowering your hips and bending your knee, until your upper leg is at a 90 degree angle with your lower leg. Second Position.\n\n5. Briefly pause in Second Position.\n\n6. Push through your heel and glute to extend your hips and straighten your leg back up into First Position. Keep your hip, knee and ankle in line throughout.\n\n7. Finish your reps.\n\n8. Repeat for your other leg.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Barbell Split Squat",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand upright with a barbell resting across your upper back and shoulders, gripping it slightly wider than shoulder-width. First Position.\n\n2. Step one foot forward and the other foot back into a split stance, keeping your torso upright and core engaged.\n\n3. Lower your body by bending both knees until your back knee nearly touches the floor and your front thigh is parallel to the ground. Second Position.\n\n4. Push through the heel of your front foot to straighten your leg and return to First Position.\n\n5. Complete all reps on one leg before switching to the other.",
     "imageName": null,
     "videoName": null
   },
@@ -271,6 +298,15 @@
     "videoName": "barbellBenchPress.mp4"
   },
   {
+    "name": "Lower Cable Chest Fly",
+    "muscle": "Chest",
+    "method": "Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set two ends of the cable machine to a low height. Standing upright, grip the handles attached to the cable with your palms facing forwards. Step and lean forward to release the weight from the stack. The weight should be pulling your arms back, stretching your chest. First Position.\n\n2. Maintaining a slight bend in your elbows, bring the two handles up and together out in front of you, contracting your chest throughout.\n\n3. Find Second Position where the handles meet in the middle, at chest height, and hold this for a second.\n\n4. Slowly guide the weight back into First Position and pause briefly.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
    "name": "Lying Leg Raise",
    "muscle": "Abs",
    "method": "Lower Abs",
@@ -325,11 +361,11 @@
     "videoName": null
   },
   {
-    "name": "Barbell Push Press",
+    "name": "Barbell Overhead Press",
     "muscle": "Shoulders",
     "method": "Shoulder Press",
     "difficulty": "Intermediate",
-    "instructions": "1. Stand upright with a neutral stance. Grab a barbell just outside shoulder-width and lift it up so it rests on the top of your chest and shoulders. First Position.\n\n2. Bend your knees slightly. Second Position.\n\n3. Extend your knees and simultaneously press the weight above your head until your arms are fully extended and let your head move under the bar. Make sure you keep your back straight throughout the movement. Third Position.\n\n4. Slowly lower the weight back to your shoulders and pause in First Position briefly.\n\n5. Finish your reps.",
+    "instructions": "1. Stand with your feet shoulder-width apart and grip a barbell with your hands slightly wider than shoulder-width.\n\n2. Lift the barbell to shoulder height with your palms facing forward and elbows slightly in front of the bar. First Position.\n\n3. Engage your core, squeeze your glutes, and keep your chest up.\n\n4. Press the barbell overhead in a straight line until your arms are fully extended. Second Position.\n\n5. Hold for a brief moment at the top, then slowly lower the barbell back to shoulder height under control.\n\n6. Repeat for the desired number of reps.",
     "imageName": null,
     "videoName": null
   },
@@ -487,6 +523,15 @@
     "videoName": null
   },
   {
+    "name": "Cable Flys",
+    "muscle": "Chest",
+    "method": "Close",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set two ends of a cable machine to a high height and attach a handle to each end.\n\n2. Stand upright between the two cables and grip the handles with your palms facing forwards.\n\n3. Step both feet forwards and lean your body forwards slightly to release the weight from the rack. The cables should be pulling your arms back, stretching your chest. First Position.\n\n4. Maintaining a slight bend in your elbows and contracting your chest, bring the two handles out in front of you in a semi-circle motion.\n\n5. Find Second Position where the handles touch in the middle.\n\n6. Tip: Think about bringing your elbows out together in front of you – rather than your hands – to get a better contraction on your chest.\n\n7. Hold Second Position and squeeze your chest muscles for a second.\n\n8. Slowly guide the handles back into First Position.\n\n9. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
     "name": "Incline Machine Bench Press",
     "muscle": "Chest",
     "method": "Push",
@@ -555,6 +600,15 @@
     "method": "Triceps",
     "difficulty": "Beginner",
     "instructions": "1. Sit on the end of a flat bench and hold one end of a dumbbell, creating a triangle with your first fingers and thumbs around the handle.\n\n2. Lift the dumbbell straight above your head until your arms are fully extended. Your palms should be facing upwards. First Position.\n\n3. Slow and controlled, lower the dumbbell behind your head until your triceps are fully stretched. Try to keep your elbows tucked close to the side of your head. Second Position.\n\n4. Contract your triceps and press the dumbbell back up into First Position.\n\n5. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Close Grip Incline Bench Press",
+    "muscle": "Arms",
+    "method": "Triceps",
+    "difficulty": "Intermediate",
+    "instructions": "1. Lie down on an incline bench press with your shoulders pinned back and feet planted on the floor.\n\n2. Grip a barbell just inside shoulder-width and lift it from the rack. Hold it straight up - arms extended - above your chest. First Position.\n\n3. Take a deep breath and slowly lower the bar until it’s a few inches above your chest. Second Position.\n\n4. Tip: Lower the bar down so it’s just underneath the bottom of your chest with your elbows tucked in by your sides.\n\n5. Pause in Second Position.\n\n6. Contract your triceps and press the bar back up into First Position.\n\n7. Finish your reps.",
     "imageName": null,
     "videoName": null
   },
@@ -649,6 +703,15 @@
       "videoName": "cableHammerCurl.mp4"
     },
     {
+        "name": "Single Arm Cable Curls",
+        "muscle": "Arms",
+        "method": "Biceps",
+        "difficulty": "Beginner",
+        "instructions": "1. Set one end of a cable machine to a high height and attach a straight handle.\n\n2. Stand upright adjacent to the cable machine and grip the handle with your palm facing upwards.\n\n3. With your spare hand, hold onto the cable machine for support.\n\n4. Release the weight from the rack and extend your arm out to your side so your bicep is fully stretched and your arm is parallel to the floor. First Position.\n\n5. Curl the handle inwards to just behind your ear, keeping your upper arm in a fixed position.\n\n6. Continue curling until you reach Second Position, where your bicep is fully contracted and the handle reaches the side of your head.\n\n7. Squeeze your biceps in Second Position for a second before slowly returning to First Position, just short of the weight touching the rack.\n\n8. Finish your reps and repeat for the other arm.",
+        "imageName": null,
+        "videoName": null
+    },
+    {
       "name": "Straight Bar Cable Bicep Curl",
       "muscle": "Arms",
       "method": "Biceps",
@@ -656,6 +719,503 @@
       "instructions": "1. Standing upright, grip the straight bar attached to a cable at shoulder width with your palms facing upwards and elbows tucked close to your side. The weight should be released from the rack. First Position.\n\n2. Curl the weight upwards, towards your shoulders, contracting your biceps. Try to keep your upper arm in a locked position.\n\n3. Continue to curl until you reach Second Position, where your biceps are fully contracted.\n\n4. Slowly lower the weight back into First Position, just short of where the weight touches the rack.\n\n5. Finish your reps.",
       "imageName": null,
       "videoName": null
-    }
+    },
+      {
+        "name": "Plank",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie face down and prop yourself on forearms and toes. First Position. 2. Keep a straight line from head to heels by bracing your core and glutes. 3. Hold without letting hips sag or pike. 4. Do your time.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Bird Dog",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. On all fours with hands under shoulders and knees under hips. First Position. 2. Extend opposite arm and leg while keeping hips square. Second Position. 3. Pause, brace, then return to First Position. 4. Switch sides and finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Dead Bug",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on your back with arms up and hips/knees at 90°. First Position. 2. Lower opposite arm and leg toward floor while pressing low back down. Second Position. 3. Return to First Position and alternate sides. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Standing Side Bend",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Stand tall with one hand behind head and the other holding a light weight or empty. First Position. 2. Bend laterally toward the weighted side without twisting. Second Position. 3. Return to First Position. 4. Finish your reps and switch sides.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Reverse Crunch",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on your back, knees bent, feet off floor, hands by sides. First Position. 2. Curl pelvis up, bringing knees toward chest by posteriorly tilting hips. Second Position. 3. Lower slowly without arching low back. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Seated Knee Tuck",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Beginner",
+        "instructions": "1. Sit on bench, lean back slightly, hands for support, legs extended. First Position. 2. Draw knees toward chest while bracing core. Second Position. 3. Extend legs without touching floor and repeat. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Side Plank",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on side, prop on forearm, feet stacked. Lift hips. First Position. 2. Keep a straight line from head to heels, ribs down, glutes tight. 3. Hold for time, then switch sides.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Supine Toe Tap",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on back with hips/knees at 90° and shins parallel. First Position. 2. Tap one foot lightly to floor by hinging at hip while keeping low back pressed down. Second Position. 3. Return to First Position and alternate. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Glute Bridge Hold",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on back, knees bent, feet hip-width. First Position. 2. Drive through heels, squeeze glutes, lift hips until torso and thighs align. Second Position. 3. Keep ribs down and core braced. 4. Hold for time, then lower.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Front Plank with Shoulder Tap",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. High plank on hands, feet hip-width. First Position. 2. Tap opposite shoulder with one hand without shifting hips. Second Position. 3. Return to First Position and alternate taps. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Lying Windshield Wiper",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on back, arms out for support, legs raised to 90°. First Position. 2. Lower legs to one side under control without lifting shoulders. Second Position. 3. Sweep to opposite side like wipers. 4. Keep low back down and finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Standing Pallof Press",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Beginner",
+        "instructions": "1. Set cable at chest height, stand side-on holding handle at sternum. First Position. 2. Press arms straight out resisting rotation. Second Position. 3. Hold briefly, return to First Position. 4. Finish reps per side.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Hanging Knee Raise",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Intermediate",
+        "instructions": "1. Hang from a bar with active shoulders. First Position. 2. Posteriorly tilt pelvis and raise knees toward chest without swinging. Second Position. 3. Lower under control to First Position. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Mountain Climbers",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. High plank with arms straight and core braced. First Position. 2. Drive one knee toward chest without lifting hips. Second Position. 3. Switch legs quickly like running in place, keeping shoulders over wrists. 4. Do your time.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Hollow Hold",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Lie on back, arms overhead, legs straight. Press low back into floor. First Position. 2. Lift shoulders and legs a few inches keeping lumbar contact. Second Position. 3. Hold without losing position. 4. Do your time.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Bird Dog Elbow-to-Knee",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. On all fours. Extend opposite arm and leg. Second Position. 2. Draw elbow to knee under torso without rounding excessively. Third Position. 3. Re-extend and repeat, then switch sides.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Russian Twist",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Sit leaning back with shins parallel or heels down, hands together or holding weight. First Position. 2. Rotate torso to one side without collapsing chest. Second Position. 3. Rotate to the other side under control. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Side Plank with Hip Dip",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Side plank on forearm, hips lifted. First Position. 2. Lower hips toward floor without losing alignment. Second Position. 3. Drive hips back up to First Position. 4. Finish reps per side.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Cable Woodchopper",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Set cable high, stand side-on, grab handle with both hands. First Position. 2. Pull diagonally down across body by rotating torso and hips. Second Position. 3. Control return to First Position. 4. Finish reps per side.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Plank to Forearm (Up-Down Plank)",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. High plank on hands. First Position. 2. Lower one arm to forearm, then the other to reach forearm plank. Second Position. 3. Press back up to First Position, alternating lead arm while keeping hips stable. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Glute Bridge March",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Bridge hips up with glutes squeezed. First Position. 2. Lift one knee toward chest without letting hips drop. Second Position. 3. Set foot down, switch sides while maintaining pelvis level. 4. Do your reps per side.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Medicine Ball Slam",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Stand tall holding a medicine ball overhead with ribs down. First Position. 2. Drive ball forcefully to floor by crunching and hinging at hips. Second Position. 3. Catch on rebound if safe and reset. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "V-Up",
+        "muscle": "Abs",
+        "method": "Upper Abs",
+        "difficulty": "Intermediate",
+        "instructions": "1. Lie supine with arms overhead and legs straight. First Position. 2. Simultaneously lift torso and legs to meet in a V, reaching hands toward feet. Second Position. 3. Lower under control to First Position. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Jackknife Sit-Up",
+        "muscle": "Abs",
+        "method": "Upper Abs",
+        "difficulty": "Intermediate",
+        "instructions": "1. Lie on back with arms overhead and legs straight. First Position. 2. Lift torso and one leg to meet at midpoint, reaching opposite hand to foot. Second Position. 3. Lower and alternate sides. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Plank Jacks",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Intermediate",
+        "instructions": "1. Forearm plank with feet together. First Position. 2. Hop feet out wider while keeping hips level. Second Position. 3. Hop feet back to First Position and repeat for time.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Hanging Leg Raise (Posterior Pelvic Tilt)",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Advanced",
+        "instructions": "1. Hang from a bar, engage lats and brace. First Position. 2. Posteriorly tilt pelvis and raise straight legs to at least hip height without swinging. Second Position. 3. Lower slowly maintaining tilt. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Toes to Bar",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Advanced",
+        "instructions": "1. Hang from bar with active shoulders. First Position. 2. Hollow body, then raise legs to touch toes to bar by tilting pelvis and flexing hips. Second Position. 3. Control the descent to First Position without excessive swing.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Hanging Oblique Raise",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Hang from bar. First Position. 2. Raise knees toward one elbow by rotating pelvis and torso. Second Position. 3. Lower under control and alternate sides. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Plank with Reach",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. High plank, feet slightly wider than hips. First Position. 2. Reach one arm forward without shifting hips or shoulders. Second Position. 3. Return hand under control and alternate reaches. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Side Plank with Rotation",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Side plank on forearm, top arm reaching up. First Position. 2. Thread top arm under torso, rotating through upper back while keeping hips lifted. Second Position. 3. Return to First Position and repeat; switch sides.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Suitcase Carry",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Stand tall holding a heavy dumbbell or kettlebell in one hand at your side. First Position. 2. Walk slowly for distance while resisting side bend and rotation. Second Position. 3. Keep ribs down and hips level. 4. Switch sides.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Plank to Pike (Slider)",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. High plank with feet on sliders or towel. First Position. 2. Lift hips into a pike by sliding feet toward hands while keeping legs straight. Second Position. 3. Slide back to First Position under control. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Medicine Ball Rotational Throw",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Stand side-on to a wall holding a med ball at chest. First Position. 2. Rotate hips and torso explosively and throw ball into wall. Second Position. 3. Catch on rebound if safe, reset stance, and repeat both sides.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "V-Up with Twist",
+        "muscle": "Abs",
+        "method": "Upper Abs",
+        "difficulty": "Advanced",
+        "instructions": "1. Lie supine with arms overhead and legs straight. First Position. 2. Rise into a V while rotating torso to reach hands toward one shin. Second Position. 3. Lower and alternate sides, keeping control. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Hollow Body Rock",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Assume hollow hold with low back pressed down. First Position. 2. Rock gently from shoulders to hips without breaking hollow shape. Second Position. 3. Keep ribs down and legs/arms fixed. 4. Do your time or reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Ab Rollout (Wheel or Barbell)",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Kneel holding an ab wheel or barbell under shoulders. First Position. 2. Roll forward, extending hips and shoulders while keeping core braced and low back neutral. Second Position. 3. Pull back to First Position by engaging lats and abs. 4. Finish your reps.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Dead Bug with Resistance Band",
+        "muscle": "Abs",
+        "method": "Full Pack",
+        "difficulty": "Advanced",
+        "instructions": "1. Anchor a light band overhead, lie on back holding band tight with arms up and hips/knees at 90°. First Position. 2. Extend opposite arm/leg against band tension while pressing low back down. Second Position. 3. Return to First Position and alternate.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Dragon Flag",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Advanced",
+        "instructions": "1. Lie on bench and hold behind head for support. Lift body so only upper back contacts bench. First Position. 2. Keeping body rigid, lower under control without letting hips sag. Second Position. 3. Pull back to First Position using abs, not momentum.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "L-Sit Hold (Parallel Bars)",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Advanced",
+        "instructions": "1. Support yourself on parallel bars with elbows locked and shoulders depressed. First Position. 2. Lift straight legs to form an L with torso while keeping knees locked and toes pointed. Second Position. 3. Hold without leaning forward excessively. 4. Do your time.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+        "name": "Flutter Kicks",
+        "muscle": "Abs",
+        "method": "Lower Abs",
+        "difficulty": "Beginner",
+        "instructions": "1. Lie on back, hands by sides, legs straight a few inches off floor. First Position. 2. Alternate small, quick up-down kicks while keeping low back pressed down. Second Position. 3. Continue for time without letting heels touch. 4. Do your time.",
+        "imageName": null,
+        "videoName": null
+      },
+      {
+          "name": "Drop Squats",
+          "muscle": "Legs",
+          "method": "Vertical Push",
+          "difficulty": "Beginner",
+          "instructions": "1. Stand upright with feet shoulder-width apart. First Position.\n\n2. Jump feet apart while quickly dropping into a squat position, keeping chest up and core braced. Second Position.\n\n3. Push through heels to jump back to First Position.\n\n4. Repeat for the desired number of reps.",
+          "imageName": null,
+          "videoName": null
+        },
+        {
+          "name": "Low Skater",
+          "muscle": "Legs",
+          "method": "Horizontal Push",
+          "difficulty": "Beginner",
+          "instructions": "1. Stand with feet hip-width apart, knees slightly bent, and torso leaning forward. First Position.\n\n2. Jump laterally to one side, landing on one foot while swinging the opposite leg behind you. Keep the back leg off the ground for balance. Second Position.\n\n3. Immediately jump to the other side, switching legs.\n\n4. Continue alternating in a smooth skating motion for the desired reps or time.",
+          "imageName": null,
+          "videoName": null
+        },
+        {
+          "name": "Push-Ups",
+          "muscle": "Chest",
+          "method": "Push",
+          "difficulty": "Beginner",
+          "instructions": "1. Start in a high plank position with hands slightly wider than shoulder-width and body in a straight line from head to heels. First Position.\n\n2. Lower your chest toward the floor by bending your elbows, keeping them at about 45 degrees from your body. Second Position.\n\n3. Press through your palms to return to First Position.\n\n4. Repeat for the desired number of reps.",
+          "imageName": null,
+          "videoName": null
+        },
+          {
+            "name": "Running Mountain Climbers",
+            "muscle": "Abs",
+            "method": "Full Pack",
+            "difficulty": "Intermediate",
+            "instructions": "1. Start in a high plank position with shoulders stacked over wrists and body in a straight line. First Position.\n\n2. Drive one knee toward your chest. Second Position.\n\n3. Quickly switch legs in a running motion while keeping hips low and core braced.\n\n4. Continue alternating for the desired time or reps.",
+            "imageName": null,
+            "videoName": null
+          },
+          {
+            "name": "Burpees",
+            "muscle": "Abs",
+            "method": "Full Pack",
+            "difficulty": "Intermediate",
+            "instructions": "1. Stand upright with feet shoulder-width apart. First Position.\n\n2. Squat down and place your hands on the floor. Second Position.\n\n3. Jump feet back into a high plank position.\n\n4. Perform a push-up (optional for beginners).\n\n5. Jump feet back toward hands.\n\n6. Explosively jump upward, reaching arms overhead.",
+            "imageName": null,
+            "videoName": null
+          },
+            {
+              "name": "Burpee Jacks",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Intermediate",
+              "instructions": "1. Stand upright with feet shoulder-width apart and arms by your sides. First Position.\n\n2. Squat down, place hands on the floor and jump feet back into a high plank. Second Position.\n\n3. In plank, jump feet out wide and back in like a jumping jack while keeping hips level. Third Position.\n\n4. Jump feet forward to hands, then explode up into a jump, clapping hands overhead like a jumping jack. Fourth Position.\n\n5. Land softly and return to First Position.\n\n6. Repeat for the desired reps or time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Running High Knees",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Beginner",
+              "instructions": "1. Stand tall with feet hip-width and arms by your sides. First Position.\n\n2. Run in place by driving one knee up to hip height while pumping opposite arm. Second Position.\n\n3. Switch legs quickly, keeping chest up and core braced. Third Position.\n\n4. Maintain a quick rhythm on the balls of your feet without leaning back.\n\n5. Do your time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Jumping Jacks",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Beginner",
+              "instructions": "1. Stand upright with feet together and arms by your sides. First Position.\n\n2. Jump feet out wider than shoulders while raising arms overhead. Second Position.\n\n3. Jump feet back together while lowering arms to your sides to return to First Position.\n\n4. Keep core engaged and land softly on mid-foot.\n\n5. Do your time or finish your reps.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Bear Crawl",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Intermediate",
+              "instructions": "1. Start on all fours with hands under shoulders and knees under hips, toes tucked. Lift knees an inch off the floor keeping back flat. First Position.\n\n2. Move opposite hand and foot forward a small step while keeping hips low and core braced. Second Position.\n\n3. Alternate sides in a controlled crawl, keeping knees close to the ground and shoulders stable.\n\n4. Crawl forward for distance or time; reverse to return if needed.\n\n5. Do your time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Floor Release Push Ups",
+              "muscle": "Chest",
+              "method": "Push",
+              "difficulty": "Beginner",
+              "instructions": "1. Lie prone on the floor with hands under shoulders, legs straight and body relaxed. First Position.\n\n2. Lift hands briefly off the floor to fully release tension. Second Position.\n\n3. Replace hands, brace core and glutes, then press up in one piece to a straight-arm plank. Third Position.\n\n4. Lower chest back to the floor under control and repeat the hand release.\n\n5. Finish your reps.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Modified Hollow Holds",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Beginner",
+              "instructions": "1. Lie on your back with knees bent at 90° and arms by your sides. Press low back into the floor. First Position.\n\n2. Lift head, shoulders and feet a few inches while keeping shins parallel and ribs down. Second Position.\n\n3. Hold the position breathing steadily without losing lumbar contact.\n\n4. To regress, keep one heel lightly touching; to progress, extend arms forward.\n\n5. Do your time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+                    "name": "Squat Reach Jumps",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Intermediate",
+                    "instructions": "1. Stand with feet shoulder-width apart.\n\n2. Lower into a squat position, keeping your chest up and core engaged.\n\n3. Explosively jump upward while reaching your arms overhead.\n\n4. Land softly and immediately descend back into the squat position.\n\n5. Repeat for the desired number of repetitions.",
+                    "imageName": null,
+                    "videoName": null
+                },
+                {
+                    "name": "Power Skip",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Beginner",
+                    "instructions": "1. Stand tall with feet hip-width apart.\n\n2. Drive your right knee upward explosively while pushing off the left foot and swinging your arms to aid momentum.\n\n3. Land softly and immediately drive the opposite knee up into the next skip.\n\n4. Continue alternating sides in a rhythmic motion.",
+                    "imageName": null,
+                    "videoName": null
+                },
+                {
+                    "name": "Military Plank",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Beginner",
+                    "instructions": "1. Start in a forearm plank position with elbows directly under shoulders and body in a straight line.\n\n2. Push up onto your right hand, then your left hand, transitioning into a high plank position.\n\n3. Lower back down to your right forearm, then your left forearm.\n\n4. Continue alternating the lead arm while keeping your hips stable.",
+                    "imageName": null,
+                    "videoName": null
+                },
+                {
+                    "name": "Rocket Launchers",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Intermediate",
+                    "instructions": "1. Start in a low lunge position with your back knee just above the ground.\n\n2. Explosively drive upward, switching legs mid-air.\n\n3. Land softly into a lunge with the opposite leg forward.\n\n4. Continue alternating legs in a fast, explosive motion.",
+                    "imageName": null,
+                    "videoName": null
+                }
+
+
 ]
 

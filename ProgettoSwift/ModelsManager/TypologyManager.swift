@@ -104,10 +104,15 @@ class TypologyManager {
                 
                 let defaultData: [(String, String)] = [
                     ("4x10", "4 sets of 10 reps."),
+                    ("4x12", "4 sets of 12 reps."),
                     ("8x4x4", "8 sets of 4 reps x 4 exercises."),
                     ("Piramidale", "Increasing weights, decreasing reps."),
-                    ("Piramidale Inverso", "Decreasing weights, increasing reps.")
+                    ("Piramidale Inverso", "Decreasing weights, increasing reps."),
+                    ("3x12", "3 sets of 12 reps."),
+                    ("3x30\"", "3 sets of 30 seconds hold."),
+                    ("3x20-30\"", "3 sets of 20–30 seconds hold.")
                 ]
+
                 
                 for (title, desc) in defaultData {
                     _ = createTypology(

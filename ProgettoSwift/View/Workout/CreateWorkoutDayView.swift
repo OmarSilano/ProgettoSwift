@@ -1,31 +1,34 @@
 import SwiftUI
 import CoreData
 
-// MARK: - EDIT esistente (commit su Save)
-struct EditWorkoutDayView: View {
-    @Environment(\.managedObjectContext) private var context
+// MARK: - CREATE nuovo giorno (commit su Save)
+struct CreateWorkoutDayView: View {
+    @Environment(\.managedObjectContext) private var envContext
     @Environment(\.dismiss) private var dismiss
     
-    @ObservedObject var day: WorkoutDay
+    @ObservedObject var workout: Workout
+    var presetName: String? = nil
     var onClose: () -> Void = {}
+    
+    private var ctx: NSManagedObjectContext { workout.managedObjectContext ?? envContext }
     
     // UI state
     @State private var dayName: String = ""
+    @State private var day: WorkoutDay? = nil
     @State private var details: [WorkoutDayDetail] = []
     @State private var isShowingExercisePicker = false
     @State private var typologies: [Typology] = []
     @State private var didHandleClose = false
     
-
     
-    // Manager
-    private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: context) }
-    private var typologyMgr: TypologyManager { TypologyManager(context: context) }
+    private var dayMgr: WorkoutDayManager { WorkoutDayManager(context: ctx) }
+    private var detailMgr: WorkoutDayDetailManager { WorkoutDayDetailManager(context: ctx) }
+    private var typologyMgr: TypologyManager { TypologyManager(context: ctx) }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
-                header(title: "EDIT DAY", onCancel: cancel, onSave: save)
+                header(title: "NEW DAY", onCancel: cancel, onSave: save)
                 
                 nameField
                 
@@ -38,8 +41,15 @@ struct EditWorkoutDayView: View {
             .background(Color("PrimaryColor").ignoresSafeArea())
         }
         .onAppear {
-            dayName = day.name ?? ""
-            details = day.sortedDetails
+            let suggested = presetName ?? "Day \(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)"
+            
+            let newDay = WorkoutDay(context: ctx)
+            newDay.id = UUID()
+            newDay.name = suggested
+            newDay.isCompleted = false
+            
+            day = newDay
+            dayName = suggested
             typologies = typologyMgr.fetchAllTypologies()
         }
         .sheet(isPresented: $isShowingExercisePicker) {
@@ -50,13 +60,13 @@ struct EditWorkoutDayView: View {
         }
         .onDisappear {
             if !didHandleClose {
-                context.rollback()   // stesso effetto del Cancel
+                ctx.rollback()   // stesso effetto del Cancel
                 onClose()
             }
         }
     }
     
-    // MARK: - UI chunks (per alleggerire il compilatore)
+    // UI chunks (riuso quelli sopra)
     private func header(title: String, onCancel: @escaping () -> Void, onSave: @escaping () -> Void) -> some View {
         HStack {
             Button("Cancel", action: onCancel).foregroundColor(.white)
@@ -153,18 +163,20 @@ struct EditWorkoutDayView: View {
         .padding()
     }
     
-    // MARK: - Actions
+    // Actions
     private func addExercises(with ids: [NSManagedObjectID]) {
+        guard let day else { return }
         let defaultTyp = (typologies.first { $0.isDefault } ?? typologies.first)!
-        let existing = Set(details.compactMap { $0.exercise?.objectID })
         
+        let existing = Set(details.compactMap { $0.exercise?.objectID })
         for id in ids where !existing.contains(id) {
-            if let ex = try? context.existingObject(with: id) as? Exercise {
-                let d = WorkoutDayDetail(context: context)
-                d.id = UUID()
-                d.exercise = ex
-                d.typology = defaultTyp
-                d.orderIndex = Int16(details.count)
+            if let ex = try? ctx.existingObject(with: id) as? Exercise {
+                let d = detailMgr.createTempWorkoutDayDetail(
+                    workoutDay: day,
+                    exercise: ex,
+                    typology: defaultTyp,
+                    orderIndex: Int16(details.count)
+                )
                 details.append(d)
             }
         }
@@ -172,15 +184,10 @@ struct EditWorkoutDayView: View {
     }
     
     private func deleteDetails(_ offsets: IndexSet) {
-        for i in offsets {
-            let det = details[i]
-            if det.workoutDay == nil {
-                context.delete(det)
-            }
-        }
+        for i in offsets { ctx.delete(details[i]) }
         details.remove(atOffsets: offsets)
+        renumberOrder()
     }
-
     
     private func moveDetails(from source: IndexSet, to destination: Int) {
         details.move(fromOffsets: source, toOffset: destination)
@@ -192,43 +199,33 @@ struct EditWorkoutDayView: View {
     }
     
     private func save() {
-            let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
-            day.name = trimmed
-
-            // 1) Collega al day i nuovi dettagli orfani (aggiunte)
-            for det in details where det.workoutDay == nil {
-                det.workoutDay = day
-            }
-
-            // 2) Cancella ORA i dettagli esistenti rimossi dalla UI
-            let keptExistingIDs: Set<NSManagedObjectID> = Set(
-                details.compactMap { $0.workoutDay != nil ? $0.objectID : nil }
-            )
-            for det in day.sortedDetails where !keptExistingIDs.contains(det.objectID) {
-                context.delete(det)
-            }
-
-            // 3) Aggiorna l'ordine definitivo (su tutti quelli tenuti e nuovi)
-            for (i, det) in details.enumerated() {
-                det.orderIndex = Int16(i)
-            }
-
-            // 4) Calcola i muscoli SOLO ora
-            day.updateMusclesFromDetails()
-
-            do {
-                try context.save()
-                didHandleClose = true
-                onClose()
-                dismiss()
-            } catch {
-                print("❌ Save day error:", error)
-            }
+        guard let day else { return }
+        
+        let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        day.name = trimmed
+        
+        // 🔒 anti-crash: stesso context
+        guard day.managedObjectContext === workout.managedObjectContext else {
+            print("⚠️ Context mismatch: skip link to avoid crash")
+            return
         }
+        
+        day.workout = workout
+        day.updateMusclesFromDetails()
+        
+        do {
+            didHandleClose = true
+            try ctx.save()
+            onClose()
+            dismiss()
+        } catch {
+            print("❌ Save new day error:", error)
+        }
+    }
     
     private func cancel() {
         didHandleClose = true
-        context.rollback()
+        ctx.rollback()
         onClose()
         dismiss()
     }

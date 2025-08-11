@@ -9,44 +9,23 @@
       {
         "name": "Day 1 - Chest & Triceps",
         "details": [
-          {
-            "exerciseName": "Close Stance Push Up",
-            "typologyName": "4x10"
-          },
-          {
-            "exerciseName": "Dumbbell Single Arm Tricep Extension",
-            "typologyName": "4x10"
-          }
+          { "exerciseName": "Close Stance Push Up", "typologyName": "4x10" },
+          { "exerciseName": "Dumbbell Single Arm Tricep Extension", "typologyName": "4x10" }
         ]
       },
       {
         "name": "Day 2 - Back & Biceps",
         "details": [
-          {
-            "exerciseName": "Straight Arm Rope Pulldown",
-            "typologyName": "4x10"
-          },
-          {
-            "exerciseName": "Hammer Curl",
-            "typologyName": "4x10"
-          }
+          { "exerciseName": "Straight Arm Rope Pulldown", "typologyName": "4x10" },
+          { "exerciseName": "Hammer Curl", "typologyName": "4x10" }
         ]
       },
       {
         "name": "Day 3 - Legs & Shoulders",
         "details": [
-          {
-            "exerciseName": "Jump Squats",
-            "typologyName": "4x10"
-          },
-          {
-            "exerciseName": "Barbell Push Press",
-            "typologyName": "4x10"
-          },
-          {
-            "exerciseName": "Ab Crunch",
-            "typologyName": "4x10"
-          }
+          { "exerciseName": "Jump Squats", "typologyName": "4x10" },
+          { "exerciseName": "Barbell Push Press", "typologyName": "4x10" },
+          { "exerciseName": "Ab Crunch", "typologyName": "4x10" }
         ]
       }
     ]
@@ -59,10 +38,172 @@
   
   {
     "category": "Hypertrophy",
+    "difficulty": "Advanced",
+    "name": "Big Gymrat Lifting",
+    "weeks": 6,
+    "pathToImage": "UomoConBarba",
+    "days": [
+      {
+        "name": "Day 1 - Back",
+        "details": [
+          { "exerciseName": "Pull Up", "typologyName": "4x10" },
+          { "exerciseName": "Barbell Deadlift", "typologyName": "8x4x4" },
+          { "exerciseName": "Barbell Bent Over Row", "typologyName": "4x12"},
+          { "exerciseName": "Seated Cable Row (Triangle Grip)", "typologyName": "4x12"},
+          { "exerciseName": "Lat Pulldown", "typologyName": "8x4x4"}
+        ]
+      },
+      {
+        "name": "Day 2 - Chest",
+        "details": [
+          {
+            "exerciseName": "Incline Machine Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Incline Dumbbell Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Dumbbell Hammer Curl",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Cable Flys",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Barbell Bench Press",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Pec Fly",
+            "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 3 - Legs",
+        "details": [
+          {
+            "exerciseName": "Barbell Back Squat",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Dumbbell Romanian Deadlift",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Machine Prone Hamstring Curl",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Seated Calf Raise",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Leg Extensions",
+            "typologyName": "4x12"
+          },
+          {
+              "exerciseName": "45 Degree Leg Press",
+              "typologyName": "4x12"
+          },
+          {
+              "exerciseName": "Dumbbell Front Lunge",
+              "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 4 - Shoulders & Triceps",
+        "details": [
+          {
+            "exerciseName": "Seated Shoulder Press",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Barbell Overhead Press",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Rear Delt Pec Fly",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Dumbbell Lateral Raise",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Cable Face Pull",
+            "typologyName": "8x4x4"
+          },
+          {
+              "exerciseName": "Barbell Skullcrusher",
+              "typologyName": "4x12"
+          },
+          {
+              "exerciseName": "Tricep Rope Pushdown",
+              "typologyName": "8x4x4"
+          },
+          {
+              "exerciseName": "Seated Overhead Dumbbell Extension",
+              "typologyName": "8x4x4"
+          }
+        ]
+      },
+      {
+        "name": "Day 5 - Arms",
+        "details": [
+          {
+            "exerciseName": "Close Grip Incline Bench Press",
+            "typologyName": "4x12"
+          },
+          {
+            "exerciseName": "Dumbbell Skullcrusher",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Tricep Pushdown (Triangle Handle)",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Barbell Bicep Curl",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Seated Dumbbell Bicep Curl",
+            "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Single Arm Cable Curls",
+              "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Overhead Rope Tricep Extension",
+              "typologyName": "8x4x4"
+          },
+          {
+              "exerciseName": "Bodyweight Tricep Dip",
+              "typologyName": "4x10"
+          }
+        ]
+      }
+    ]
+  },
+  
+  
+  
+  
+  
+  
+  
+  {
+    "category": "Hypertrophy",
     "difficulty": "Intermediate",
     "name": "Full Body Confidence",
     "weeks": 6,
-    "pathToImage": "Hypertrophy",
+    "pathToImage": "BiondaConBilanciere",
     "days": [
       {
         "name": "Day 1 - Lower Body Compounds",
@@ -127,30 +268,258 @@
         ]
       },
       {
-        "name": "Day 3 - Legs & Shoulders",
+        "name": "Day 3 - Lower Body Posterior",
         "details": [
           {
-            "exerciseName": "Jump Squats",
+            "exerciseName": "Barbell Romanian Deadlift",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Barbell Split Squat",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Barbell Push Press",
+            "exerciseName": "Barbell Hip Thrust",
             "typologyName": "4x10"
           },
           {
-            "exerciseName": "Ab Crunch",
+            "exerciseName": "Barbell Split Squat",
             "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Machine Prone Hamstring Curl",
+            "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Dumbbell Front Lunge",
+              "typologyName": "4x10"
+          }
+        ]
+      },
+      {
+        "name": "Day 4 - Upper Body Pushing",
+        "details": [
+          {
+            "exerciseName": "Barbell Bench Press",
+            "typologyName": "Piramidale"
+          },
+          {
+            "exerciseName": "Lower Cable Chest Fly",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Seated Shoulder Press",
+            "typologyName": "8x4x4"
+          },
+          {
+            "exerciseName": "Dumbbell Lateral Raise",
+            "typologyName": "4x10"
+          },
+          {
+            "exerciseName": "Tricep Pushdown (Triangle Handle)",
+            "typologyName": "4x10"
+          },
+          {
+              "exerciseName": "Single Arm Dumbbell Bent Over Row",
+              "typologyName": "Piramidale"
           }
         ]
       }
     ]
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-]
+  },
+    {
+      "category": "Abs & Core",
+      "difficulty": "Beginner",
+      "name": "Core Stability Start",
+      "weeks": 4,
+      "pathToImage": "CoreBeginner",
+      "days": [
+        {
+          "name": "Day 1 - Stability Focus",
+          "details": [
+            { "exerciseName": "Plank", "typologyName": "3x30\"" },
+            { "exerciseName": "Bird Dog", "typologyName": "3x12" },
+            { "exerciseName": "Dead Bug", "typologyName": "3x12" },
+            { "exerciseName": "Standing Side Bend", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 2 - Lower Abs & Obliques",
+          "details": [
+            { "exerciseName": "Reverse Crunch", "typologyName": "3x12" },
+            { "exerciseName": "Seated Knee Tuck", "typologyName": "3x12" },
+            { "exerciseName": "Side Plank", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Supine Toe Tap", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 3 - Core Activation",
+          "details": [
+            { "exerciseName": "Glute Bridge Hold", "typologyName": "3x30\"" },
+            { "exerciseName": "Front Plank with Shoulder Tap", "typologyName": "3x12" },
+            { "exerciseName": "Lying Windshield Wiper", "typologyName": "3x12" },
+            { "exerciseName": "Standing Pallof Press", "typologyName": "3x12" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Abs & Core",
+      "difficulty": "Intermediate",
+      "name": "Dynamic Core Builder",
+      "weeks": 4,
+      "pathToImage": "CoreIntermediate",
+      "days": [
+        {
+          "name": "Day 1 - Lower Abs & Hip Flexors",
+          "details": [
+            { "exerciseName": "Hanging Knee Raise", "typologyName": "3x12" },
+            { "exerciseName": "Flutter Kicks", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Mountain Climbers", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Bicycle Crunch", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 2 - Obliques & Rotation",
+          "details": [
+            { "exerciseName": "Russian Twist", "typologyName": "3x12" },
+            { "exerciseName": "Side Plank with Hip Dip", "typologyName": "3x12" },
+            { "exerciseName": "Cable Woodchopper", "typologyName": "3x12" },
+            { "exerciseName": "Bird Dog elbow-to-knee", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 3 - Stability & Control",
+          "details": [
+            { "exerciseName": "Plank to Forearm", "typologyName": "3x12" },
+            { "exerciseName": "Hollow Hold", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Standing Pallof Press", "typologyName": "3x12" },
+            { "exerciseName": "Glute Bridge March", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 4 - Core Power",
+          "details": [
+            { "exerciseName": "Medicine Ball Slam", "typologyName": "3x12" },
+            { "exerciseName": "V-Up", "typologyName": "3x12" },
+            { "exerciseName": "Jackknife Sit-Up", "typologyName": "3x12" },
+            { "exerciseName": "Plank Jacks", "typologyName": "3x20-30\"" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Abs & Core",
+      "difficulty": "Advanced",
+      "name": "Core Strength Mastery",
+      "weeks": 4,
+      "pathToImage": "CoreAdvanced",
+      "days": [
+        {
+          "name": "Day 1 - Hanging Core Challenge",
+          "details": [
+            { "exerciseName": "Hanging Leg Raise (posterior tilt)", "typologyName": "4x10" },
+            { "exerciseName": "Toes to Bar", "typologyName": "4x10" },
+            { "exerciseName": "Hanging Oblique Raise", "typologyName": "4x10" },
+            { "exerciseName": "Plank with Reach", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 2 - Anti-Rotation & Stability",
+          "details": [
+            { "exerciseName": "Pallof Press (Heavy)", "typologyName": "4x10" },
+            { "exerciseName": "Side Plank with Rotation", "typologyName": "4x10" },
+            { "exerciseName": "Suitcase Carry", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Plank to Pike (Slider)", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 3 - Explosive Core",
+          "details": [
+            { "exerciseName": "Medicine Ball Rotational Throw", "typologyName": "4x10" },
+            { "exerciseName": "V-Up with Twist", "typologyName": "4x10" },
+            { "exerciseName": "Bicycle Crunch (Weighted)", "typologyName": "4x12" },
+            { "exerciseName": "Plank with Shoulder Tap (Weighted)", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 4 - Core Endurance",
+          "details": [
+            { "exerciseName": "Hollow Body Rock", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Side Plank Hip Lift", "typologyName": "3x12" },
+            { "exerciseName": "Ab Rollout (Wheel or Barbell)", "typologyName": "3x12" },
+            { "exerciseName": "Dead Bug with Resistance Band", "typologyName": "3x12" }
+          ]
+        },
+        {
+          "name": "Day 5 - Mixed Core Attack",
+          "details": [
+            { "exerciseName": "Dragon Flag", "typologyName": "3x12" },
+            { "exerciseName": "Cable Woodchopper (Heavy)", "typologyName": "3x12" },
+            { "exerciseName": "L-Sit Hold (Parallel Bars)", "typologyName": "3x20-30\"" },
+            { "exerciseName": "Mountain Climbers (Weighted Vest)", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "HIIT",
+      "difficulty": "Beginner",
+      "name": "Burn Circuit: Level 1",
+      "weeks": 4,
+      "pathToImage": "HIIT_BurnCircuit",
+      "days": [
+        {
+          "name": "Beginner Burn Circuit",
+          "details": [
+            { "exerciseName": "Drop Squats", "typologyName": "3x12" },
+            { "exerciseName": "Low Skater", "typologyName": "3x12" },
+            { "exerciseName": "Push-Ups", "typologyName": "3x12" },
+            { "exerciseName": "Running Mountain Climbers", "typologyName": "3x30\"" },
+            { "exerciseName": "Flutter Kicks", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "HIIT",
+      "difficulty": "Intermediate",
+      "name": "Burn Circuit: Level 2",
+      "weeks": 4,
+      "pathToImage": "HIIT_BurnCircuit_Level2",
+      "days": [
+        {
+          "name": "Intermediate Burn Circuit",
+          "details": [
+            { "exerciseName": "Squat Reach Jumps", "typologyName": "3x12" },
+            { "exerciseName": "Power Skip", "typologyName": "3x12" },
+            { "exerciseName": "Military Plank", "typologyName": "3x30\"" },
+            { "exerciseName": "Rocket Launchers", "typologyName": "3x12" },
+            { "exerciseName": "Bicycle Crunch", "typologyName": "3x12" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "HIIT",
+      "difficulty": "Advanced",
+      "name": "Burn Circuit: Level 3",
+      "weeks": 4,
+      "pathToImage": "HIIT_BurnCircuit_Level3",
+      "days": [
+        {
+          "name": "Advanced Burn Circuit",
+          "details": [
+            { "exerciseName": "Burpee Jacks", "typologyName": "3x12" },
+            { "exerciseName": "Running High Knees", "typologyName": "3x30\"" },
+            { "exerciseName": "Jumping Jacks", "typologyName": "3x12" },
+            { "exerciseName": "Bear Crawl", "typologyName": "3x30\"" },
+            { "exerciseName": "Floor Release Push Ups", "typologyName": "3x12" },
+            { "exerciseName": "Modified Hollow Holds", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
+    }
+
+
+  ]
