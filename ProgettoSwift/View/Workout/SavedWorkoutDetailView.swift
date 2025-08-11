@@ -42,7 +42,7 @@ struct SavedWorkoutDetailView: View {
 
                             // MARK: Info
                             HStack {
-                                Text("\(workout.days) Days")
+                                Text("\((workout.workoutDay?.count) ?? 0) Days")
                                     .font(.headline)
                                     .foregroundColor(.white)
                                 
@@ -141,10 +141,15 @@ struct SavedWorkoutDetailView: View {
                 }
                 Button("Share") {
                     if let selectedDay = selectedDay {
-                        shareDay(selectedDay) // ✅ chiamiamo la funzione
+                        shareDay(selectedDay)
                     }
                 }
-                Button("Delete", role: .destructive) { /* Da implementare */ }
+                Button("Delete", role: .destructive) {
+                    /* Da implementare */
+                    if let selectedDay = selectedDay {
+                        deleteDay(selectedDay)
+                    }
+                }
                 Button("Cancel", role: .cancel) {}
             }
             .onAppear {
@@ -185,6 +190,16 @@ struct SavedWorkoutDetailView: View {
             print("✅ File pronto per condivisione: \(url.path)")
             shareURL = url
         }
+    }
+    
+    private func deleteDay(_ day: WorkoutDay) {
+        
+        let workoutDayManger: WorkoutDayManager = WorkoutDayManager(context: context)
+        
+        workoutDayManger.deleteWorkoutDay(day)
+        
+        print("Day correctly deleted.")
+        
     }
 }
 
