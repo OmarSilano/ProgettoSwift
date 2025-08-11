@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreData
 
 struct SettingsView: View {
     
@@ -37,19 +38,9 @@ struct SettingsView: View {
                     }
                     
                     // Banned Exercises List
-                     /*NavigationLink(destination: BannedExercisesView(
+                    NavigationLink(destination: BannedExercisesView(
                         
-                        onSelect: { previews in
-                            let manager = ExerciseManager(context: context)
-
-                            for preview in previews {
-                                if let exercise = manager.fetchExercise(byID: preview.id), exercise.isBanned {
-                                    manager.toggleBan(for: exercise)
-                                }
-                            }
-                        }
-
-                        
+                        onSelect: { ids in unbanExercises(with: ids) }
                         
                     )) {
                         HStack {
@@ -65,7 +56,7 @@ struct SettingsView: View {
                         .frame(height: 80)
                         .background(Color.black)
                         .cornerRadius(10)
-                    }*/
+                    }
                     
                     //ChatBotView
                     NavigationLink(destination: ChatBotView()) {
@@ -92,6 +83,21 @@ struct SettingsView: View {
             .background(Color("PrimaryColor").ignoresSafeArea())
         }
     }
+    
+    // MARK: - Actions
+    private func unbanExercises(with ids: [NSManagedObjectID]) {
+        
+        let manager = ExerciseManager(context: context)
+        for id in ids {
+            if let exercise = try? context.existingObject(with: id) as? Exercise,
+               exercise.isBanned {
+                manager.toggleBan(for: exercise) // diventa "non bannato"
+            }
+        }
+        
+    }
+    
+    
+    
+    
 }
-
-
