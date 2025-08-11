@@ -141,12 +141,17 @@ struct ExercisePickerView: View {
                         .mapValues { $0.filter { !$0.isBanned } }
                     selectedIDs = []
                 }
+                
             }
-            
-            // Pulsante overlay in basso
+        }
+        .sheet(item: $selectedExerciseForDetail) { exercise in
+            ExerciseDetailView(objectID: exercise.objectID)
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
             if !selectedIDs.isEmpty {
                 VStack(spacing: 0) {
                     Divider().background(Color.gray.opacity(0.5))
+
                     Button(action: {
                         onSelect(Array(selectedIDs))
                         dismiss()
@@ -161,14 +166,11 @@ struct ExercisePickerView: View {
                             .padding(.horizontal)
                     }
                     .padding(.bottom, 10)
-                    .background(Color("PrimaryColor").ignoresSafeArea(edges: .bottom))
                 }
-                .transition(.move(edge: .bottom))
+                .background(Color("PrimaryColor").ignoresSafeArea())
             }
         }
-        .sheet(item: $selectedExerciseForDetail) { exercise in
-            ExerciseDetailView(objectID: exercise.objectID)
-        }
+        .animation(.easeInOut, value: selectedIDs.isEmpty)
     }
     
     // MARK: - Helpers
