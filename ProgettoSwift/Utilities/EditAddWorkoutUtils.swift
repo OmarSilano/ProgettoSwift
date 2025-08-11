@@ -7,23 +7,23 @@ struct WorkoutDayRow_CoreData: View {
     @Binding var expandedDayID: NSManagedObjectID?
     var onDelete: () -> Void
     var onEdit: () -> Void
-
+    
     private var musclesSubtitle: String {
         // prendi i muscoli dagli esercizi dei dettagli già collegati al day
         let groups = day.sortedDetails
             .compactMap { $0.exercise?.muscle }
             .compactMap { MuscleGroup(rawValue: $0) }
-
+        
         var seen = Set<MuscleGroup>()
         let orderedUnique = groups.filter { seen.insert($0).inserted }
-
+        
         let names = orderedUnique.map { $0.rawValue }
         guard !names.isEmpty else { return "" }
         let head = names.prefix(3).joined(separator: " • ")
         
         return names.count > 3 ? head + " ..." : head
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -35,12 +35,12 @@ struct WorkoutDayRow_CoreData: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .contentShape(Circle())
-
+                
                 VStack(spacing: 2) {
                     Text(day.name ?? "Unnamed Day")
                         .font(.headline)
                         .foregroundColor(.white)
-
+                    
                     if !musclesSubtitle.isEmpty {
                         Text(musclesSubtitle)   // <— ora arriva dai dettagli
                             .font(.subheadline)
@@ -50,7 +50,7 @@ struct WorkoutDayRow_CoreData: View {
                 .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture { withAnimation { toggleExpansion() } }
-
+                
                 Button(action: onEdit) {
                     Image(systemName: "pencil")
                         .resizable()
@@ -65,7 +65,7 @@ struct WorkoutDayRow_CoreData: View {
             .background(Color("ThirdColor"))
             .contentShape(Rectangle())
             .onTapGesture { withAnimation { toggleExpansion() } }
-
+            
             if expandedDayID == day.objectID {
                 if day.sortedDetails.isEmpty {
                     Text("No exercises yet...")
@@ -84,12 +84,12 @@ struct WorkoutDayRow_CoreData: View {
                     .transition(.opacity)
                 }
             }
-
+            
             Divider().background(Color("ThirdColor").opacity(0.3))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-
+    
     private func toggleExpansion() {
         expandedDayID = (expandedDayID == day.objectID) ? nil : day.objectID
     }
@@ -99,7 +99,7 @@ struct WorkoutDayRow_CoreData: View {
 // MARK: - Row Esercizio
 struct WorkoutExercisePreviewRow_CoreData: View {
     @ObservedObject var detail: WorkoutDayDetail
-
+    
     var body: some View {
         HStack(spacing: 12) {
             // Placeholder immagine
@@ -128,18 +128,18 @@ struct WorkoutExercisePreviewRow_CoreData: View {
                             .foregroundColor(.gray)
                     )
             }
-
-
+            
+            
             VStack(alignment: .leading, spacing: 4) {
                 Text(detail.exercise?.name ?? "Exercise")
                     .foregroundColor(.white)
                     .font(.subheadline)
-
+                
                 Text(detail.typology?.name ?? "Method")
                     .foregroundColor(Color("SubtitleColor"))
                     .font(.caption)
             }
-
+            
             Spacer()
         }
         .padding(.vertical, 4)
