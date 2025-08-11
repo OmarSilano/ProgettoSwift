@@ -61,7 +61,10 @@ struct WorkoutDayRow_CoreData: View {
                 .contentShape(Circle())
             }
             .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color("ThirdColor"))
+            .contentShape(Rectangle())
+            .onTapGesture { withAnimation { toggleExpansion() } }
 
             if expandedDayID == day.objectID {
                 if day.sortedDetails.isEmpty {
@@ -84,7 +87,7 @@ struct WorkoutDayRow_CoreData: View {
 
             Divider().background(Color("ThirdColor").opacity(0.3))
         }
-        .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func toggleExpansion() {

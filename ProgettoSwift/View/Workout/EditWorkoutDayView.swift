@@ -86,7 +86,6 @@ struct EditWorkoutDayView: View {
                     ForEach(details, id: \.objectID) { d in
                         detailRow(detail: d)
                     }
-                    .onDelete(perform: deleteDetails)
                     .onMove(perform: moveDetails)
                 }
                 .environment(\.editMode, .constant(.active))
@@ -100,7 +99,6 @@ struct EditWorkoutDayView: View {
     private func detailRow(detail d: WorkoutDayDetail) -> some View {
         HStack(spacing: 12) {
             Button {
-                // delete singolo (stesso effetto dello swipe)
                 if let idx = details.firstIndex(where: { $0.objectID == d.objectID }) {
                     deleteDetails(IndexSet(integer: idx))
                 }
@@ -137,8 +135,6 @@ struct EditWorkoutDayView: View {
                     }
                 }
             }
-            
-            Image(systemName: "line.3.horizontal").foregroundColor(.gray)
         }
         .padding(.vertical, 10)
         .listRowBackground(Color("ThirdColor"))

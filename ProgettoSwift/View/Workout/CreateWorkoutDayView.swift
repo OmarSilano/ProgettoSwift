@@ -94,51 +94,8 @@ struct CreateWorkoutDayView: View {
             } else {
                 List {
                     ForEach(details, id: \.objectID) { d in
-                        HStack(spacing: 12) {
-                            Button {
-                                if let idx = details.firstIndex(where: { $0.objectID == d.objectID }) {
-                                    deleteDetails(IndexSet(integer: idx))
-                                }
-                            } label: {
-                                Image(systemName: "minus.circle").resizable().frame(width: 26, height: 26).foregroundColor(.white)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .contentShape(Circle())
-                            
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack {
-                                    Text(d.exercise?.name ?? "Exercise")
-                                        .foregroundColor(.white)
-                                        .font(.headline)
-                                    
-                                    Spacer()
-                                    
-                                    Menu {
-                                        ForEach(typologies, id: \.objectID) { t in
-                                            Button(t.name ?? "Typology") {
-                                                d.typology = t
-                                            }
-                                        }
-                                    } label: {
-                                        HStack(spacing: 4) {
-                                            Text(d.typology?.name ?? "Method")
-                                                .foregroundColor(Color("SubtitleColor"))
-                                                .font(.subheadline)
-                                            Image(systemName: "chevron.down")
-                                                .resizable().frame(width: 10, height: 6)
-                                                .foregroundColor(Color("SubtitleColor"))
-                                                .padding(.top, 2)
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            Image(systemName: "line.3.horizontal").foregroundColor(.gray)
-                        }
-                        .padding(.vertical, 10)
-                        .listRowBackground(Color("ThirdColor"))
+                        detailRow(detail: d)
                     }
-                    .onDelete(perform: deleteDetails)
                     .onMove(perform: moveDetails)
                 }
                 .environment(\.editMode, .constant(.active))
@@ -147,6 +104,50 @@ struct CreateWorkoutDayView: View {
                 .background(Color("PrimaryColor"))
             }
         }
+    }
+    
+    private func detailRow(detail d: WorkoutDayDetail) -> some View {
+        HStack(spacing: 12) {
+            Button {
+                if let idx = details.firstIndex(where: { $0.objectID == d.objectID }) {
+                    deleteDetails(IndexSet(integer: idx))
+                }
+            } label: {
+                Image(systemName: "minus.circle").resizable().frame(width: 26, height: 26).foregroundColor(.white)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Circle())
+            
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text(d.exercise?.name ?? "Exercise")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    Menu {
+                        ForEach(typologies, id: \.objectID) { t in
+                            Button(t.name ?? "Typology") {
+                                d.typology = t
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text(d.typology?.name ?? "Method")
+                                .foregroundColor(Color("SubtitleColor"))
+                                .font(.subheadline)
+                            Image(systemName: "chevron.down")
+                                .resizable().frame(width: 10, height: 6)
+                                .foregroundColor(Color("SubtitleColor"))
+                                .padding(.top, 2)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 10)
+        .listRowBackground(Color("ThirdColor"))
     }
     
     private var addExerciseButton: some View {
