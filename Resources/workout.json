@@ -46,7 +46,7 @@
       {
         "name": "Day 1 - Back",
         "details": [
-          { "exerciseName": "Pull up", "typologyName": "4x10" },
+          { "exerciseName": "Pull Up", "typologyName": "4x10" },
           { "exerciseName": "Barbell Deadlift", "typologyName": "8x4x4" },
           { "exerciseName": "Barbell Bent Over Row", "typologyName": "4x12"},
           { "exerciseName": "Seated Cable Row (Triangle Grip)", "typologyName": "4x12"},
@@ -461,5 +461,65 @@
           ]
         }
       ]
+    },
+    {
+      "category": "HIIT",
+      "difficulty": "Beginner",
+      "name": "Burn Circuit: Level 1",
+      "weeks": 4,
+      "pathToImage": "HIIT_BurnCircuit",
+      "days": [
+        {
+          "name": "Beginner Burn Circuit",
+          "details": [
+            { "exerciseName": "Drop Squats", "typologyName": "3x12" },
+            { "exerciseName": "Low Skater", "typologyName": "3x12" },
+            { "exerciseName": "Push-Ups", "typologyName": "3x12" },
+            { "exerciseName": "Running Mountain Climbers", "typologyName": "3x30\"" },
+            { "exerciseName": "Flutter Kicks", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "HIIT",
+      "difficulty": "Intermediate",
+      "name": "Burn Circuit: Level 2",
+      "weeks": 4,
+      "pathToImage": "HIIT_BurnCircuit_Level2",
+      "days": [
+        {
+          "name": "Intermediate Burn Circuit",
+          "details": [
+            { "exerciseName": "Squat Reach Jumps", "typologyName": "3x12" },
+            { "exerciseName": "Power Skip", "typologyName": "3x12" },
+            { "exerciseName": "Military Plank", "typologyName": "3x30\"" },
+            { "exerciseName": "Rocket Launchers", "typologyName": "3x12" },
+            { "exerciseName": "Bicycle Crunch", "typologyName": "3x12" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "HIIT",
+      "difficulty": "Advanced",
+      "name": "Burn Circuit: Level 3",
+      "weeks": 4,
+      "pathToImage": "HIIT_BurnCircuit_Level3",
+      "days": [
+        {
+          "name": "Advanced Burn Circuit",
+          "details": [
+            { "exerciseName": "Burpee Jacks", "typologyName": "3x12" },
+            { "exerciseName": "Running High Knees", "typologyName": "3x30\"" },
+            { "exerciseName": "Jumping Jacks", "typologyName": "3x12" },
+            { "exerciseName": "Bear Crawl", "typologyName": "3x30\"" },
+            { "exerciseName": "Floor Release Push Ups", "typologyName": "3x12" },
+            { "exerciseName": "Modified Hollow Holds", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
     }
+
+
   ]

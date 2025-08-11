@@ -525,7 +525,7 @@
   {
     "name": "Cable Flys",
     "muscle": "Chest",
-    "method": "Fly",
+    "method": "Close",
     "difficulty": "Intermediate",
     "instructions": "1. Set two ends of a cable machine to a high height and attach a handle to each end.\n\n2. Stand upright between the two cables and grip the handles with your palms facing forwards.\n\n3. Step both feet forwards and lean your body forwards slightly to release the weight from the rack. The cables should be pulling your arms back, stretching your chest. First Position.\n\n4. Maintaining a slight bend in your elbows and contracting your chest, bring the two handles out in front of you in a semi-circle motion.\n\n5. Find Second Position where the handles touch in the middle.\n\n6. Tip: Think about bringing your elbows out together in front of you – rather than your hands – to get a better contraction on your chest.\n\n7. Hold Second Position and squeeze your chest muscles for a second.\n\n8. Slowly guide the handles back into First Position.\n\n9. Finish your reps.",
     "imageName": null,
@@ -1079,7 +1079,143 @@
         "instructions": "1. Lie on back, hands by sides, legs straight a few inches off floor. First Position. 2. Alternate small, quick up-down kicks while keeping low back pressed down. Second Position. 3. Continue for time without letting heels touch. 4. Do your time.",
         "imageName": null,
         "videoName": null
-      }
+      },
+      {
+          "name": "Drop Squats",
+          "muscle": "Legs",
+          "method": "Vertical Push",
+          "difficulty": "Beginner",
+          "instructions": "1. Stand upright with feet shoulder-width apart. First Position.\n\n2. Jump feet apart while quickly dropping into a squat position, keeping chest up and core braced. Second Position.\n\n3. Push through heels to jump back to First Position.\n\n4. Repeat for the desired number of reps.",
+          "imageName": null,
+          "videoName": null
+        },
+        {
+          "name": "Low Skater",
+          "muscle": "Legs",
+          "method": "Horizontal Push",
+          "difficulty": "Beginner",
+          "instructions": "1. Stand with feet hip-width apart, knees slightly bent, and torso leaning forward. First Position.\n\n2. Jump laterally to one side, landing on one foot while swinging the opposite leg behind you. Keep the back leg off the ground for balance. Second Position.\n\n3. Immediately jump to the other side, switching legs.\n\n4. Continue alternating in a smooth skating motion for the desired reps or time.",
+          "imageName": null,
+          "videoName": null
+        },
+        {
+          "name": "Push-Ups",
+          "muscle": "Chest",
+          "method": "Push",
+          "difficulty": "Beginner",
+          "instructions": "1. Start in a high plank position with hands slightly wider than shoulder-width and body in a straight line from head to heels. First Position.\n\n2. Lower your chest toward the floor by bending your elbows, keeping them at about 45 degrees from your body. Second Position.\n\n3. Press through your palms to return to First Position.\n\n4. Repeat for the desired number of reps.",
+          "imageName": null,
+          "videoName": null
+        },
+          {
+            "name": "Running Mountain Climbers",
+            "muscle": "Abs",
+            "method": "Full Pack",
+            "difficulty": "Intermediate",
+            "instructions": "1. Start in a high plank position with shoulders stacked over wrists and body in a straight line. First Position.\n\n2. Drive one knee toward your chest. Second Position.\n\n3. Quickly switch legs in a running motion while keeping hips low and core braced.\n\n4. Continue alternating for the desired time or reps.",
+            "imageName": null,
+            "videoName": null
+          },
+          {
+            "name": "Burpees",
+            "muscle": "Abs",
+            "method": "Full Pack",
+            "difficulty": "Intermediate",
+            "instructions": "1. Stand upright with feet shoulder-width apart. First Position.\n\n2. Squat down and place your hands on the floor. Second Position.\n\n3. Jump feet back into a high plank position.\n\n4. Perform a push-up (optional for beginners).\n\n5. Jump feet back toward hands.\n\n6. Explosively jump upward, reaching arms overhead.",
+            "imageName": null,
+            "videoName": null
+          },
+            {
+              "name": "Burpee Jacks",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Intermediate",
+              "instructions": "1. Stand upright with feet shoulder-width apart and arms by your sides. First Position.\n\n2. Squat down, place hands on the floor and jump feet back into a high plank. Second Position.\n\n3. In plank, jump feet out wide and back in like a jumping jack while keeping hips level. Third Position.\n\n4. Jump feet forward to hands, then explode up into a jump, clapping hands overhead like a jumping jack. Fourth Position.\n\n5. Land softly and return to First Position.\n\n6. Repeat for the desired reps or time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Running High Knees",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Beginner",
+              "instructions": "1. Stand tall with feet hip-width and arms by your sides. First Position.\n\n2. Run in place by driving one knee up to hip height while pumping opposite arm. Second Position.\n\n3. Switch legs quickly, keeping chest up and core braced. Third Position.\n\n4. Maintain a quick rhythm on the balls of your feet without leaning back.\n\n5. Do your time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Jumping Jacks",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Beginner",
+              "instructions": "1. Stand upright with feet together and arms by your sides. First Position.\n\n2. Jump feet out wider than shoulders while raising arms overhead. Second Position.\n\n3. Jump feet back together while lowering arms to your sides to return to First Position.\n\n4. Keep core engaged and land softly on mid-foot.\n\n5. Do your time or finish your reps.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Bear Crawl",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Intermediate",
+              "instructions": "1. Start on all fours with hands under shoulders and knees under hips, toes tucked. Lift knees an inch off the floor keeping back flat. First Position.\n\n2. Move opposite hand and foot forward a small step while keeping hips low and core braced. Second Position.\n\n3. Alternate sides in a controlled crawl, keeping knees close to the ground and shoulders stable.\n\n4. Crawl forward for distance or time; reverse to return if needed.\n\n5. Do your time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Floor Release Push Ups",
+              "muscle": "Chest",
+              "method": "Push",
+              "difficulty": "Beginner",
+              "instructions": "1. Lie prone on the floor with hands under shoulders, legs straight and body relaxed. First Position.\n\n2. Lift hands briefly off the floor to fully release tension. Second Position.\n\n3. Replace hands, brace core and glutes, then press up in one piece to a straight-arm plank. Third Position.\n\n4. Lower chest back to the floor under control and repeat the hand release.\n\n5. Finish your reps.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+              "name": "Modified Hollow Holds",
+              "muscle": "Abs",
+              "method": "Full Pack",
+              "difficulty": "Beginner",
+              "instructions": "1. Lie on your back with knees bent at 90° and arms by your sides. Press low back into the floor. First Position.\n\n2. Lift head, shoulders and feet a few inches while keeping shins parallel and ribs down. Second Position.\n\n3. Hold the position breathing steadily without losing lumbar contact.\n\n4. To regress, keep one heel lightly touching; to progress, extend arms forward.\n\n5. Do your time.",
+              "imageName": null,
+              "videoName": null
+            },
+            {
+                    "name": "Squat Reach Jumps",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Intermediate",
+                    "instructions": "1. Stand with feet shoulder-width apart.\n\n2. Lower into a squat position, keeping your chest up and core engaged.\n\n3. Explosively jump upward while reaching your arms overhead.\n\n4. Land softly and immediately descend back into the squat position.\n\n5. Repeat for the desired number of repetitions.",
+                    "imageName": null,
+                    "videoName": null
+                },
+                {
+                    "name": "Power Skip",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Beginner",
+                    "instructions": "1. Stand tall with feet hip-width apart.\n\n2. Drive your right knee upward explosively while pushing off the left foot and swinging your arms to aid momentum.\n\n3. Land softly and immediately drive the opposite knee up into the next skip.\n\n4. Continue alternating sides in a rhythmic motion.",
+                    "imageName": null,
+                    "videoName": null
+                },
+                {
+                    "name": "Military Plank",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Beginner",
+                    "instructions": "1. Start in a forearm plank position with elbows directly under shoulders and body in a straight line.\n\n2. Push up onto your right hand, then your left hand, transitioning into a high plank position.\n\n3. Lower back down to your right forearm, then your left forearm.\n\n4. Continue alternating the lead arm while keeping your hips stable.",
+                    "imageName": null,
+                    "videoName": null
+                },
+                {
+                    "name": "Rocket Launchers",
+                    "muscle": "Abs",
+                    "method": "Full Pack",
+                    "difficulty": "Intermediate",
+                    "instructions": "1. Start in a low lunge position with your back knee just above the ground.\n\n2. Explosively drive upward, switching legs mid-air.\n\n3. Land softly into a lunge with the opposite leg forward.\n\n4. Continue alternating legs in a fast, explosive motion.",
+                    "imageName": null,
+                    "videoName": null
+                }
+
 
 ]
 
