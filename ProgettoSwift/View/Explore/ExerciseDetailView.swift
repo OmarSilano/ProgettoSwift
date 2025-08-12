@@ -131,16 +131,20 @@ struct ExerciseVideoView: View {
             } else {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(height: 200)
+                    .frame(height: 250)
                     .overlay(
-                        Image(systemName: "video.slash")
-                            .font(.system(size: 30))
+                        Text("Video not yet available.")
                             .foregroundColor(.gray)
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
+                            .padding()
                     )
                     .onAppear {
                         print("❌ Video non trovato: \(pathToVideo ?? "nil")")
                     }
             }
+
+
         }
     }
 }
