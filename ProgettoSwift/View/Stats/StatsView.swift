@@ -1,9 +1,3 @@
-//
-//  StatsView.swift
-//  ProgettoSwift
-//
-//  Created by Studente on 04/07/25.
-//
 import SwiftUI
 
 struct StatsView: View {

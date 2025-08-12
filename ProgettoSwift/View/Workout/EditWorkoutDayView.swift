@@ -15,7 +15,7 @@ struct EditWorkoutDayView: View {
     @State private var isShowingExercisePicker = false
     @State private var typologies: [Typology] = []
     @State private var didHandleClose = false
-    
+    @State private var refreshTrigger = false
 
     
     // Manager
@@ -88,6 +88,7 @@ struct EditWorkoutDayView: View {
                     }
                     .onMove(perform: moveDetails)
                 }
+                .id(refreshTrigger)
                 .environment(\.editMode, .constant(.active))
                 .listStyle(PlainListStyle())
                 .scrollContentBackground(.hidden)
@@ -120,6 +121,7 @@ struct EditWorkoutDayView: View {
                         ForEach(typologies, id: \.objectID) { t in
                             Button(t.name ?? "Typology") {
                                 d.typology = t
+                                refreshTrigger.toggle()
                             }
                         }
                     } label: {

@@ -53,6 +53,11 @@ struct AddWorkoutView: View {
     @State private var pathToImage: String? = nil
     @State private var showPermissionAlert = false
     @State private var isPresentingNewDayEditor = false
+    @State private var refreshTrigger = false
+
+    private let maxDays = 7
+    @State private var showMaxDaysAlert = false
+    private var canAddDay: Bool { fetchedDays.count < maxDays }
     
     // Fetch dei Day
     @FetchRequest private var fetchedDays: FetchedResults<WorkoutDay>
@@ -196,6 +201,7 @@ struct AddWorkoutView: View {
                                 expandedDayID: $expandedDayID,
                                 onDelete: {
                                     childContext.delete(day) // elimina dal child
+                                    refreshTrigger.toggle()
                                 },
                                 onEdit: {
                                     editingDay = day
@@ -203,10 +209,17 @@ struct AddWorkoutView: View {
                             )
                         }
                     }
+                    .id(refreshTrigger)
                     .padding(.horizontal)
                 }
                 
                 Button {
+                    guard canAddDay else {
+                        showMaxDaysAlert = true
+                        UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+                        return
+                    }
+                    
                     ensurePermanentID(workoutDraft, in: childContext)
                     isPresentingNewDayEditor = true
                 } label: {
@@ -238,6 +251,7 @@ struct AddWorkoutView: View {
                 day: day,
                 onClose: {
                     editingDay = nil
+                    refreshTrigger.toggle()
                 }
             )
             .environment(\.managedObjectContext, childContext)
@@ -246,9 +260,18 @@ struct AddWorkoutView: View {
         
         // CREATE Day (eredita il child dall’ambiente)
         .sheet(isPresented: $isPresentingNewDayEditor) {
-            CreateWorkoutDayView(workout: workoutDraft, onClose: {
-                isPresentingNewDayEditor = false
-            })
+            CreateWorkoutDayView(
+                workout: workoutDraft,
+                onClose: {
+                    isPresentingNewDayEditor = false
+                    refreshTrigger.toggle()
+                }
+            )
+        }
+        .alert("Limit reached", isPresented: $showMaxDaysAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("You can create up to 7 training days per workout.")
         }
         
         .navigationBarBackButtonHidden(true)

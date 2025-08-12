@@ -10,7 +10,10 @@ struct CreateWorkoutDayView: View {
     var presetName: String? = nil
     var onClose: () -> Void = {}
     
-    private var ctx: NSManagedObjectContext { workout.managedObjectContext ?? envContext }
+    @State private var lockedCtx: NSManagedObjectContext? = nil
+    private var ctx: NSManagedObjectContext {
+        lockedCtx ?? workout.managedObjectContext ?? envContext
+    }
     
     // UI state
     @State private var dayName: String = ""
@@ -19,6 +22,8 @@ struct CreateWorkoutDayView: View {
     @State private var isShowingExercisePicker = false
     @State private var typologies: [Typology] = []
     @State private var didHandleClose = false
+    @State private var refreshTrigger = false
+
     
     
     private var dayMgr: WorkoutDayManager { WorkoutDayManager(context: ctx) }
@@ -41,6 +46,10 @@ struct CreateWorkoutDayView: View {
             .background(Color("PrimaryColor").ignoresSafeArea())
         }
         .onAppear {
+            if lockedCtx == nil {
+                lockedCtx = workout.managedObjectContext ?? envContext
+            }   
+            
             let suggested = presetName ?? "Day \(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)"
             
             let newDay = WorkoutDay(context: ctx)
@@ -98,6 +107,7 @@ struct CreateWorkoutDayView: View {
                     }
                     .onMove(perform: moveDetails)
                 }
+                .id(refreshTrigger)
                 .environment(\.editMode, .constant(.active))
                 .listStyle(PlainListStyle())
                 .scrollContentBackground(.hidden)
@@ -130,6 +140,7 @@ struct CreateWorkoutDayView: View {
                         ForEach(typologies, id: \.objectID) { t in
                             Button(t.name ?? "Typology") {
                                 d.typology = t
+                                refreshTrigger.toggle()
                             }
                         }
                     } label: {

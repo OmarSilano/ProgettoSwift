@@ -259,10 +259,10 @@ struct WorkoutDayRowViewWithActionSheet: View {
             if !result.contains(group) {
                 result.append(group)
             }
-        }.prefix(2)
+        }.prefix(3)
         
         var text = uniqueGroups.joined(separator: " • ")
-        if Set(allGroups).count > 2 { text += " ..." }
+        if Set(allGroups).count > 3 { text += " ..." }
         
         return text
     }
