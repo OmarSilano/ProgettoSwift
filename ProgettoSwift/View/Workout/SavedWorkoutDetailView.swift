@@ -13,7 +13,9 @@ struct SavedWorkoutDetailView: View {
     @State private var shareURL: URL?
     
     @Environment(\.dismiss) private var dismiss
-    @State private var navigateToEdit = false
+    @State private var navigateToEditWorkout = false
+    @State private var navigateToEditDay = false
+    @State private var selectedDayForEditing: WorkoutDay? = nil
     
     init(workoutID: NSManagedObjectID) {
         self.workoutID = workoutID
@@ -75,7 +77,7 @@ struct SavedWorkoutDetailView: View {
                         .padding(.top)
                     }
                     
-                    // ✅ HEADER SEMPRE IN PRIMO PIANO
+                    // HEADER
                     HStack {
                         Button {
                             dismiss()
@@ -98,26 +100,35 @@ struct SavedWorkoutDetailView: View {
                         Spacer()
                         
                         Button {
-                            navigateToEdit = true
+                            navigateToEditWorkout = true
                         } label: {
                             Image(systemName: "pencil")
                                 .resizable()
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(Color("FourthColor"))
                         }
-                        .navigationDestination(isPresented: $navigateToEdit) {
-                            EditWorkoutView(workout: workout)
-                        }
                     }
                     .padding(.horizontal)
                     .padding(.top, 20)
                     .background(Color.black.opacity(0.001))
                 }
-            .sheet(item: $shareURL) { url in
-                ShareSheet(items: [url]) {
-                    shareURL = nil
+                .navigationDestination(isPresented: $navigateToEditWorkout) {
+                    EditWorkoutView(workout: workout)
                 }
-            }
+                .navigationDestination(isPresented: $navigateToEditDay) {
+                    if let dayToEdit = selectedDayForEditing {
+                        EditWorkoutDayView(day: dayToEdit)
+                    } else {
+                        EmptyView()
+                    }
+                }
+
+                .sheet(item: $shareURL) { url in
+                    ShareSheet(items: [url]) {
+                        shareURL = nil
+                    }
+                }
+
             .background(Color("PrimaryColor").ignoresSafeArea())
             .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
                 if let selectedDay = selectedDay, let id = selectedDay.id {
@@ -137,8 +148,12 @@ struct SavedWorkoutDetailView: View {
                 }
                 
                 Button("Edit") {
-                    navigateToEdit = true
+                    if let day = selectedDay {
+                        selectedDayForEditing = day
+                        navigateToEditDay = true
+                    }
                 }
+
                 Button("Share") {
                     if let selectedDay = selectedDay {
                         shareDay(selectedDay)
@@ -251,6 +266,7 @@ struct WorkoutDayRowViewWithActionSheet: View {
                 ForEach(details, id: \.id) { detail in
                     WorkoutExerciseDetailView(detail: detail, isCompletedToday: isCompletedToday)
                 }
+                
             }
             
             Divider().background(Color.gray.opacity(0.3))
@@ -258,6 +274,7 @@ struct WorkoutDayRowViewWithActionSheet: View {
         .background(isCompletedToday ? Color("SecondaryColor") : Color.clear)
         .cornerRadius(10)
         .padding(.horizontal)
+        
     }
     
     private func toggleDay(_ day: WorkoutDay) {
