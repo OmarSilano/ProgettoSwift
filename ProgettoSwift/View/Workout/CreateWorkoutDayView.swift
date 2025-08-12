@@ -48,7 +48,8 @@ struct CreateWorkoutDayView: View {
         .onAppear {
             if lockedCtx == nil {
                 lockedCtx = workout.managedObjectContext ?? envContext
-            }   
+                print("🟢 lockedCtx =", ctxID(lockedCtx))
+            }
             
             let suggested = presetName ?? "Day \(((workout.workoutDay as? Set<WorkoutDay>)?.count ?? 0) + 1)"
             
@@ -59,6 +60,7 @@ struct CreateWorkoutDayView: View {
             
             day = newDay
             dayName = suggested
+            print("🆕 Created day =", objDesc(newDay), "in", ctxID(newDay.managedObjectContext))
             typologies = typologyMgr.fetchAllTypologies()
         }
         .sheet(isPresented: $isShowingExercisePicker) {
@@ -209,36 +211,118 @@ struct CreateWorkoutDayView: View {
         for (i, d) in details.enumerated() { d.orderIndex = Int16(i) }
     }
     
-    private func save() {
-        guard let day else { return }
-        
-        let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
-        day.name = trimmed
-        
-        // 🔒 anti-crash: stesso context
-        guard day.managedObjectContext === workout.managedObjectContext else {
-            print("⚠️ Context mismatch: skip link to avoid crash")
-            return
-        }
-        
-        day.workout = workout
-        day.updateMusclesFromDetails()
-        
-        do {
-            didHandleClose = true
-            try ctx.save()
-            onClose()
-            dismiss()
-        } catch {
-            print("❌ Save new day error:", error)
-        }
-    }
-    
     private func cancel() {
         didHandleClose = true
         ctx.rollback()
         onClose()
         dismiss()
     }
+    
+    
+    
+    private func save() {
+        guard let rawDay = day else { return }
+
+        let trimmed = dayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        rawDay.name = trimmed
+        rawDay.updateMusclesFromDetails()
+
+        // Log pre-link
+        print("💾 SAVE DAY start")
+        print("   ctx =", ctxID(ctx))
+        print("   day =", objDesc(rawDay), "in", ctxID(rawDay.managedObjectContext))
+        print("   workout =", objDesc(workout), "in", ctxID(workout.managedObjectContext))
+
+        do {
+            // Prova a risolvere e linkare nel context target
+            let (resolvedDay, resolvedWorkout) = try linkInSameContext(day: rawDay, workout: workout)
+
+            // Verifica finale: se (ancora) mismatch, non linkare per evitare crash
+            guard resolvedDay.managedObjectContext === resolvedWorkout.managedObjectContext else {
+                print("⚠️ Context mismatch: skip link to avoid crash")
+                return
+            }
+
+            didHandleClose = true
+            try ctx.save()
+            print("✅ SAVE DAY ok in", ctxID(ctx))
+            onClose()
+            dismiss()
+        } catch {
+            print("❌ Save new day error:", error)
+        }
+    }
+
+    
+    // Helpers (con print di debug)
+    private func ensurePermanentIDs(_ objects: [NSManagedObject]) {
+        // gruppa per context e converte solo i temp ID
+        let ctxs = Dictionary(grouping: objects.compactMap { $0 }) { $0.managedObjectContext }
+        for (maybeCtx, objs) in ctxs {
+            guard let c = maybeCtx else { continue }
+            let temps = objs.filter { $0.objectID.isTemporaryID }
+            if !temps.isEmpty {
+                print("🔧 obtainPermanentIDs in \(ctxID(c)) ->", temps.map { objDesc($0) })
+                do { try c.obtainPermanentIDs(for: temps) }
+                catch { print("❌ obtainPermanentIDs failed:", error) }
+            }
+        }
+    }
+
+    
+    private func linkInSameContext(day: WorkoutDay, workout: Workout) throws -> (WorkoutDay, Workout) {
+        let target = ctx // context “bloccato” dallo sheet
+        print("🔗 linkInSameContext target =", ctxID(target))
+        print("   day    =", objDesc(day), "in", ctxID(day.managedObjectContext))
+        print("   workout=", objDesc(workout), "in", ctxID(workout.managedObjectContext))
+
+        // 1) Assicurati che gli ID siano permanenti
+        ensurePermanentIDs([day, workout])
+
+        // 2) (Ri)materializza nel target
+        let dayInTarget: WorkoutDay = {
+            if day.managedObjectContext === target { return day }
+            return (try? target.existingObject(with: day.objectID) as? WorkoutDay) ?? day
+        }()
+
+        let workoutInTarget: Workout = {
+            if workout.managedObjectContext === target { return workout }
+            return (try? target.existingObject(with: workout.objectID) as? Workout) ?? workout
+        }()
+
+        print("   -> resolved day   =", objDesc(dayInTarget), "in", ctxID(dayInTarget.managedObjectContext))
+        print("   -> resolved workout=", objDesc(workoutInTarget), "in", ctxID(workoutInTarget.managedObjectContext))
+
+        // 3) Link
+        if dayInTarget.managedObjectContext !== workoutInTarget.managedObjectContext {
+            // non dovremmo arrivarci, ma logghiamo in chiaro
+            print("⚠️ Context mismatch after resolve:",
+                  ctxID(dayInTarget.managedObjectContext), "vs", ctxID(workoutInTarget.managedObjectContext))
+        } else {
+            dayInTarget.workout = workoutInTarget
+            print("✅ Linked day.workout in", ctxID(dayInTarget.managedObjectContext))
+        }
+
+        return (dayInTarget, workoutInTarget)
+    }
+
+    
+    
+    // MARK: - Debug helpers---------------------------------------------------------------------
+    private func ctxID(_ ctx: NSManagedObjectContext?) -> String {
+        guard let c = ctx else { return "nil" }
+        let ptr = Unmanaged.passUnretained(c).toOpaque()
+        let type = (c.concurrencyType == .mainQueueConcurrencyType) ? "main" :
+                   (c.concurrencyType == .privateQueueConcurrencyType) ? "private" : "confined"
+        return "CTX[\(type) \(ptr)]"
+    }
+
+    private func objDesc(_ obj: NSManagedObject?) -> String {
+        guard let o = obj else { return "nil" }
+        let idStr = o.objectID.isTemporaryID ? "temp" : "perm"
+        return "\(type(of: o))(\(idStr)) id=\(o.objectID.uriRepresentation().absoluteString)"
+    }
+
+    
 }
 
