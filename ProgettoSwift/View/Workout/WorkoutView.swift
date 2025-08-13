@@ -13,6 +13,8 @@ struct WorkoutView: View {
     @State private var workoutToEdit: Workout? = nil
     @State private var shareURL: URL?
     @State private var showInfoSheet = false
+    @State private var workoutForReplicate: Workout? = nil
+
 
     
     @Environment(\.managedObjectContext) private var context
@@ -64,7 +66,9 @@ struct WorkoutView: View {
                                 WorkoutRow(workout: workout)
                             }
                             .contextMenu {
-                                Button("Replicate and Improve") { /* Da fare */ }
+                                Button("Replicate and Improve") {
+                                        workoutForReplicate = workout
+                                }
                                 Button("Edit") {
                                     workoutToEdit = workout
                                 }
@@ -105,6 +109,13 @@ struct WorkoutView: View {
         .sheet(isPresented: $showInfoSheet) {
             WorkoutInfoSheetView()
         }
+        .sheet(item: $workoutForReplicate) { w in
+            ReplicateImproveSheet(workout: w, isPresented: Binding(
+                get: { workoutForReplicate != nil },
+                set: { if !$0 { workoutForReplicate = nil } }
+            ))
+        }
+
 
         
     }
