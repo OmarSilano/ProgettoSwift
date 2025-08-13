@@ -11,7 +11,7 @@ struct ProgettoSwiftApp: App {
         #if DEBUG
         // Esegui reset + preload UNA VOLTA all'avvio
         let coordinator = persistenceController.container.persistentStoreCoordinator
-       resetDatabase(coordinator: coordinator)
+       //resetDatabase(coordinator: coordinator)
 
         let context = persistenceController.container.viewContext
         TypologyManager(context: context).preloadDefaultTypologies()
