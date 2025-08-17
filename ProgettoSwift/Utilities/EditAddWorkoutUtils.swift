@@ -102,13 +102,14 @@ struct WorkoutExercisePreviewRow_CoreData: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            // Placeholder immagine
+            // Immagine
             if let exercise = detail.exercise,
-               let imageName = exercise.pathToImage,
-               !imageName.isEmpty,
-               UIImage(named: imageName) != nil {
-                
-                Image(imageName)
+               let path = exercise.pathToImage, !path.isEmpty,
+               let url = Bundle.main.url(forResource: (path as NSString).deletingPathExtension,
+                                         withExtension: (path as NSString).pathExtension),
+               let uiImage = UIImage(contentsOfFile: url.path) {
+
+                Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 60, height: 60)
