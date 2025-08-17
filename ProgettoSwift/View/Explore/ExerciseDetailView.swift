@@ -8,11 +8,22 @@ struct ExerciseDetailView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) var dismiss
     
-    @State private var exercise: Exercise?
+    @FetchRequest private var fetched: FetchedResults<Exercise>
+    private var exercise: Exercise? { fetched.first }
+
     @State private var player: AVPlayer? = nil
     
     private var exerciseManager: ExerciseManager {
         ExerciseManager(context: context)
+    }
+    
+    init(objectID: NSManagedObjectID) {
+        self.objectID = objectID
+        _fetched = FetchRequest(
+            entity: Exercise.entity(),
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "self == %@", objectID)
+        )
     }
     
     var body: some View {
@@ -81,14 +92,6 @@ struct ExerciseDetailView: View {
                     }
                 }
                 .background(Color("PrimaryColor").ignoresSafeArea())
-            }
-        }
-        .onAppear {
-            // Rifetch sicuro dal context
-            if let fetchedExercise = try? context.existingObject(with: objectID) as? Exercise {
-                self.exercise = fetchedExercise
-            } else {
-                print("⚠️ Exercise non trovato per ID \(objectID)")
             }
         }
     }

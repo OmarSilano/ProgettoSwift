@@ -1,7 +1,7 @@
 import SwiftUI
 import CoreData
 
-struct TrainingMetodologyView: View {
+struct TrainingMethodologyView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) var context
@@ -36,19 +36,29 @@ struct TrainingMetodologyView: View {
                                 Image(systemName: "chevron.left")
                                     .foregroundColor(.white)
                                     .font(.title2)
+                                    .frame(width: 44, height: 44, alignment: .leading) // area di tap comoda
+                                    .contentShape(Rectangle())
                             }
-                            
-                            Spacer()
-                            
-                            Text("TRAINING METODOLOGY")
-                                .font(.titleLarge)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                            Spacer().frame(width: 44)
+
+                            Spacer(minLength: 0)
                         }
+                        .overlay(
+                            Text("TRAINING METHODOLOGY")
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(Color("FourthColor"))
+                                .multilineTextAlignment(.center)     // ✅ linee centrate
+                                .lineLimit(2)                      // ✅ può andare su più righe
+                                .fixedSize(horizontal: false, vertical: true) // evita troncamenti
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.horizontal, 40)            // margine per non “toccare” il back
+                            ,
+                            alignment: .center
+                        )
                         .padding(.top, 20)
                         .padding(.horizontal)
+                        
+                        Spacer()
                         
                         // MARK: - Default Section
                         Text("DEFAULT")
@@ -197,5 +207,5 @@ struct TypologyRow: View {
 }
 
 #Preview {
-    TrainingMetodologyView();
+    TrainingMethodologyView();
 }

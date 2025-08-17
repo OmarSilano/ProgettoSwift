@@ -103,33 +103,35 @@ struct StatsView: View {
                     .sheet(isPresented: $showSheet, onDismiss: {
                         selectedDate = nil
                     }) {
-                        VStack(spacing: 16) {
-                            Text("\(formattedDate(selectedDate))")
-                                .font(.largeTitle)
-                                .bold()
-                                .foregroundColor(Color("FourthColor"))
-                                .padding(.top, 16)
-                            
-                            ScrollView {
-                                LazyVStack(spacing: 4) {
-                                    ForEach(completionsForSelectedDate, id: \.objectID) { completion in
-                                        if let workoutDay = completion.workoutDay {
-                                            let workoutName = workoutDay.workout?.name ?? "Workout"
-                                            let workoutDayName = workoutDay.name ?? "WorkoutDay"
-                                            let formattedName = "\(workoutName) - \(workoutDayName)"
-                                            
-                                            WorkoutDayRowView(
-                                                day: workoutDay,
-                                                expandedDayID: $expandedDayID,
-                                                overrideName: formattedName
-                                            )
+                        NavigationStack {
+                            VStack(spacing: 16) {
+                                Text("\(formattedDate(selectedDate))")
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .foregroundColor(Color("FourthColor"))
+                                    .padding(.top, 16)
+                                
+                                ScrollView {
+                                    LazyVStack(spacing: 4) {
+                                        ForEach(completionsForSelectedDate, id: \.objectID) { completion in
+                                            if let workoutDay = completion.workoutDay {
+                                                let workoutName = workoutDay.workout?.name ?? "Workout"
+                                                let workoutDayName = workoutDay.name ?? "WorkoutDay"
+                                                let formattedName = "\(workoutName) - \(workoutDayName)"
+                                                
+                                                WorkoutDayRowView(
+                                                    day: workoutDay,
+                                                    expandedDayID: $expandedDayID,
+                                                    overrideName: formattedName
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
+                            .presentationDetents([.medium, .large])
+                            .background(Color("PrimaryColor"))
                         }
-                        .presentationDetents([.medium, .large])
-                        .background(Color("PrimaryColor"))
                     }
                     
                     Spacer()

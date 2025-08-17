@@ -21,9 +21,9 @@ struct SettingsView: View {
                 VStack(alignment: .center, spacing: 10) {
                     
                     // Training Metodology
-                    NavigationLink(destination: TrainingMetodologyView()) {
+                    NavigationLink(destination: TrainingMethodologyView()) {
                         HStack {
-                            Text("Training Metodology")
+                            Text("Training Methodology")
                                 .foregroundColor(.white)
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .center)

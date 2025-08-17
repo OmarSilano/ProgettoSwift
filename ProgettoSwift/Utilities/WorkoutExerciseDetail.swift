@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WorkoutExerciseDetailView: View {
-    let detail: WorkoutDayDetail
+    @ObservedObject var detail: WorkoutDayDetail
     let isCompletedToday: Bool?
 
     var body: some View {
