@@ -9,7 +9,7 @@ import CoreData
 
 class WorkoutManager {
     
-    private let context: NSManagedObjectContext
+    let context: NSManagedObjectContext
 
     init(context: NSManagedObjectContext) {
         self.context = context
