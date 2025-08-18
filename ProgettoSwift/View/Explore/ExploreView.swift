@@ -236,7 +236,6 @@ struct ExploreView: View {
                                 }
                             }
                         }
-                        .id(refreshTrigger)
                         .listStyle(.insetGrouped)
                         .scrollContentBackground(.hidden)
                         .background(Color("PrimaryColor").ignoresSafeArea())
