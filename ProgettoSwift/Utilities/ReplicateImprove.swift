@@ -152,7 +152,7 @@ extension WorkoutManager {
             WorkoutDayManager(context: context).updateOrder(for: newDay)
         }
 
-        do { try context.save() } catch { print("❌ Errore salvataggio replicateAndImprove: \(error)") }
+        do { try context.save() } catch { print("Error saving replicateAndImprove: \(error)") }
 
         return newWorkout
     }
