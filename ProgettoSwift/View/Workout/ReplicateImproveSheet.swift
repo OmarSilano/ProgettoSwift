@@ -13,9 +13,9 @@ struct ReplicateImproveSheet: View {
         var id: Int { rawValue }
         var label: String {
             switch self {
-            case .easier: return "Più facile"
-            case .same:   return "Uguale"
-            case .harder: return "Più intenso"
+            case .easier: return "Easier"
+            case .same:   return "Same"
+            case .harder: return "More intense"
             }
         }
     }
@@ -28,7 +28,7 @@ struct ReplicateImproveSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Intensità")) {
+                Section(header: Text("Intensity")) {
                     Picker("Seleziona", selection: $intensity) {
                         ForEach(IntensityChoice.allCases) { choice in
                             Text(choice.label).tag(choice)
@@ -37,14 +37,14 @@ struct ReplicateImproveSheet: View {
                     .pickerStyle(.segmented)
                 }
 
-                Section(header: Text("Tipologia (opzionale)")) {
-                    Picker("Tipologia", selection: Binding(
+                Section(header: Text("Metodology (opzional)")) {
+                    Picker("Metodology", selection: Binding(
                         get: { selectedTypology?.objectID },
                         set: { newID in
                             selectedTypology = allTypologies.first { $0.objectID == newID }
                         }
                     )) {
-                        Text("Mantieni originali").tag(Optional<NSManagedObjectID>.none)
+                        Text("Keep originals").tag(Optional<NSManagedObjectID>.none)
                         ForEach(allTypologies, id: \.objectID) { t in
                             Text(t.name ?? "-").tag(Optional(t.objectID))
                         }
@@ -52,16 +52,16 @@ struct ReplicateImproveSheet: View {
                 }
 
                 Section {
-                    Toggle("Massimizza varietà (evita esercizi già usati)", isOn: $enforceVariety)
+                    Toggle("Maximize variety (avoid exercises you have already used)", isOn: $enforceVariety)
                 }
             }
-            .navigationTitle("Replica e migliora")
+            .navigationTitle("Replicate and improve")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Annulla") { isPresented = false }
+                    Button("Cancel") { isPresented = false }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Crea") {
+                    Button("Create") {
                         let manager = WorkoutManager(context: context)
                         let opts = WorkoutManager.ReplicateImproveOptions(
                             intensityDelta: intensity.rawValue,      // -1 / 0 / +1

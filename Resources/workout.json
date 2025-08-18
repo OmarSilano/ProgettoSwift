@@ -99,7 +99,7 @@
         "details": [
           {
             "exerciseName": "Barbell Back Squat",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Dumbbell Romanian Deadlift",
@@ -132,7 +132,7 @@
         "details": [
           {
             "exerciseName": "Seated Shoulder Press",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Barbell Overhead Press",
@@ -234,7 +234,7 @@
           },
           {
             "exerciseName": "45 Degree Leg Press",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Dumbbell Squat",
@@ -242,7 +242,7 @@
           },
           {
             "exerciseName": "Machine Standing Calf Raise",
-            "typologyName": "Piramidale Inverso"
+            "typologyName": "Reverse Pyramidal"
           },
           {
             "exerciseName": "Monster Walk (Lateral)",
@@ -255,7 +255,7 @@
         "details": [
           {
             "exerciseName": "Barbell Bent Over Row",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Lat Pulldown",
@@ -263,11 +263,11 @@
           },
           {
             "exerciseName": "Cable Face Pull",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Seated Cable Row (Triangle Grip)",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Dumbbell Hammer Curl",
@@ -284,7 +284,7 @@
         "details": [
           {
             "exerciseName": "Barbell Romanian Deadlift",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Barbell Split Squat",
@@ -313,7 +313,7 @@
         "details": [
           {
             "exerciseName": "Barbell Bench Press",
-            "typologyName": "Piramidale"
+            "typologyName": "Pyramidal"
           },
           {
             "exerciseName": "Lower Cable Chest Fly",
@@ -333,7 +333,7 @@
           },
           {
               "exerciseName": "Single Arm Dumbbell Bent Over Row",
-              "typologyName": "Piramidale"
+              "typologyName": "Pyramidal"
           }
         ]
       }
