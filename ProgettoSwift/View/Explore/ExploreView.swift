@@ -144,7 +144,7 @@ struct ExploreView: View {
                         HStack {
                             ZStack(alignment: .leading) {
                                 if searchText.isEmpty {
-                                    Text("Cerca un esercizio...")
+                                    Text("Search exercises...")
                                         .foregroundColor(Color("SubtitleColor"))
                                         .padding(.horizontal, 14)
                                 }
