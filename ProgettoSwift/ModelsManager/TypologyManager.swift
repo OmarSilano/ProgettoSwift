@@ -105,9 +105,9 @@ class TypologyManager {
                 let defaultData: [(String, String)] = [
                     ("4x10", "4 sets of 10 reps."),
                     ("4x12", "4 sets of 12 reps."),
-                    ("8x4x4", "8 sets of 4 reps x 4 exercises."),
-                    ("Pyramidal", "Increasing weights, decreasing reps."),
-                    ("Reverse Pyramidal", "Decreasing weights, increasing reps."),
+                    ("8x4x4", "4 sets. For each set: 8 reps, rest 10s, 4 reps, rest 10s, 4 reps."),
+                    ("Pyramidal", "Pyramid scheme: start with 12 reps and decrease each set (12–10–8–6)."),
+                    ("Reverse Pyramidal", "Reverse pyramid: start with fewer reps (6) and increase each set (6–8–10–12)."),
                     ("3x12", "3 sets of 12 reps."),
                     ("3x30\"", "3 sets of 30 seconds hold."),
                     ("3x20-30\"", "3 sets of 20–30 seconds hold.")
