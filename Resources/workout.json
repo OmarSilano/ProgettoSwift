@@ -2,7 +2,7 @@
   {
     "category": "Hypertrophy",
     "difficulty": "Beginner",
-    "name": "Hypertrophy A",
+    "name": "Hypertrophy Start",
     "weeks": 4,
     "pathToImage": "Hypertrophy",
     "days": [
@@ -470,6 +470,66 @@
             { "exerciseName": "Cable Woodchopper", "typologyName": "3x12" },
             { "exerciseName": "L-Sit Hold (Parallel Bars)", "typologyName": "3x20-30\"" },
             { "exerciseName": "Mountain Climbers", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Functional Fitness",
+      "difficulty": "Advanced",
+      "name": "HIGH-INTENSITY MONDAY",
+      "weeks": 4,
+      "pathToImage": "FunctionalAdvanced",
+      "days": [
+        {
+          "name": "HIGH-INTENSITY MONDAY",
+          "details": [
+            { "exerciseName": "Power Clean & Push Jerk", "typologyName": "8x4x4" },
+            { "exerciseName": "Front Squat", "typologyName": "4x10" },
+            { "exerciseName": "Dumbbell Box Step Overs", "typologyName": "4x10" },
+            { "exerciseName": "Devil's Press", "typologyName": "4x10" },
+            { "exerciseName": "Double Unders", "typologyName": "8x4x4" },
+            { "exerciseName": "Arch Hold", "typologyName": "3x30\"" },
+            { "exerciseName": "Hollow Hold", "typologyName": "3x30\"" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Functional Fitness",
+      "difficulty": "Beginner",
+      "name": "Cardio Superset",
+      "weeks": 4,
+      "pathToImage": "FunctionalBeginner",
+      "days": [
+        {
+          "name": "Cardio Superset",
+          "details": [
+            { "exerciseName": "ERG Rowing", "typologyName": "4x10" },
+            { "exerciseName": "Medicine Ball Slam", "typologyName": "8x4x4" },
+            { "exerciseName": "Burpees To The Floor", "typologyName": "8x4x4" },
+            { "exerciseName": "Box Step Over", "typologyName": "8x4x4" },
+            { "exerciseName": "Barbell Hang Power Clean", "typologyName": "8x4x4" }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Functional Fitness",
+      "difficulty": "Intermediate",
+      "name": "Core Wednesday",
+      "weeks": 4,
+      "pathToImage": "FunctionalIntermediate",
+      "days": [
+        {
+          "name": "Core Wednesday",
+          "details": [
+            { "exerciseName": "Barbell Back Squat", "typologyName": "4x10" },
+            { "exerciseName": "Barbell Good Morning", "typologyName": "4x12" },
+            { "exerciseName": "Kettlebell Hang Clean", "typologyName": "8x4x4" },
+            { "exerciseName": "Double Kettlebell Walking Lunge", "typologyName": "8x4x4" },
+            { "exerciseName": "Butterfly Sit Up", "typologyName": "8x4x4" },
+            { "exerciseName": "Plank Hold", "typologyName": "3x30\"" }
           ]
         }
       ]

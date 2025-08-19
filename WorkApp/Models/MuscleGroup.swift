@@ -7,6 +7,7 @@ enum MuscleGroup: String, CaseIterable, Codable{
     case chest = "Chest"
     case shoulders = "Shoulders"
     case legs = "Legs"
+    case core = "Core"
 }
 
 extension MuscleGroup {
@@ -30,6 +31,9 @@ extension MuscleGroup {
             
         case .legs:
             return [.hPushLegs, .vPushLegs, .calfLegs, .hamstringLegs]
+            
+        case .core:
+            return [.fullBody, .cardio, .hcore]
         }
     }
 }

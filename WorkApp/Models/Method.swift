@@ -29,5 +29,10 @@ enum Method: String, CaseIterable, Codable {
     case vPushLegs = "Vertical Push"
     case calfLegs = "Calf Raise"
     case hamstringLegs = "Hamstring Curl"
+    
+    //core
+    case fullBody = "Full Body"
+    case cardio = "Cardio"
+    case hcore = "Core"
 }
 
