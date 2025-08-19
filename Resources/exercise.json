@@ -8,6 +8,114 @@
       "imageName": null,
       "videoName": null
   },
+ {
+   "name": "Power Clean & Push Jerk",
+   "muscle": "Core",
+   "method": "Full Body",
+   "difficulty": "Advanced",
+   "instructions": "1. Set a loaded barbell on the floor. Stand with feet shoulder-width apart, toes slightly outward, and grip the bar just outside your knees with an overhand grip. Keep your chest up and back straight. First Position.\n\n2. Begin the clean by explosively driving through your legs and extending your hips and knees to lift the bar. Keep the bar close to your body.\n\n3. As the bar reaches mid-thigh, extend forcefully through your hips, shrug your shoulders, and pull yourself under the bar. Rotate your elbows forward and catch the barbell on your shoulders in a quarter squat position. Second Position.\n\n4. Stand tall to complete the power clean.\n\n5. From the front rack position, dip slightly by bending your knees, then explosively drive upward to push the barbell overhead.\n\n6. As the bar travels upward, quickly drop under it, extending your arms to lock out overhead while landing in a split or slight squat stance. Third Position.\n\n7. Recover by bringing your feet back together under control with the barbell locked out overhead.\n\n8. Lower the bar back to the front rack safely, then to the floor if needed.\n\n9. Repeat for desired reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Front Squat",
+   "muscle": "Legs",
+   "method": "Vertical Push",
+   "difficulty": "Intermediate",
+   "instructions": "1. Set a squat rack to shoulder height and load the bar with your chosen weight.\n\n2. Rest the bar across the front of your shoulders, hold your arms out straight in front, then bring your lower arms back to grip the underside of the bar with your fingers. Elbows should point forward. If this grip is difficult, cross your arms over the bar for support.\n\n3. Lift the bar out of the rack and take a few steps back. Plant your feet shoulder-width apart, toes slightly outwards, and head in a neutral position. First Position.\n\n4. Take a deep breath, brace your core, and squat down by sitting your hips back and bending your knees. Keep torso and head upright.\n\n5. Lower until your upper legs are at least parallel to the floor, or deeper if mobility allows (hamstrings near calves). Second Position.\n\n6. Push through your heels, extend your legs, and return to First Position while keeping your chest upright.\n\n7. Tip: Keep pushing your knees out for better stability.\n\n8. Repeat for the desired number of reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Dumbbell Box Step Overs",
+   "muscle": "Legs",
+   "method": "Vertical Push",
+   "difficulty": "Intermediate",
+   "instructions": "1. Stand upright behind a box roughly at knee height, holding a dumbbell in each hand. First Position.\n\n2. Lead with one leg and plant your foot firmly on the box. Drive through the glute and hamstring of the leading leg to bring your back foot up to meet your front foot, standing tall on top of the box. Second Position.\n\n3. Step back down with your leading leg, then follow with the other, returning to First Position.\n\n4. Repeat, alternating the leading leg each rep.\n\n5. Maintain control of the dumbbells throughout and keep your torso upright.\n\n6. Finish your reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Devil's Press",
+   "muscle": "Core",
+   "method": "Full Body",
+   "difficulty": "Advanced",
+   "instructions": "1. Stand with your feet shoulder-width apart and a dumbbell in each hand placed on the floor in front of you. First Position.\n\n2. Hinge at the hips, bend your knees, and place the dumbbells on the ground. Kick your feet back to land in a push-up position.\n\n3. Perform a push-up by lowering your chest to the floor and pressing back up.\n\n4. Jump your feet forward explosively, bringing them outside the dumbbells, and transition into a squat position.\n\n5. From the squat, drive through your legs and hips to stand up explosively, simultaneously swinging the dumbbells between your legs and then overhead in one continuous motion (similar to a kettlebell snatch). Second Position.\n\n6. Lock out your arms overhead with the dumbbells together and your body fully upright.\n\n7. Lower the dumbbells under control back to the starting position.\n\n8. Repeat for the desired number of reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Arch Hold",
+   "muscle": "Core",
+   "method": "Core",
+   "difficulty": "Beginner",
+   "instructions": "1. Lie face down on the floor with your legs extended and arms stretched out overhead. First Position.\n\n2. Engage your glutes, hamstrings, and lower back muscles.\n\n3. Simultaneously lift your arms, chest, and legs off the ground while keeping them straight. Your body should form a gentle arch, with only your hips and lower abdomen in contact with the floor. Second Position.\n\n4. Hold this position, keeping your neck neutral and squeezing your glutes and core to maintain stability.\n\n5. Maintain the hold for the desired duration, then slowly lower back to the floor.\n\n6. Repeat for the prescribed sets and time.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Double Unders",
+   "muscle": "Core",
+   "method": "Cardio",
+   "difficulty": "Intermediate",
+   "instructions": "1. Stand upright holding a jump rope with the handles in each hand at your sides. Keep your feet together and your posture tall. First Position.\n\n2. Begin with small jumps, rotating the rope with your wrists (not your arms).\n\n3. Once in rhythm, jump slightly higher than normal and quickly rotate the rope twice under your feet before you land. Second Position.\n\n4. Keep your core tight, chest up, and wrists relaxed to ensure smooth rope speed.\n\n5. Land softly on the balls of your feet and immediately prepare for the next jump.\n\n6. Continue for the desired number of reps or time, maintaining consistent rhythm and breathing.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Hollow Hold",
+   "muscle": "Core",
+   "method": "Core",
+   "difficulty": "Beginner",
+   "instructions": "1. Lie flat on your back with your arms extended overhead and legs straight. First Position.\n\n2. Engage your core by pressing your lower back firmly into the floor.\n\n3. Lift your shoulders, arms, and legs a few inches off the ground, keeping them straight. Your body should form a slight curve like a banana shape. Second Position.\n\n4. Hold this position, maintaining core engagement and controlled breathing.\n\n5. Keep your lower back pressed against the floor throughout the hold.\n\n6. Maintain for the desired time, then slowly lower back down.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "ERG Rowing",
+   "muscle": "Core",
+   "method": "Cardio",
+   "difficulty": "Beginner",
+   "instructions": "1. Sit on a rowing machine, secure your feet comfortably on the foot rests, grab the handle bar with both hands and sit up straight with your legs fully extended. First Position.\n\n2. Begin to slide down the machine until your knees are close to your chest and your torso is leaning forwards. Second Position.\n\n3. Press your feet against the foot rests to push backwards and pull the handle bar to your torso until you're back in First Position.\n\n4. Keep going with smooth and controlled motion, maintaining a strong posture throughout the exercise.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Medicine Ball Slam",
+   "muscle": "Core",
+   "method": "Full Body",
+   "difficulty": "Beginner",
+   "instructions": "1. Stand upright and place a medicine ball just in front of you, between your feet.\n\n2. Squat down by sitting your hips back and bending your knees, then reach down with your arms to grab the ball. First Position.\n\n3. Pick the ball up with both hands. Push through the floor with your heels, straighten your legs and extend your hips to rise back up.\n\n4. As you reach the top of the squat, lift the ball straight above your head. Second Position.\n\n5. Bring your arms down forcefully and throw the ball to the floor with power.\n\n6. Squat back down into First Position.\n\n7. Repeat for the desired reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Burpees To The Floor",
+   "muscle": "Core",
+   "method": "Full Body",
+   "difficulty": "Intermediate",
+   "instructions": "1. Stand upright with your feet at shoulder-width. First Position.\n\n2. Squat down by sitting your hips back and bending your knees, then place both hands on the floor. Second Position.\n\n3. Kick both legs backwards and extend them fully into a press-up position. Lower your torso until your chest touches the floor. Third Position.\n\n4. Press your torso back up, jump your feet forward under your hips into Second Position again, then squat up and jump off the floor, raising your hands overhead.\n\n5. Land softly and return to First Position.\n\n6. Repeat for the desired reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Box Step Over",
+   "muscle": "Core",
+   "method": "Cardio",
+   "difficulty": "Beginner",
+   "instructions": "1. Stand beside a platform that's roughly half a foot in height. Place one foot on the platform while keeping the other foot on the floor.\n\n2. Step up onto the platform with the leg on the floor, then step down from the platform with your other leg, placing it on the opposite side of the platform.\n\n3. Repeat the movement in the opposite direction.\n\n4. Continue alternating sides for the desired reps.",
+   "imageName": null,
+   "videoName": null
+ },
+ {
+   "name": "Barbell Hang Power Clean",
+   "muscle": "Core",
+   "method": "Full Body",
+   "difficulty": "Intermediate",
+   "instructions": "1. Stand upright holding a barbell with an overhand grip, hands just outside shoulder-width. The bar should rest against your thighs. First Position.\n\n2. Bend slightly at the hips and knees, lowering the barbell to just above your knees while keeping your back flat and chest up. Second Position.\n\n3. Explosively extend your hips and knees while pulling the bar upwards, keeping it close to your body. Shrug your shoulders and pull the bar to chest height.\n\n4. Quickly drop under the bar by bending your knees slightly and rotating your elbows forward, catching the barbell on your shoulders in a quarter squat. Third Position.\n\n5. Stand up fully to complete the rep.\n\n6. Lower the barbell back to the thighs and repeat.",
+   "imageName": null,
+   "videoName": null
+ },
   {
    "name": "Ab Crunch",
    "muscle": "Abs",
@@ -15,7 +123,7 @@
    "difficulty": "Beginner",
    "instructions": "1. Lie flat on your back, plant your feet and bend your legs so your knees are off the floor. Put your hands behind your head. First Position.\n\n2. Contract your abs to curl your torso upwards, towards you knees. Your head, neck and upper back should all lift from the floor. Second Position.\n\n3. Slowly lower yourself back down into First Position.\n\n4. Finish your reps.",
    "imageName": null,
-   "videoName": "crunch.mp4"
+   "videoName": null
   },
   {
    "name": "Bicycle Crunch",
@@ -71,6 +179,33 @@
     "instructions": "1. Lie face down on the hamstring curl machine with your ankles positioned under the padded lever. Grip the machine handles for stability. First Position.\n\n2. Contract your hamstrings to curl your legs upward toward your glutes. Keep your hips pressed against the bench and avoid lifting them during the movement.\n\n3. Continue curling until you reach Second Position, where your hamstrings are fully contracted.\n\n4. Slowly lower the weight back into First Position in a controlled motion.\n\n5. Finish your reps.",
     "imageName": "machineProneHamstringCurl.jpeg",
     "videoName": "machineProneHamstringCurl.mp4"
+  },
+  {
+    "name": "Barbell Good Morning",
+    "muscle": "Legs",
+    "method": "Hamstring Curl",
+    "difficulty": "Intermediate",
+    "instructions": "1. Set a squat rack to shoulder height and load the bar with your chosen weight.\n\n2. Grip the bar just outside shoulder width. Step under and place the bar across the back of your shoulders.\n\n3. Lift the bar out of the rack and take a few steps back. Plant your feet at hip-width and point your toes slightly outwards. First Position.\n\n4. Keep your legs in a fixed position and bend at your hips to lean your torso forwards. Continue to bend until your torso is parallel to the floor while keeping your neck and back straight. Second Position.\n\n5. Pause in Second Position briefly.\n\n6. Still keeping your legs fixed, extend your back and raise your torso back up into First Position.\n\n7. Finish your reps.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Kettlebell Hang Clean",
+    "muscle": "Core",
+    "method": "Full Body",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand with your feet shoulder-width apart, holding a kettlebell in one hand with a loose grip. Let it hang between your legs. First Position.\n\n2. Push your hips back slightly into a hinge, keeping your chest up and core braced.\n\n3. Drive through your hips explosively to pull the kettlebell upward along your body.\n\n4. As the kettlebell rises, rotate your wrist and tuck your elbow close to your body to guide the kettlebell into the rack position (resting on your forearm and upper arm). Second Position.\n\n5. Keep your wrist straight and elbow tight to avoid the kettlebell flipping onto your arm.\n\n6. Lower the kettlebell back into First Position with control.\n\n7. Repeat for the desired reps, then switch arms.",
+    "imageName": null,
+    "videoName": null
+  },
+  {
+    "name": "Double Kettlebell Walking Lunge",
+    "muscle": "Legs",
+    "method": "Vertical Push",
+    "difficulty": "Intermediate",
+    "instructions": "1. Stand upright holding a kettlebell in each hand at your sides with a firm grip, palms facing inward. Keep your chest up and core engaged. First Position.\n\n2. Step forward with your right leg and lower your hips until both knees are bent at 90 degrees. Your back knee should hover just above the ground, and your front knee should track over your toes. Second Position.\n\n3. Drive through your front heel to stand tall, bringing your back leg forward into the next lunge step.\n\n4. Continue alternating legs as you walk forward, maintaining control of the kettlebells and keeping your torso upright.\n\n5. Perform the desired number of steps or distance.",
+    "imageName": null,
+    "videoName": null
   },
   {
     "name": "Leg Extensions",
