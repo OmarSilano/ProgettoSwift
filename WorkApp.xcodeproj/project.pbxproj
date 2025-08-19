@@ -24,18 +24,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1F32BEE52E1801AB0004040D /* ProgettoSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProgettoSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F32BEF22E1801AC0004040D /* ProgettoSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgettoSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F32BEFC2E1801AC0004040D /* ProgettoSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgettoSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F32BEE52E1801AB0004040D /* WorkApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F32BEF22E1801AC0004040D /* WorkAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F32BEFC2E1801AC0004040D /* WorkAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		1FA4BFEF2E321A3300BB695C /* Exceptions for "ProgettoSwift" folder in "ProgettoSwift" target */ = {
+		1FA4BFEF2E321A3300BB695C /* Exceptions for "WorkApp" folder in "WorkApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 1F32BEE42E1801AB0004040D /* ProgettoSwift */;
+			target = 1F32BEE42E1801AB0004040D /* WorkApp */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -45,22 +45,22 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		1F32BEE72E1801AB0004040D /* ProgettoSwift */ = {
+		1F32BEE72E1801AB0004040D /* WorkApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				1FA4BFEF2E321A3300BB695C /* Exceptions for "ProgettoSwift" folder in "ProgettoSwift" target */,
+				1FA4BFEF2E321A3300BB695C /* Exceptions for "WorkApp" folder in "WorkApp" target */,
 			);
-			path = ProgettoSwift;
+			path = WorkApp;
 			sourceTree = "<group>";
 		};
-		1F32BEF52E1801AC0004040D /* ProgettoSwiftTests */ = {
+		1F32BEF52E1801AC0004040D /* WorkAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ProgettoSwiftTests;
+			path = WorkAppTests;
 			sourceTree = "<group>";
 		};
-		1F32BEFF2E1801AC0004040D /* ProgettoSwiftUITests */ = {
+		1F32BEFF2E1801AC0004040D /* WorkAppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ProgettoSwiftUITests;
+			path = WorkAppUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -94,9 +94,9 @@
 			isa = PBXGroup;
 			children = (
 				1F194FEA2E28E6D8004C2238 /* Resources */,
-				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
-				1F32BEF52E1801AC0004040D /* ProgettoSwiftTests */,
-				1F32BEFF2E1801AC0004040D /* ProgettoSwiftUITests */,
+				1F32BEE72E1801AB0004040D /* WorkApp */,
+				1F32BEF52E1801AC0004040D /* WorkAppTests */,
+				1F32BEFF2E1801AC0004040D /* WorkAppUITests */,
 				1F32BEE62E1801AB0004040D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,9 +104,9 @@
 		1F32BEE62E1801AB0004040D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1F32BEE52E1801AB0004040D /* ProgettoSwift.app */,
-				1F32BEF22E1801AC0004040D /* ProgettoSwiftTests.xctest */,
-				1F32BEFC2E1801AC0004040D /* ProgettoSwiftUITests.xctest */,
+				1F32BEE52E1801AB0004040D /* WorkApp.app */,
+				1F32BEF22E1801AC0004040D /* WorkAppTests.xctest */,
+				1F32BEFC2E1801AC0004040D /* WorkAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,9 +114,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1F32BEE42E1801AB0004040D /* ProgettoSwift */ = {
+		1F32BEE42E1801AB0004040D /* WorkApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F32BF062E1801AC0004040D /* Build configuration list for PBXNativeTarget "ProgettoSwift" */;
+			buildConfigurationList = 1F32BF062E1801AC0004040D /* Build configuration list for PBXNativeTarget "WorkApp" */;
 			buildPhases = (
 				1F32BEE12E1801AB0004040D /* Sources */,
 				1F32BEE22E1801AB0004040D /* Frameworks */,
@@ -128,18 +128,18 @@
 			);
 			fileSystemSynchronizedGroups = (
 				1F194FEA2E28E6D8004C2238 /* Resources */,
-				1F32BEE72E1801AB0004040D /* ProgettoSwift */,
+				1F32BEE72E1801AB0004040D /* WorkApp */,
 			);
-			name = ProgettoSwift;
+			name = WorkApp;
 			packageProductDependencies = (
 			);
 			productName = ProgettoSwift;
-			productReference = 1F32BEE52E1801AB0004040D /* ProgettoSwift.app */;
+			productReference = 1F32BEE52E1801AB0004040D /* WorkApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1F32BEF12E1801AC0004040D /* ProgettoSwiftTests */ = {
+		1F32BEF12E1801AC0004040D /* WorkAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F32BF092E1801AC0004040D /* Build configuration list for PBXNativeTarget "ProgettoSwiftTests" */;
+			buildConfigurationList = 1F32BF092E1801AC0004040D /* Build configuration list for PBXNativeTarget "WorkAppTests" */;
 			buildPhases = (
 				1F32BEEE2E1801AC0004040D /* Sources */,
 				1F32BEEF2E1801AC0004040D /* Frameworks */,
@@ -151,18 +151,18 @@
 				1F32BEF42E1801AC0004040D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				1F32BEF52E1801AC0004040D /* ProgettoSwiftTests */,
+				1F32BEF52E1801AC0004040D /* WorkAppTests */,
 			);
-			name = ProgettoSwiftTests;
+			name = WorkAppTests;
 			packageProductDependencies = (
 			);
 			productName = ProgettoSwiftTests;
-			productReference = 1F32BEF22E1801AC0004040D /* ProgettoSwiftTests.xctest */;
+			productReference = 1F32BEF22E1801AC0004040D /* WorkAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		1F32BEFB2E1801AC0004040D /* ProgettoSwiftUITests */ = {
+		1F32BEFB2E1801AC0004040D /* WorkAppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F32BF0C2E1801AC0004040D /* Build configuration list for PBXNativeTarget "ProgettoSwiftUITests" */;
+			buildConfigurationList = 1F32BF0C2E1801AC0004040D /* Build configuration list for PBXNativeTarget "WorkAppUITests" */;
 			buildPhases = (
 				1F32BEF82E1801AC0004040D /* Sources */,
 				1F32BEF92E1801AC0004040D /* Frameworks */,
@@ -174,13 +174,13 @@
 				1F32BEFE2E1801AC0004040D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				1F32BEFF2E1801AC0004040D /* ProgettoSwiftUITests */,
+				1F32BEFF2E1801AC0004040D /* WorkAppUITests */,
 			);
-			name = ProgettoSwiftUITests;
+			name = WorkAppUITests;
 			packageProductDependencies = (
 			);
 			productName = ProgettoSwiftUITests;
-			productReference = 1F32BEFC2E1801AC0004040D /* ProgettoSwiftUITests.xctest */;
+			productReference = 1F32BEFC2E1801AC0004040D /* WorkAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -206,7 +206,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1F32BEE02E1801AB0004040D /* Build configuration list for PBXProject "ProgettoSwift" */;
+			buildConfigurationList = 1F32BEE02E1801AB0004040D /* Build configuration list for PBXProject "WorkApp" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -220,9 +220,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1F32BEE42E1801AB0004040D /* ProgettoSwift */,
-				1F32BEF12E1801AC0004040D /* ProgettoSwiftTests */,
-				1F32BEFB2E1801AC0004040D /* ProgettoSwiftUITests */,
+				1F32BEE42E1801AB0004040D /* WorkApp */,
+				1F32BEF12E1801AC0004040D /* WorkAppTests */,
+				1F32BEFB2E1801AC0004040D /* WorkAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -278,12 +278,12 @@
 /* Begin PBXTargetDependency section */
 		1F32BEF42E1801AC0004040D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1F32BEE42E1801AB0004040D /* ProgettoSwift */;
+			target = 1F32BEE42E1801AB0004040D /* WorkApp */;
 			targetProxy = 1F32BEF32E1801AC0004040D /* PBXContainerItemProxy */;
 		};
 		1F32BEFE2E1801AC0004040D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1F32BEE42E1801AB0004040D /* ProgettoSwift */;
+			target = 1F32BEE42E1801AB0004040D /* WorkApp */;
 			targetProxy = 1F32BEFD2E1801AC0004040D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -418,7 +418,7 @@
 				DEVELOPMENT_TEAM = 84BTK9R34P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ProgettoSwift/Info.plist;
+				INFOPLIST_FILE = "$(PRODUCT_NAME)/Info.plist";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save Photos From Gallery";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Library Permission";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -450,7 +450,7 @@
 				DEVELOPMENT_TEAM = 84BTK9R34P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ProgettoSwift/Info.plist;
+				INFOPLIST_FILE = "$(PRODUCT_NAME)/Info.plist";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save Photos From Gallery";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Library Permission";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -485,7 +485,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProgettoSwift.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ProgettoSwift";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WorkApp";
 			};
 			name = Debug;
 		};
@@ -503,7 +503,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProgettoSwift.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ProgettoSwift";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WorkApp";
 			};
 			name = Release;
 		};
@@ -542,7 +542,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1F32BEE02E1801AB0004040D /* Build configuration list for PBXProject "ProgettoSwift" */ = {
+		1F32BEE02E1801AB0004040D /* Build configuration list for PBXProject "WorkApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F32BF042E1801AC0004040D /* Debug */,
@@ -551,7 +551,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1F32BF062E1801AC0004040D /* Build configuration list for PBXNativeTarget "ProgettoSwift" */ = {
+		1F32BF062E1801AC0004040D /* Build configuration list for PBXNativeTarget "WorkApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F32BF072E1801AC0004040D /* Debug */,
@@ -560,7 +560,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1F32BF092E1801AC0004040D /* Build configuration list for PBXNativeTarget "ProgettoSwiftTests" */ = {
+		1F32BF092E1801AC0004040D /* Build configuration list for PBXNativeTarget "WorkAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F32BF0A2E1801AC0004040D /* Debug */,
@@ -569,7 +569,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1F32BF0C2E1801AC0004040D /* Build configuration list for PBXNativeTarget "ProgettoSwiftUITests" */ = {
+		1F32BF0C2E1801AC0004040D /* Build configuration list for PBXNativeTarget "WorkAppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F32BF0D2E1801AC0004040D /* Debug */,

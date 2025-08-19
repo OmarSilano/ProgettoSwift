@@ -2,7 +2,7 @@ import SwiftUI
 import CoreData
 
 @main
-struct ProgettoSwiftApp: App {
+struct WorkAppApp: App {
     let persistenceController = PersistenceController.shared
 
     init() {
