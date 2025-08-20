@@ -39,15 +39,19 @@ struct ExploreView: View {
         
         switch category {
         case .hypertrophy:
-            description = "This section is dedicated to those who wish to increase their muscle mass in an aesthetic and structured way. Workouts focus on multi-joint and isolation exercises, with medium to high volumes, repetitions between 6 and 12, and controlled recovery times."
+            description = "Build muscle size and shape for a more sculpted look. Best if your goal is visible gains and balanced aesthetics."
+            
         case .cardioCore:
-            description = "This section is designed for those who want to improve abdominal tone, posture, and overall body stability. The exercises involve not only the visible abdominals, but also deep muscles such as the transverse, obliques, and lumbar muscles."
+            description = "Strengthen abs and deep core for stability and posture. Ideal for desk workers, runners, and anyone chasing a tighter midsection."
+            
         case .functionalFitness:
-            description = "This section offers dynamic and comprehensive workouts that simulate real movements from everyday life. The exercises involve multiple muscle groups simultaneously and are designed to develop a strong, agile and responsive body."
+            description = "Train for everyday performance—strength, balance, and mobility working together. Great for all levels seeking practical, all-round fitness."
+            
         case .hit:
-            description = "The HIIT section offers short but intense workouts based on high-intensity work intervals alternating with short breaks. This approach maximizes caloric expenditure in a short time, accelerates metabolism and improves overall fitness."
+            description = "Big impact in short sessions—burn calories and boost conditioning fast. Perfect for the time-crunched and fat-loss focused."
         }
-
+        
+        
         return CategoryCard(category: category, imageName: category.rawValue, description: description)
     }
 
@@ -124,7 +128,7 @@ struct ExploreView: View {
                                         Text(card.description)
                                             .font(.subheadline)
                                             .foregroundColor(.white)
-                                            .multilineTextAlignment(.leading)
+                                            .multilineTextAlignment(.center)
                                             .padding(.horizontal, 30)
 
                                         Spacer()

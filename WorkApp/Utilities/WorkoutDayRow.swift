@@ -68,11 +68,11 @@ struct WorkoutDayRowView: View {
             }
         }
 
-        let shown = orderedUnique.prefix(2)
+        let shown = orderedUnique.prefix(3)
         if shown.isEmpty { return "—" }
 
         var text = shown.joined(separator: " • ")
-        if orderedUnique.count > 2 { text += " ..." }
+        if orderedUnique.count > 3 { text += " ..." }
         return text
     }
 

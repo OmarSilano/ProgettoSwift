@@ -114,17 +114,7 @@ struct StatsView: View {
                                 ScrollView {
                                     LazyVStack(spacing: 4) {
                                         ForEach(completionsForSelectedDate, id: \.objectID) { completion in
-                                            if let workoutDay = completion.workoutDay {
-                                                let workoutName = workoutDay.workout?.name ?? "Workout"
-                                                let workoutDayName = workoutDay.name ?? "WorkoutDay"
-                                                let formattedName = "\(workoutName) - \(workoutDayName)"
-                                                
-                                                WorkoutDayRowView(
-                                                    day: workoutDay,
-                                                    expandedDayID: $expandedDayID,
-                                                    overrideName: formattedName
-                                                )
-                                            }
+                                            completionRow(completion)
                                         }
                                     }
                                 }
@@ -193,6 +183,40 @@ struct StatsView: View {
         }
         
     }
+    
+    @ViewBuilder
+    private func completionRow(_ completion: WorkoutDayCompleted) -> some View {
+        if let workoutDay = completion.workoutDay {
+            let workoutName = workoutDay.workout?.name ?? "Workout"
+            let workoutDayName = workoutDay.name ?? "WorkoutDay"
+            let formattedName = "\(workoutName) - \(workoutDayName)"
+
+            WorkoutDayRowView(
+                day: workoutDay,
+                expandedDayID: $expandedDayID,
+                overrideName: formattedName
+            )
+            .contentShape(Rectangle())
+            .contextMenu {
+                Button(role: .destructive) {
+                    delete(completion)
+                } label: {
+                    Text("Delete")
+                }
+            }
+        } else {
+            EmptyView()
+        }
+    }
+    
+    private func delete(_ completion: WorkoutDayCompleted) {
+        context.delete(completion)
+        do { try context.save() } catch {
+            context.rollback()
+            print("Delete error:", error)
+        }
+    }
+
 }
 
 enum StatsPeriod: String, CaseIterable, Identifiable {
