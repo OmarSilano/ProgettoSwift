@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CategoryCard: Identifiable {
-    let id = UUID()
+    var id: Category { category }
     let category: Category
     let imageName: String
     let description: String
