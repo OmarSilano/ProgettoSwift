@@ -14,7 +14,14 @@ struct ContentView: View {
         
         TabBarView()
             .task {
-                await Permissions().requestNotificationPermission()
+                //chiedo il permesso per le notifiche
+                let granted: Bool = await Permissions().requestNotificationPermission()
+                
+                //ritorno un valore bool per capire se pianificare o meno la notifica
+                if granted {
+                    let notifications = Notifications()
+                    await notifications.dispatchNotificationEveryMonday()
+                }
             }
         
     }
