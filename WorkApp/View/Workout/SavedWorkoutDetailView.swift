@@ -29,107 +29,111 @@ struct SavedWorkoutDetailView: View {
     
     var body: some View {
         if let workout = fetchedWorkout.first {
-            ZStack(alignment: .top) {
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            // lascia spazio per l’header
-                            Spacer().frame(height: 80)
-                            
-                            // MARK: Immagine
-                            if workout.category != nil {
-                                DefaultWorkoutImageView(imageName: workout.pathToImage)
-                            } else {
-                                UserWorkoutImageView(imageName: workout.pathToImage)
-                            }
-
-                            // MARK: Info
-                            HStack {
-                                Text("\((workout.workoutDay?.count) ?? 0) Days")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                
-                                Spacer()
-                                
-                                Text("\(workout.weeks) Weeks")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                            }
-                            .padding(.horizontal)
-                            
-                            Divider().background(Color.gray)
-                            
-                            if let days = workout.workoutDay?.allObjects as? [WorkoutDay] {
-                                ForEach(days.sorted(by: { ($0.name ?? "") < ($1.name ?? "") })) { day in
-                                    WorkoutDayRowViewWithActionSheet(
-                                        day: day,
-                                        isCompletedToday: completedTodayIDs.contains(day.id ?? UUID()),
-                                        expandedDayID: $expandedDayID,
-                                        onLongPress: {
-                                            selectedDay = day
-                                            showActionSheet = true
-                                        }
-                                    )
-                                }
-                            }
-                            
-                            Spacer(minLength: 40)
-                        }
-                        .padding(.top)
+            VStack(spacing: 0) {
+                // HEADER
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .padding(12)
+                            .background(Color.black.opacity(0.3))
+                            .clipShape(Circle())
                     }
                     
-                    // HEADER
-                    HStack {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.left")
+                    Spacer()
+                    
+                    Text(workout.name ?? "Workout")
+                        .font(.title)
+                        .bold()
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    
+                    Button {
+                        navigateToEditWorkout = true
+                    } label: {
+                        Image(systemName: "pencil")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(Color("FourthColor"))
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, 20)
+                .padding(.bottom, 12)
+                .background(
+                    Color("PrimaryColor")
+                        .ignoresSafeArea(edges: .top)
+                )
+                .overlay(
+                    Divider().background(Color.gray.opacity(0.6)),
+                    alignment: .bottom
+                )
+                
+                // CONTENUTO scrollabile
+                ScrollView {
+                    VStack(spacing: 16) {
+                        // MARK: Immagine
+                        if workout.category != nil {
+                            DefaultWorkoutImageView(imageName: workout.pathToImage)
+                        } else {
+                            UserWorkoutImageView(imageName: workout.pathToImage)
+                        }
+                        
+                        // MARK: Info
+                        HStack {
+                            Text("\((workout.workoutDay?.count) ?? 0) Days")
+                                .font(.headline)
                                 .foregroundColor(.white)
-                                .font(.title3)
-                                .padding(12)
-                                .background(Color.black.opacity(0.3)) // opzionale per visibilità
-                                .clipShape(Circle())
+                            
+                            Spacer()
+                            
+                            Text("\(workout.weeks) Weeks")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        }
+                        .padding(.horizontal)
+                        
+                        Divider().background(Color.gray)
+                        
+                        if let days = workout.workoutDay?.allObjects as? [WorkoutDay] {
+                            ForEach(days.sorted(by: { ($0.name ?? "") < ($1.name ?? "") })) { day in
+                                WorkoutDayRowViewWithActionSheet(
+                                    day: day,
+                                    isCompletedToday: completedTodayIDs.contains(day.id ?? UUID()),
+                                    expandedDayID: $expandedDayID,
+                                    onLongPress: {
+                                        selectedDay = day
+                                        showActionSheet = true
+                                    }
+                                )
+                            }
                         }
                         
-                        Spacer()
-                        
-                        Text(workout.name ?? "Workout")
-                            .font(.title)
-                            .bold()
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Button {
-                            navigateToEditWorkout = true
-                        } label: {
-                            Image(systemName: "pencil")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(Color("FourthColor"))
-                        }
+                        Spacer(minLength: 40)
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 20)
-                    .background(Color.black.opacity(0.001))
+                    .padding(.top, 16)
                 }
-                .navigationDestination(isPresented: $navigateToEditWorkout) {
-                    EditWorkoutView(workout: workout)
-                }
-                .navigationDestination(isPresented: $navigateToEditDay) {
-                    if let dayToEdit = selectedDayForEditing {
-                        EditWorkoutDayView(day: dayToEdit)
-                    } else {
-                        EmptyView()
-                    }
-                }
-
-                .sheet(item: $shareURL) { url in
-                    ShareSheet(items: [url]) {
-                        shareURL = nil
-                    }
-                }
-
+            }
             .background(Color("PrimaryColor").ignoresSafeArea())
+            .navigationDestination(isPresented: $navigateToEditWorkout) {
+                EditWorkoutView(workout: workout)
+            }
+            .navigationDestination(isPresented: $navigateToEditDay) {
+                if let dayToEdit = selectedDayForEditing {
+                    EditWorkoutDayView(day: dayToEdit)
+                } else {
+                    EmptyView()
+                }
+            }
+            .sheet(item: $shareURL) { url in
+                ShareSheet(items: [url]) {
+                    shareURL = nil
+                }
+            }
             .confirmationDialog("Day Actions", isPresented: $showActionSheet, titleVisibility: .visible) {
                 if let selectedDay = selectedDay, let id = selectedDay.id {
                     if completedTodayIDs.contains(id) {
@@ -153,14 +157,13 @@ struct SavedWorkoutDetailView: View {
                         navigateToEditDay = true
                     }
                 }
-
+                
                 Button("Share") {
                     if let selectedDay = selectedDay {
                         shareDay(selectedDay)
                     }
                 }
                 Button("Delete", role: .destructive) {
-                    /* Da implementare */
                     if let selectedDay = selectedDay {
                         deleteDay(selectedDay)
                     }
@@ -175,32 +178,23 @@ struct SavedWorkoutDetailView: View {
                 completedTodayIDs = Set(
                     completions
                         .filter { completion in
-                            // controlla che la data sia di oggi e che ci sia un workoutDay
                             completion.workoutDay != nil &&
                             Calendar.current.isDate(completion.date ?? .distantPast, inSameDayAs: today)
                         }
                         .compactMap { $0.workoutDay?.id }
                 )
                 print("🖼️ Path to workout image: \(workout.pathToImage ?? "Nessun path")")
-
             }
             .navigationBarBackButtonHidden(true)
-            
         } else {
             Text("Workout not found")
                 .foregroundColor(.gray)
                 .padding()
         }
-        
-        
     }
-    
-    
     
     private func shareDay(_ day: WorkoutDay) {
         let text = day.toPlainText()
-        
-        // Salva come file temporaneo
         if let url = saveAsTextFile(text, filename: day.name ?? "WorkoutDay") {
             print("✅ File pronto per condivisione: \(url.path)")
             shareURL = url
@@ -208,17 +202,11 @@ struct SavedWorkoutDetailView: View {
     }
     
     private func deleteDay(_ day: WorkoutDay) {
-        
         let workoutDayManger: WorkoutDayManager = WorkoutDayManager(context: context)
-        
         workoutDayManger.deleteWorkoutDay(day)
-        
         print("Day correctly deleted.")
-        
     }
 }
-
-
 
 struct WorkoutDayRowViewWithActionSheet: View {
     let day: WorkoutDay
@@ -246,27 +234,19 @@ struct WorkoutDayRowViewWithActionSheet: View {
                 
                 Image(systemName: expandedDayID == day.id ? "chevron.up" : "plus")
                     .foregroundColor(isCompletedToday ? Color("SecondaryColor") : .white)
-                
             }
             .padding(.vertical, 8)
             .contentShape(Rectangle())
             .onTapGesture {
-                withAnimation {
-                    toggleDay(day)
-                }
+                withAnimation { toggleDay(day) }
             }
-            .onLongPressGesture {
-                onLongPress()
-            }
-            
-            
+            .onLongPressGesture { onLongPress() }
             
             if expandedDayID == day.id {
                 let details = day.sortedDetails
                 ForEach(details, id: \.id) { detail in
                     WorkoutExerciseDetailView(detail: detail, isCompletedToday: isCompletedToday)
                 }
-                
             }
             
             Divider().background(Color.gray.opacity(0.3))
@@ -274,7 +254,6 @@ struct WorkoutDayRowViewWithActionSheet: View {
         .background(isCompletedToday ? Color("SecondaryColor") : Color.clear)
         .cornerRadius(10)
         .padding(.horizontal)
-        
     }
     
     private func toggleDay(_ day: WorkoutDay) {
@@ -284,22 +263,12 @@ struct WorkoutDayRowViewWithActionSheet: View {
     
     private func muscleGroupsText(from day: WorkoutDay) -> String {
         guard let details = day.workoutDayDetail?.allObjects as? [WorkoutDayDetail] else { return "—" }
-        
         let allGroups = details.compactMap { $0.exercise?.muscle }
-        
         let uniqueGroups = allGroups.reduce(into: [String]()) { result, group in
-            if !result.contains(group) {
-                result.append(group)
-            }
+            if !result.contains(group) { result.append(group) }
         }.prefix(3)
-        
         var text = uniqueGroups.joined(separator: " • ")
         if Set(allGroups).count > 3 { text += " ..." }
-        
         return text
     }
-
-    
 }
-
-
