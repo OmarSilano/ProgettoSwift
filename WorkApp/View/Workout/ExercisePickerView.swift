@@ -44,7 +44,7 @@ struct ExercisePickerView: View {
                 HStack {
                     ZStack(alignment: .leading) {
                         if searchText.isEmpty {
-                            Text("Search")
+                            Text("Search exercises...")
                                 .foregroundColor(Color("SubtitleColor"))
                                 .padding(.horizontal, 14)
                         }
