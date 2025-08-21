@@ -1,5 +1,7 @@
 import SwiftUI
 import CoreData
+import UserNotifications
+
 
 struct AddWorkoutHost: View {
     private let parentContext: NSManagedObjectContext
@@ -336,7 +338,13 @@ struct AddWorkoutView: View {
         
         do {
             try childContext.save()     // child -> parent (bozza → parent)
-            try parentContext.save()    // parent -> store (commit)
+            try parentContext.save()
+            
+            //Schedulo una notifica che mi avviserà del completamento del workout
+            Task {
+                let notifications = Notifications()
+                await notifications.dispatchNotificationWorkoutEnd(workout: workoutDraft)
+            }// parent -> store (commit)
         } catch {
             print("❌ Errore salvataggio workout:", error)
         }

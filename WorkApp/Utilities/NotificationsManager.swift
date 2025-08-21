@@ -4,24 +4,6 @@ import CoreData
 
 class Notifications {
     
-    //è solo una prova va eliminata
-    func dispatchNotification() async {
-        
-        let identifier = "prova"
-        let title = "notifica di prova"
-        let body = "Funziona?????"
-        let hour = 12
-        let minute = 17
-        let repeats = true
-        
-        var dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current)
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        
-        await scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
-        
-    }
-    
     //Notifica che ogni lunedì alle 7 di mattina ti ricorda di allenarti
     func dispatchNotificationEveryMonday() async {
         
@@ -41,44 +23,55 @@ class Notifications {
         await scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
     }
     
-    /*
-    //Funzione che ti manda una notifica ogni 3 giorni se non completi un WorkoutDay da almeno 3 giorni (per ora in modo locale)
-    func dispatchComeBackTrainingNotification() {
+    //Notifica schedulata al momento della creazione di un nuovo workout.
+    //Se crei un workout con durata in settimane diversa da 0, allora viene schedulata una notifica di fine workout
+    func dispatchNotificationWorkoutEnd(workout: Workout) async {
         
-        let manager = WorkoutDayCompletedManager(context: context)
-
-        let completions = manager.fetchCompletionsLastNDays(n: 3)   //lista di giorni completati negli ultimi 3 giorni
-                
-                guard completions.isEmpty else {
-                    print("Allenamenti recenti trovati, nessuna notifica inviata.")
-                    return
-                }
-
+        // Verifico che id e name esistano, altrimenti esco
+        guard let workoutID = workout.id, let workoutName = workout.name else {
+            print("Workout non valido, impossibile schedulare la notifica")
+            return
+        }
         
-        let identifier = "comeBack"
-        let title = "Come back training!"
-        let body = "It's been 3 days since you last completed an exercise. Don't give up!"
-        let hour = 10
-        let minute = 0
-        let repeats = true
+        let identifier = "workoutEnd_\(workoutID)"
+        let title = "Workout finished!"
+        let body = "Congratulations! You have completed \(workoutName)! Are you looking for a new challenge?"
+        let repeats = false
         
+        // Se weeks è lasciato a 0, non schedulo niente
+        guard workout.weeks > 0 else {
+            return
+        }
         
-        var dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current)
-        dateComponents.hour = hour
-        dateComponents.minute = minute
+        //Verifico che venga schedulata una notifica ad una data che non restituisca nil se va fuori il range disponibile
+        guard let endDate = Calendar.current.date(byAdding: .weekOfYear,
+                                                  value: Int(workout.weeks),
+                                                  to: Date()) else {
+            print("Errore nel calcolo della data di fine workout")
+            return
+        }
         
-        scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
+        //la notifica arriverà allo stesso giorno e stesso orario in cui è stato creato il workout, dopo il numero di settimane inserito dall'utente alla creazione
+        let dateComponents = Calendar.current.dateComponents(
+            [.year, .month, .day, .hour, .minute],
+            from: endDate
+        )
+        
+        await scheduleNotification(title: title, body: body, identifier: identifier, dateComponents: dateComponents, repeats: repeats)
+    }
+    
+    func dispatchNotificationEditedWorkoutEnd(workout: Workout) async {
+        
+        guard let workoutID = workout.id else {
+            print("Workout non valido, impossibile aggiornare la notifica")
+            return
+        }
+        
+        cancelNotification(with: "workoutEnd_\(workoutID)")
+        
+        await dispatchNotificationWorkoutEnd(workout: workout)
         
     }
-     */
-    
-    //metodo per cancellare le notifiche
-    func cancelNotification(with identifier: String) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
-        print("Notifica \(identifier) cancellata.")
-    }
-
-    
     
     // Funzione generica per pianificare una notifica, chiamato dai dispatch
     private func scheduleNotification(title: String, body: String, identifier: String, dateComponents: DateComponents, repeats: Bool) async {
@@ -109,6 +102,12 @@ class Notifications {
         }
 
         }
+    }
+
+    //metodo per cancellare le notifiche
+    private func cancelNotification(with identifier: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        print("Notifica \(identifier) cancellata.")
     }
     
     //true se ho i permessi di notifiche, false altrimenti

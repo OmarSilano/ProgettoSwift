@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreData
+import UserNotifications
 
 struct EditWorkoutView: View {
     @Environment(\.managedObjectContext) private var context
@@ -310,6 +311,8 @@ struct EditWorkoutView: View {
         let trimmed = workoutName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         
+        let oldWeeks = workout.weeks    //salvo il numero vecchio di settimane per verificare dopo se rischedulare la notifica o meno
+        
         // 1) Cancella i giorni marcati (manager salva)
         for id in stagedDeletedDayIDs {
             if let day = try? context.existingObject(with: id) as? WorkoutDay {
@@ -322,12 +325,20 @@ struct EditWorkoutView: View {
         workout.days = Int16(remaining)
         
         // 3) Aggiorna i campi del workout (manager salva)
+        let newWeeks = Int16(numberWeeks) ?? workout.weeks
         workoutManager.updateWorkout(
             workout,
             name: trimmed,
             weeks: Int16(numberWeeks) ?? workout.weeks,
             pathToImage: pathToImage
         )
+        
+        // 4) Se il numero di settimane non è cambiato, ri-schedula la notifica
+        if oldWeeks == newWeeks {
+            Task {
+                await Notifications().dispatchNotificationEditedWorkoutEnd(workout: workout)
+            }
+        }
         
         dismiss()
     }
