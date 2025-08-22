@@ -38,8 +38,8 @@ struct TabBarView: View {
                     .tabItem { Label("STATS", systemImage: "chart.bar") }
                     .tag(2)
 
-                SettingsView()
-                    .tabItem { Label("SETTINGS", systemImage: "gearshape") }
+                ToolsView()
+                    .tabItem { Label("TOOLS", systemImage: "gearshape") }
                     .tag(3)
             }
             .tint(Color("SecondaryColor"))

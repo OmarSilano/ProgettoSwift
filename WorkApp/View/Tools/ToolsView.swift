@@ -1,7 +1,7 @@
 import SwiftUI
 import CoreData
 
-struct SettingsView: View {
+struct ToolsView: View {
     
     @Environment(\.managedObjectContext) private var context
     
@@ -10,7 +10,7 @@ struct SettingsView: View {
         NavigationStack {
             VStack {
                 // Titolo
-                Text("SETTINGS")
+                Text("TOOLS")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(Color("FourthColor"))
